@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Plan | Micah Bryant</title>
+<meta name="description" content="All your results from the free tools in one place. Save, print, or send them.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell" style="max-width:900px">
+  <div class="eyebrow">Your plan</div>
+  <h1 style="font-size:clamp(34px,5vw,52px)">Everything you've worked out, in one place.</h1>
+  <p class="lede">Each tool you use adds to this page, and your answers carry over from one tool to the next. It's saved on this device only, so email it to yourself to keep a copy, or send it to Micah before your meeting.</p>
+
+
+  <div id="status"></div>
+
+  <div id="since"></div>
+
+  <h3 class="sub-h">Where you are</h3>
+  <div id="jr"></div>
+
+  <h3 class="sub-h">Where things stand</h3>
+  <p class="muted" style="margin-top:-6px">Only what you've finished. To change a result, open the tool and change your answers.</p>
+  <div id="results"></div>
+
+
+  <div id="sendBox"></div>
+
+  <div class="tool-actions" style="margin:28px 0 0">
+    <button class="btn ghost" id="print">Print or save as PDF</button>
+    <button class="linkbtn" id="clear">Clear my saved answers</button>
+  </div>
+
+  <div class="offer" style="margin:48px 0 96px">
+    <h3>Ready to turn this into a real plan?</h3>
+    <p>Bring this page to a review. We'll start with your goals, check the numbers, and work out the strategy before anyone talks about products.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">Results are educational estimates based on the information you entered and are not financial, tax, legal, or investment advice. Your answers are stored in this browser only until you choose to send them. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<form name="results" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="name"><input name="email"><input name="phone"><input name="tool"><input name="source"><textarea name="summary"></textarea><input name="bot-field">
+</form>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var T = MB.TOOLS, R = MB.results();
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var dfmt = function (d) { return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }); };
+  var used = Object.keys(R).length, p = MB.progress(), st = MB.stage();
+
+  // status: stage pill + completeness, like the client view in Life Backend
+  document.getElementById("status").innerHTML = used ?
+    "<div class='status-card'><div class='sc-left'><span class='stage-pill s-" + st.name.toLowerCase() + "'>" + st.name + " stage</span><p>" + st.desc + "</p></div>" +
+    "<div class='sc-right'>" + MB.progressHtml() + "</div></div>" :
+    "<div class='flag'>Nothing here yet. Start with the <a href='money-plan.html'>money planner</a> or the <a href='stress-test.html'>stress test</a>, and your plan builds as you go.</div>";
+
+  // ---- Your progress: the few numbers that change month to month, each with a target ----
+  var cks = MB.checkins(), G = function (k) { return MB.get(k); };
+  var lastA = (cks.length && cks[cks.length - 1].answers) || {};
+  var FRESH = { apps: 1, interviews: 1 };
+  var cur = function (k, fb) { var v = !FRESH[k] && lastA[k] !== undefined ? lastA[k] : fb; return v === undefined || v === null || v === "" ? "" : +v; };
+  var money = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var monthName = function (m) { var d = new Date(); d.setMonth(d.getMonth() + Math.round(m)); return d.toLocaleDateString("en-US", { month: "long", year: "numeric" }); };
+  var ac = MB.answerChanges();
+  var chip = function (k) {
+    if (!ac || !ac.since) return "";
+    var x = ac.list.filter(function (c) { return c.k === k && (c.dir === "better" || c.dir === "worse"); })[0];
+    return x ? "<span class='chip " + x.dir + "'>" + (x.dir === "better" ? "Better" : "Worse") + " than " + esc(x.from) + "</span>" : "";
+  };
+  var moveK = G("tMove") || "business";
+  var TR = [];
+
+  // 1. Emergency fund
+  if (R.moneyplan || R.stress) {
+    var ef = R.moneyplan && R.moneyplan.ef, spend = parseFloat(G("monthlySpend")) || 0;
+    var efT = ef && ef.target ? ef.target : spend ? spend * 3 : 0, cash = cur("cashSaved", G("cashSaved") !== undefined ? +G("cashSaved") : (ef ? ef.saved : ""));
+    TR.push({ id: "ef", label: "Emergency fund", fields: [["cashSaved", "Cash you have saved now", "$"]], vals: { cashSaved: cash },
+      value: cash === "" ? "Not entered" : money(cash) + (efT ? " <small>of " + money(efT) + "</small>" : ""), pct: efT && cash !== "" ? Math.min(cash / efT * 100, 100) : null,
+      sub: cash === "" ? "Add what you have saved to track it." : efT ? (cash >= efT ? "Fully funded." : money(efT - cash) + " to go" + (ef ? "." : ", based on 3 months of spending.")) : "", ck: "cashSaved",
+      save: function (v) { MB.set("cashSaved", String(v.cashSaved)); if (ef) MB.set("g1s", String(v.cashSaved)); } });
+  }
+  // 2. Debt
+  if (R.debt && R.debt.m) {
+    var start = R.debt.start || R.debt.m.v, dnow = cur("debtTotal", R.debt.m.v), pay = R.debt.pay || 0, rate = (R.debt.rate || 0) / 1200;
+    var est = "";
+    if (dnow <= 0) est = "Debt-free. Nice work.";
+    else if (pay) { var k = 1 - rate * dnow / pay; est = k <= 0 ? "At " + money(pay) + " a month, payments don't keep up with the interest." : "At " + money(pay) + " a month, debt-free around " + monthName(rate ? -Math.log(k) / Math.log(1 + rate) : dnow / pay) + "."; }
+    TR.push({ id: "debt", label: "Debt", fields: [["debtTotal", "Total you owe now", "$"]], vals: { debtTotal: dnow },
+      value: money(dnow) + " <small>left of " + money(start) + "</small>", pct: start ? Math.max(Math.min((start - dnow) / start * 100, 100), 0) : null, barLabel: "paid off",
+      sub: est, ck: "debtTotal", save: function (v) {
+        if (v.debtTotal === undefined) return;
+        var b2 = v.debtTotal, r = JSON.parse(JSON.stringify(R.debt)), k2 = pay ? 1 - rate * b2 / pay : 0;
+        var mo = b2 <= 0 ? 0 : pay && k2 > 0 ? (rate ? -Math.log(k2) / Math.log(1 + rate) : b2 / pay) : null;
+        r.headline = b2 <= 0 ? "Debt-free." : mo === null ? "Current payments don't keep up with the interest." : "Debt-free around " + monthName(mo) + " at your current pace.";
+        r.lines = (r.lines || []).map(function (l) { return /^Total debt/.test(l) ? "Total debt " + money(b2) + " left (started at " + money(start) + "); paying " + money(pay) + "/mo" : l; });
+        r.m = { v: Math.round(b2), l: "Total debt", b: "down", f: "$" }; r.start = start;
+        MB.saveResult("debt", r);
+      } });
+  }
+  // 3. Retirement
+  if (R.retire && R.retire.calc) {
+    var C = R.retire.calc, you = cur("retPct", Math.round(C.you * 100));
+    var rFor = function (y) {
+      var yy = y / 100, max = C.hasPlan ? C.sal * C.up * C.mp : 0, got = C.hasPlan ? C.sal * Math.min(yy, C.up) * C.mp : 0;
+      return { left: max - got, captured: max ? Math.round(got / max * 100) : 100, total: Math.round((yy + (C.hasPlan ? Math.min(yy, C.up) * C.mp : 0)) * 100) };
+    };
+    var rr = rFor(you);
+    TR.push({ id: "retire", label: C.hasPlan ? "Employer match" : "Saving for retirement", fields: [["retPct", "% of your pay you put in", "%"]], vals: { retPct: you },
+      value: C.hasPlan ? (rr.left > 0 ? rr.captured + "% <small>of the match</small>" : "Full match") : rr.total + "% <small>of pay</small>",
+      pct: C.hasPlan ? rr.captured : Math.min(rr.total / 10 * 100, 100),
+      sub: C.hasPlan ? (rr.left > 0 ? "You put in " + you + "%. Put in " + Math.round(C.up * 100) + "% and your employer adds " + money(rr.left) + " more a year." : "You put in " + you + "% and get every dollar your employer offers.") : (rr.total >= 10 ? "At or above the 10% target." : "The target is 10% of your pay."),
+      ck: "retPct", save: function (v) {
+        MB.set("rYou", String(v.retPct)); var x = rFor(v.retPct), r = JSON.parse(JSON.stringify(R.retire));
+        r.calc.you = v.retPct / 100;
+        r.m = C.hasPlan ? { v: x.captured, l: "Employer match captured", b: "up", f: "%" } : { v: x.total, l: "Saving for retirement (% of pay)", b: "up", f: "%" };
+        r.pct = C.hasPlan ? x.captured : Math.min(100, Math.round(x.total / 10 * 100));
+        if (C.hasPlan) r.headline = x.left > 0 ? "Leaving " + money(x.left) + "/yr of employer match behind." : "Getting the full employer match.";
+        r.lines = (r.lines || []).map(function (l) { return /^Saving:/.test(l) ? "Saving: " + x.total + "% of pay" + (C.hasPlan ? " including match" : "") : l; });
+        MB.saveResult("retire", r);
+      } });
+  }
+  // 4. Income move
+  if (R.transition) {
+    var T0 = R.transition;
+    if (moveK === "career") {
+      var apps = cur("apps", ""), ints = cur("interviews", "");
+      TR.push({ id: "move", label: "Job search this month", fields: [["apps", "Applications and networking conversations", "n"], ["interviews", "Interviews", "n"]], vals: { apps: apps, interviews: ints },
+        value: apps === "" && ints === "" ? "Not entered" : (apps || 0) + " <small>applications</small> &middot; " + (ints || 0) + " <small>interviews</small>", pct: null,
+        sub: T0.goal ? "Goal: " + money(T0.goal) + " a month, up from " + money(T0.now || 0) + ". <a href='negotiate.html'>Prep the ask</a> when an offer or review comes up." : "", ck: "interviews", save: function () {} });
+    } else {
+      var target = T0.target || T0.goal || 0, inc = cur("newIncome", +(G("newIncome") || 0)), cp1 = T0.cp1 || Math.round(target * 0.1);
+      var nextFor = function (v) { return T0.replacing === false ? (v < target ? null : "done") : v < cp1 ? ["Prove it", "about " + money(cp1) + " a month"] : T0.ess && v < T0.ess ? ["Cover the basics", money(T0.ess) + " a month, three months in a row"] : v < target ? ["Make the switch", money(target) + " a month, with 6 months of essentials saved"] : "done"; };
+      var nx = nextFor(inc);
+      var flds = [["newIncome", moveK === "owner" ? "Monthly income without your hours" : "Income from the new path last month", "$"]];
+      if (moveK === "business" || moveK === "indie") flds.push(["customers", "Paying customers", "n"]);
+      if (moveK === "owner") flds.push(["ownerHours", "Hours a week it still needs you", "n"]);
+      var extra = moveK === "business" || moveK === "indie" ? (cur("customers", "") !== "" ? cur("customers", "") + " paying customers. " : "") : moveK === "owner" && cur("ownerHours", "") !== "" ? "Needs you " + cur("ownerHours", "") + " hours a week. " : "";
+      TR.push({ id: "move", label: moveK === "owner" ? "Income without your hours" : "Income from your new path", fields: flds, vals: { newIncome: inc, customers: cur("customers", moveK === "business" || moveK === "indie" ? 0 : ""), ownerHours: cur("ownerHours", "") },
+        value: money(inc) + " <small>a month, of " + money(target) + "</small>", pct: target ? Math.min(inc / target * 100, 100) : null,
+        sub: extra + (nx === "done" ? "You've hit your goal." : nx ? "Next checkpoint: <b>" + nx[0] + "</b>, " + nx[1] + "." : ""), ck: "newIncome",
+        save: function (v) {
+          if (v.newIncome === undefined) return;
+          MB.set("newIncome", String(v.newIncome));
+          if (!target) return;
+          var pc = Math.min(Math.round(v.newIncome / target * 100), 100), n2 = nextFor(v.newIncome), r = JSON.parse(JSON.stringify(T0));
+          r.m = { v: pc, l: "Progress toward your new income", b: "up", f: "%" }; r.pct = pc;
+          r.lines = (r.lines || []).filter(function (l) { return !/^New path so far|^Next checkpoint/.test(l); });
+          r.lines.unshift("Next checkpoint: " + (n2 === "done" ? "goal reached" : n2 ? n2[0] : "your goal"));
+          r.lines.unshift("New path so far: " + money(v.newIncome) + "/mo (" + pc + "% of the way)");
+          MB.saveResult("transition", r);
+        } });
+    }
+  }
+
+  var sh = "";
+  if (TR.length) {
+    sh = "<div class='checkin progress-card' id='progress'><div class='ck-head'><h3>Your progress</h3><span class='fine'>" + (cks.length ? "Last updated " + dfmt(cks[cks.length - 1].at) : "Update these each month") + "</span></div>" +
+      TR.map(function (t, i) {
+        return "<div class='trk'><div class='trk-top'><span class='trk-l'>" + t.label + "</span><span class='trk-v'>" + t.value + "</span></div>" +
+          (t.pct !== null ? "<div class='bar'><div style='width:" + Math.max(t.pct, 2) + "%'></div></div>" : "") +
+          "<div class='trk-sub'><span>" + t.sub + "</span>" + chip(t.ck) + "<button type='button' class='trk-btn' data-i='" + i + "'>Update</button></div>" +
+          "<form class='quick' data-i='" + i + "' hidden>" + t.fields.map(function (f) {
+            var v = t.vals[f[0]]; v = v === undefined || v === "" ? "" : v;
+            return "<label><span>" + f[1] + "</span>" + (f[2] === "$" ? "<span class='money'><span>$</span>" : "") + "<input inputmode='numeric' data-ck='" + f[0] + "' value='" + esc(String(v)) + "'>" + (f[2] === "$" ? "</span>" : "") + "</label>";
+          }).join("") + "<button class='btn small' type='submit'>Save</button></form></div>";
+      }).join("") +
+      (function () {
+        var slipped = ac && ac.since && ac.list.some(function (x) { return x.dir === "worse"; });
+        return "<div class='cadence'>" + (slipped ? "<b>Something slipped since last time.</b> You don't have to wait for your review. <a href='book.html'>Book a time &rarr;</a>" :
+          "<b>Each month:</b> update these numbers. <b>Once or twice a year:</b> a review with Micah to adjust your policies and strategies. <a href='book.html'>Book a review &rarr;</a>") + "</div>";
+      })() + "</div>";
+  }
+  document.getElementById("since").innerHTML = sh;
+  document.querySelectorAll(".trk-btn").forEach(function (b) {
+    b.addEventListener("click", function () { var f = document.querySelector("form.quick[data-i='" + b.dataset.i + "']"); f.hidden = !f.hidden; b.textContent = f.hidden ? "Update" : "Cancel"; if (!f.hidden) { var inp = f.querySelector("input"); inp.focus(); inp.select(); } });
+  });
+  document.querySelectorAll("form.quick").forEach(function (f) {
+    f.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var t = TR[+f.dataset.i], vals = {}, prev = {};
+      f.querySelectorAll("[data-ck]").forEach(function (el) { var k = el.dataset.ck, v = el.value.replace(/[^0-9.\-]/g, ""); prev[k] = t.vals[k]; if (v !== "") vals[k] = parseFloat(v); });
+      t.save(vals);
+      MB.quickSave(vals, prev);
+      var b = f.querySelector("button"); b.textContent = "Saved"; b.disabled = true;
+      setTimeout(function () { location.reload(); }, 400);
+    });
+  });
+
+  // the four areas, with Life Backend-style badges and progress bars
+  var badge = function (cls, t) { return "<span class='badge-s " + cls + "'>&#9679; " + t + "</span>"; };
+  var bar = function (pct) { var c = pct >= 70 ? "good" : pct >= 40 ? "mid" : "low"; return "<div class='gbar " + c + "'><div style='width:" + Math.max(pct, 3) + "%'></div></div>"; };
+  var AREAS = [
+    ["Goals and dreams", "What you're building toward, what's changing, and what matters most.", ["prep", "events", "moneyplan"]],
+    ["Income and work", "How you earn today, and the income you're building next.", ["transition", "negotiate"]],
+    ["Investment and saving", "Retirement accounts, and the path to making work optional.", ["independence", "retire"]],
+    ["Debt elimination", "What you owe, and the fastest realistic way out.", ["debt"]],
+    ["Protection", "What could break, and what would keep your plan standing if it did.", ["stress", "dime", "business", "leadership", "checklist"]]
+  ];
+  var STATUS = {
+    retire: function (r) { return badge(r.pct >= 100 ? "ok" : r.pct >= 50 ? "warn" : "bad", r.m && r.m.l.indexOf("match") !== -1 ? (r.pct >= 100 ? "Full match" : r.pct + "% of match") : r.pct + "% of target"); },
+    events: function (r) { return badge(r.pct >= 100 ? "ok" : r.pct >= 50 ? "warn" : "none", r.pct >= 100 ? "All set" : r.pct >= 50 ? "Halfway there" : r.pct > 0 ? "In progress" : "Getting started"); },
+    transition: function (r) { return r.pct >= 100 ? badge("ok", "Switched") : r.pct > 0 ? badge("warn", r.pct + "% of the way") : badge("warn", "Plan ready"); },
+    moneyplan: function (r) { return r.m.v <= 0 ? badge("ok", "On track") : badge("warn", "Funded " + r.pct + "%"); },
+    independence: function (r) { return r.pct >= 100 ? badge("ok", "On track") : badge(r.pct >= 60 ? "warn" : "bad", r.pct + "% of the way"); },
+    debt: function (r) { return r.m.v === 0 ? badge("ok", "Debt-free") : r.months ? badge("warn", "On a plan") : badge("bad", "Not keeping up"); },
+    stress: function (r) { return badge(r.pct >= 70 ? "ok" : r.pct >= 40 ? "warn" : "bad", r.pct >= 70 ? "Resilient" : r.pct >= 40 ? "Stable" : "Fragile"); },
+    dime: function (r) { return r.pct >= 100 ? badge("ok", "Covered") : badge(r.pct >= 50 ? "warn" : "bad", r.pct + "% covered"); },
+    business: function (r) { return badge(r.pct >= 60 ? "ok" : r.pct >= 35 ? "warn" : "bad", "Dependence " + r.m.v + "/100"); },
+    leadership: function (r) { return badge(r.m.v >= 5 ? "ok" : r.m.v >= 3 ? "warn" : "bad", r.m.v + " of 6 ready"); }
+  };
+  var h = "";
+  AREAS.forEach(function (a) {
+    var done = a[2].filter(function (k) { return R[k]; });
+    if (!done.length) return;
+    h += "<div class='efa-area'><h3>" + a[0] + "</h3>";
+    done.forEach(function (k) {
+      var r = R[k], t = T[k];
+      var LINK = { events: "Open checklist", checklist: "Open checklist", prep: "Change answers" };
+      h += "<div class='plan-card'><div class='pc-top'><div class='lv-name'>" + esc(t[0]) + "</div><a href='" + t[1] + "'>" + (LINK[k] || "Change answers") + " &rarr;</a></div>" +
+        "<div class='pc-head'><h3>" + esc(r.headline) + "</h3>" + (STATUS[k] && r.m ? STATUS[k](r) : "") + "</div>" +
+        (typeof r.pct === "number" ? bar(r.pct) : "") +
+        (r.lines && r.lines.length ? "<details class='pc-more'><summary>Details</summary><div class='kvs'>" + r.lines.slice(0, 4).map(function (l) { var i = l.indexOf(": "); return i > 0 && i < 40 ? "<div class='kv'><span>" + esc(l.slice(0, i)) + "</span><b>" + esc(l.slice(i + 2)) + "</b></div>" : "<div class='kv'><b>" + esc(l) + "</b></div>"; }).join("") + "</div><div class='fine'>Last updated " + dfmt(r.at) + "</div></details>" : "") + "</div>";
+    });
+    h += "</div>";
+  });
+  if (R.iul) h += "<p class='fine explored'>You also explored <a href='iul-explained.html'>protected growth and being your own bank</a>.</p>";
+  if (!h) h = "<div class='flag'>Your finished tools will show up here. Start with the <a href='stress-test.html'>stress test</a>.</div>";
+  document.getElementById("results").innerHTML = h;
+
+
+  var STEPS = [["Free tools", "Work through them at your own pace. Your plan builds as you go.", "index.html#free", "Find a tool"], ["Book a conversation", "Pick a time on my calendar. No cost, no obligation.", "book.html", "Book a time"], ["Before we meet", "Two minutes of questions about you, your work, and your goals.", "prepare.html", "Answer them"], ["Meeting 1: Understand", "Where you want to go, and an Expert Financial Analysis of where you stand."], ["Meeting 2: Decide", "Your options side by side, including what each costs and what you give up."], ["Build it and keep it moving", "I put the policies and strategies in place. You update this page each month, and we review together once or twice a year."]];
+  var step = R.prep ? 4 : used ? 2 : 1, S = STEPS[step - 1];
+  document.getElementById("jr").innerHTML = "<div class='jr-mini'><div class='jr-dots'>" + STEPS.map(function (x, i) { return "<span class='" + (i + 1 < step ? "done" : i + 1 === step ? "here" : "") + "' title='" + x[0] + "'></span>"; }).join("") + "</div>" +
+    "<p><b>Step " + step + " of 6: " + S[0] + ".</b> " + S[1] + (S[2] ? " <a href='" + S[2] + "'>" + S[3] + " &rarr;</a>" : "") + "</p></div>";
+
+  if (used) MB.sendBox("sendBox", "plan", "your full plan", cks.length ? "Send your check-in" : (p.missing.length ? "Email yourself your plan so far" : "Email yourself your full plan"));
+  document.getElementById("print").addEventListener("click", function () { try { window.print(); } catch (e) {} });
+  document.getElementById("clear").addEventListener("click", function () {
+    var b = this;
+    if (b.dataset.sure) { MB.clear(); location.reload(); }
+    else { b.dataset.sure = "1"; b.textContent = "Click again to clear everything"; }
+  });
+})();
+</script>
+</body>
+</html>

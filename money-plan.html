@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Job Does Your Money Need to Do? | Micah Bryant</title>
+<meta name="description" content="Give every dollar a job, set short, mid, and long-term goals, and see exactly what it would take to hit them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free planner</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">What job does your money need to do?</h1>
+    <p class="lede">Start with your goals for the short, mid, and long term. Then see where your money goes now, give every dollar a job, and find out exactly what it would take to reach them: spending less, earning more, better growth, or more time.</p>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="plan-step first">
+    <div class="step-label">Step 1 &middot; Your goals</div>
+    <h2 style="font-size:32px">What are you building toward?</h2>
+    <p class="hint muted">Use today's dollars. The planner adjusts for inflation.</p>
+    <div class="goals">
+      <div class="goal">
+        <div class="hz">Short term &middot; within 2 years</div>
+        <div class="field"><label for="g1n">Goal</label><input id="g1n" value="Emergency fund"></div>
+        <div class="field"><label for="g1a">Target amount</label><div class="money"><span>$</span><input id="g1a" inputmode="numeric" value="15000"></div></div>
+        <div class="row2">
+          <div class="field"><label for="g1y">Years</label><input id="g1y" inputmode="numeric" value="2"></div>
+          <div class="field"><label for="g1s">Saved so far</label><div class="money"><span>$</span><input id="g1s" inputmode="numeric" value="2000"></div></div>
+        </div>
+      </div>
+      <div class="goal">
+        <div class="hz">Mid term &middot; 3 to 10 years</div>
+        <div class="field"><label for="g2n">Goal</label><input id="g2n" value="Home down payment"></div>
+        <div class="field"><label for="g2a">Target amount</label><div class="money"><span>$</span><input id="g2a" inputmode="numeric" value="40000"></div></div>
+        <div class="row2">
+          <div class="field"><label for="g2y">Years</label><input id="g2y" inputmode="numeric" value="6"></div>
+          <div class="field"><label for="g2s">Saved so far</label><div class="money"><span>$</span><input id="g2s" inputmode="numeric" value="0"></div></div>
+        </div>
+      </div>
+      <div class="goal">
+        <div class="hz">Long term &middot; 10+ years</div>
+        <div class="field"><label for="g3n">Goal</label><input id="g3n" value="Financial independence"></div>
+        <div class="field"><label for="g3a">Target amount</label><div class="money"><span>$</span><input id="g3a" inputmode="numeric" value="500000"></div><small>Not sure? <a href="independence-number.html">Find your independence number.</a></small></div>
+        <div class="row2">
+          <div class="field"><label for="g3y">Years</label><input id="g3y" inputmode="numeric" value="30"></div>
+          <div class="field"><label for="g3s">Saved so far</label><div class="money"><span>$</span><input id="g3s" inputmode="numeric" value="15000"></div></div>
+        </div>
+      </div>
+    </div>
+    <details class="assume">
+      <summary>Assumptions (change any of these)</summary>
+      <div class="assume-grid">
+        <div class="field"><label for="inf">Yearly inflation: <b id="infv"></b></label><input id="inf" type="range" min="0" max="6" step="0.5" value="3"></div>
+        <div class="field"><label for="r1">Short-term growth: <b id="r1v"></b></label><input id="r1" type="range" min="0" max="5" step="0.5" value="2"><small>Typical of savings accounts.</small></div>
+        <div class="field"><label for="r2">Mid-term growth: <b id="r2v"></b></label><input id="r2" type="range" min="0" max="8" step="0.5" value="4"></div>
+        <div class="field"><label for="r3">Long-term growth: <b id="r3v"></b></label><input id="r3" type="range" min="0" max="10" step="0.5" value="6"></div>
+      </div>
+      <p class="fine">Growth rates are hypothetical. No rate of return is guaranteed.</p>
+    </details>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="plan-step">
+    <div class="step-label">Step 2 &middot; Where your money goes now</div>
+    <div class="calc-grid">
+      <form class="calc-form" id="f1" novalidate>
+        <div class="field"><label for="pay">Monthly take-home pay</label><div class="money"><span>$</span><input id="pay" inputmode="numeric" value="5500"></div><small>What actually lands in your account, after taxes. If it varies, use a typical low month.</small></div>
+        <div class="field"><label for="ess"><i class="dot j1"></i>Essentials</label><div class="money"><span>$</span><input id="ess" inputmode="numeric" value="2800"></div><small>Housing, utilities, groceries, transportation, childcare.</small></div>
+        <div class="field"><label for="debt"><i class="dot j2"></i>Debt payments</label><div class="money"><span>$</span><input id="debt" inputmode="numeric" value="550"></div><small>Car loan, credit cards, student loans. Not your mortgage, which counts as an essential.</small></div>
+        <div class="field"><label for="prot"><i class="dot j3"></i>Protection</label><div class="money"><span>$</span><input id="prot" inputmode="numeric" value="120"></div><small>Life, disability, and health insurance premiums you pay yourself.</small></div>
+        <div class="field"><label for="save"><i class="dot j4"></i>Saving and investing</label><div class="money"><span>$</span><input id="save" inputmode="numeric" value="600"></div><small>Emergency fund, retirement, any money set aside for goals.</small></div>
+        <div class="field"><label for="life"><i class="dot j5"></i>Lifestyle and hobbies</label><div class="money"><span>$</span><input id="life" inputmode="numeric" value="1000"></div><small>Dining out, subscriptions, shopping, travel, hobbies.</small></div>
+      </form>
+
+      <div class="calc-out light">
+        <div class="out-label">Every dollar's job</div>
+        <div class="stack tall" id="split"></div>
+        <div class="legend" id="legend"></div>
+        <div class="flag" id="leftover"></div>
+        <div id="flags"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="plan-step">
+    <div class="step-label">Step 3 &middot; What it would take</div>
+    <div class="need-table" id="needs"></div>
+    <div class="verdict" id="verdict"></div>
+    <div id="leverWrap">
+      <h3 style="margin:40px 0 4px">Ways to close the gap</h3>
+      <p class="muted" style="margin:0 0 20px">Here's what each lever would take on its own. Most realistic plans use a mix.</p>
+      <div class="levers" id="levers"></div>
+      <div class="mix" id="mix"></div>
+    </div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:56px 0 96px">
+    <h3>Want help turning this into a real plan?</h3>
+    <p>In a review, we'll go through your actual numbers, put protection in the right place, and map out which moves make sense for you, and in what order.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This planner is a hypothetical, educational illustration based on the numbers and assumptions you enter. It does not predict or guarantee results and is not financial, tax, legal, or investment advice. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var pctf = function (v) { return (v * 100).toFixed(1).replace(/\.0$/, "") + "%"; };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+
+  MB.bind({ pay: "takeHome", ess: "essentials", debt: "debtPay", prot: "protection", save: "monthlySaving", life: "lifestyle", g1n: "g1n", g1a: "g1a", g1y: "g1y", g1s: "g1s", g2n: "g2n", g2a: "g2a", g2y: "g2y", g2s: "g2s", g3n: "g3n", g3a: "g3a", g3y: "g3y", g3s: "g3s" });
+  var JOBS = [["ess", "Essentials", "j1"], ["debt", "Debt", "j2"], ["prot", "Protection", "j3"], ["save", "Saving & investing", "j4"], ["life", "Lifestyle", "j5"]];
+
+  function monthlyNeed(target, years, saved, rate, inf) {
+    if (years <= 0) return Math.max(target - saved, 0);
+    var fut = target * Math.pow(1 + inf, years);
+    var grown = saved * Math.pow(1 + rate, years);
+    var rem = Math.max(fut - grown, 0), n = years * 12, r = rate / 12;
+    if (rem === 0) return 0;
+    return r === 0 ? rem / n : rem * r / (Math.pow(1 + r, n) - 1);
+  }
+
+  function goals(extraYears, longRate) {
+    var inf = +$("inf").value / 100;
+    var rates = [+$("r1").value / 100, +$("r2").value / 100, longRate == null ? +$("r3").value / 100 : longRate];
+    return [1, 2, 3].map(function (k) {
+      var y = Math.max(num("g" + k + "y"), 0) + (extraYears || 0);
+      return { name: $("g" + k + "n").value || ["Short-term goal", "Mid-term goal", "Long-term goal"][k - 1],
+        amt: num("g" + k + "a"), years: y, saved: num("g" + k + "s"),
+        need: num("g" + k + "a") > 0 ? monthlyNeed(num("g" + k + "a"), y, num("g" + k + "s"), rates[k - 1], inf) : 0,
+        future: num("g" + k + "a") * Math.pow(1 + inf, y) };
+    });
+  }
+  var totalNeed = function (gs) { return gs.reduce(function (s, g) { return s + g.need; }, 0); };
+
+  function calc() {
+    ["inf", "r1", "r2", "r3"].forEach(function (id) { $(id + "v").textContent = pctf(+$(id).value / 100); });
+    var pay = num("pay"), spent = 0, vals = {};
+    JOBS.forEach(function (j) { vals[j[0]] = num(j[0]); spent += vals[j[0]]; });
+    var left = pay - spent, base = Math.max(pay, spent) || 1;
+
+    var s = "", lg = "";
+    JOBS.forEach(function (j) {
+      if (vals[j[0]] > 0) s += "<div class='" + j[2] + "' style='width:" + (vals[j[0]] / base * 100) + "%'></div>";
+      lg += "<div><i class='dot " + j[2] + "'></i>" + j[1] + "<b>" + (pay ? Math.round(vals[j[0]] / pay * 100) : 0) + "%</b></div>";
+    });
+    if (left > 0) s += "<div class='j0' style='width:" + (left / base * 100) + "%'></div>";
+    $("split").innerHTML = s; $("legend").innerHTML = lg;
+    $("leftover").className = "flag " + (left < 0 ? "bad" : left > 0 ? "good" : "");
+    $("leftover").innerHTML = left < 0 ? "<b>You're spending " + usd(-left) + " a month more than you take home.</b> That gap is coming from savings or credit. Fix this first."
+      : left > 0 ? "<b>" + usd(left) + " a month has no job yet.</b> Unassigned money tends to disappear. It's counted toward your goals in Step 3."
+      : "<b>Every dollar has a job.</b>";
+    var fl = "";
+    if (vals.prot === 0) fl += "<div class='flag'>Nothing is going to <b>protection</b>. If your income stopped, what would cover it? <a href='dime-calculator.html'>Check your life insurance need</a> or <a href='stress-test.html'>take the stress test</a>.</div>";
+    if (pay && vals.debt / pay > 0.2) fl += "<div class='flag'><b>Debt takes " + Math.round(vals.debt / pay * 100) + "% of your pay.</b> Paying it down frees up money for every goal below.</div>";
+    if (pay && vals.save / pay < 0.1) fl += "<div class='flag'>You're saving <b>" + Math.round(vals.save / pay * 100) + "%</b> of your pay. Your goals below show what it would actually take.</div>";
+    $("flags").innerHTML = fl;
+
+    var gs = goals(), need = totalNeed(gs);
+    var available = vals.save + Math.max(left, 0);
+    var gap = need - available;
+
+    var t = "<div class='nt-row nt-head'><span>Goal</span><span>Future cost</span><span>Monthly needed</span></div>";
+    gs.forEach(function (g, i) {
+      if (!g.amt) return;
+      t += "<div class='nt-row'><span><small>" + ["Short term", "Mid term", "Long term"][i] + " &middot; " + g.years + " yrs</small>" + esc(g.name) + "</span><span>" + usd(g.future) + "</span><span><b>" + usd(g.need) + "</b></span></div>";
+    });
+    t += "<div class='nt-row nt-total'><span>Total needed each month</span><span></span><span><b>" + usd(need) + "</b></span></div>";
+    t += "<div class='nt-row'><span>Currently going to saving, plus money with no job</span><span></span><span><b>" + usd(available) + "</b></span></div>";
+    $("needs").innerHTML = t;
+
+    MB.set("monthlySpend", String(vals.ess + vals.debt + vals.prot + vals.life));
+    MB.set("monthlySaving", String(vals.save)); MB.set("takeHome", String(pay));
+    if (/emergency/i.test($("g1n").value)) MB.set("cashSaved", String(num("g1s")));
+    var gl = gs.filter(function (g) { return g.amt; }).map(function (g) { return g.name + ": " + usd(g.need) + "/mo for " + g.years + " yrs (" + usd(g.amt) + " in today's dollars)"; });
+    MB.saveResult("moneyplan", { title: "What job your money needs to do", url: "money-plan.html", ef: /emergency/i.test($("g1n").value) ? { target: num("g1a"), saved: num("g1s") } : null, m: { v: Math.round(gap), l: "Monthly gap to your goals", b: "down", f: "$" }, pct: need > 0 ? Math.min(100, Math.round(available / need * 100)) : 100,
+      headline: gap <= 0 ? "Your goals are on track, with " + usd(-gap) + " a month to spare." : "You're " + usd(gap) + " a month short of your goals.",
+      lines: ["Take-home " + usd(pay) + "/mo: essentials " + usd(vals.ess) + ", debt " + usd(vals.debt) + ", protection " + usd(vals.prot) + ", saving " + usd(vals.save) + ", lifestyle " + usd(vals.life)].concat(gl) });
+    if (gap <= 0) {
+      $("verdict").className = "verdict ready";
+      $("verdict").innerHTML = "<div class='score-line'>On track</div><h2>Your plan works, with " + usd(-gap) + " a month to spare.</h2><p>The next question is protection: what happens to these goals if your income stops? That's what keeps a working plan working.</p>";
+      $("leverWrap").hidden = true; return;
+    }
+    $("verdict").className = "verdict " + (gap > pay * 0.25 ? "wait" : "ask");
+    $("verdict").innerHTML = "<div class='score-line'>Monthly gap</div><h2>You're " + usd(gap) + " a month short of these goals.</h2><p>That doesn't mean the goals are wrong. It means something has to move. Here are your options.</p>";
+    $("leverWrap").hidden = false;
+
+    var L = [];
+    // 1 lifestyle
+    var lifePct = vals.life ? gap / vals.life : Infinity;
+    L.push(["Spend less", lifePct <= 1 ? "Cut lifestyle spending by " + usd(gap) + " a month" : "Cutting lifestyle alone can't close this", lifePct <= 1 ? "That's " + Math.round(lifePct * 100) + "% of your current lifestyle budget." : "Your whole lifestyle budget is " + usd(vals.life) + ". You'll need another lever too.", lifePct <= 0.3 ? "ok" : lifePct <= 1 ? "hard" : "no"]);
+    // 2 income
+    var gross = gap * 12 / 0.75;
+    L.push(["Earn more", "Bring home " + usd(gap) + " more a month", "Roughly " + usd(gross) + " a year more before taxes, through a raise, side income, or growing your business.", pay && gap / pay <= 0.15 ? "ok" : "hard"]);
+    // 3 growth on long-term money
+    var lo = 0, hi = 0.15, base3 = totalNeed(goals(0, 0)) - goals(0, 0)[2].need;
+    var needAt = function (r) { return base3 + goals(0, r)[2].need; };
+    var reqRate = null;
+    if (needAt(hi) <= available) { for (var k = 0; k < 40; k++) { var mid = (lo + hi) / 2; if (needAt(mid) <= available) hi = mid; else lo = mid; } reqRate = hi; }
+    var cur3 = +$("r3").value / 100;
+    L.push(["Better growth", reqRate !== null && reqRate > cur3 ? "Grow long-term money at about " + pctf(reqRate) + " a year" : "Growth alone can't close this", reqRate !== null && reqRate > cur3 ? "Instead of " + pctf(cur3) + ". " + (reqRate > 0.08 ? "That's higher than most plans should count on." : "Possible over long periods, but never guaranteed.") : "Even at 15% a year, the gap remains. The other levers matter more here.", reqRate !== null && reqRate <= 0.08 ? "hard" : "no"]);
+    // 4 time
+    var extra = null;
+    for (var y = 1; y <= 20; y++) { if (totalNeed(goals(y)) <= available) { extra = y; break; } }
+    L.push(["More time", extra ? "Push each goal back about " + extra + " year" + (extra > 1 ? "s" : "") : "Time alone can't close this", extra ? "Same goals, later dates. Inflation makes them cost more, but compounding has longer to work." : "Even 20 extra years isn't enough without another change.", extra && extra <= 3 ? "ok" : extra ? "hard" : "no"]);
+
+    var lh = "";
+    L.forEach(function (l) { lh += "<div class='lever " + l[3] + "'><div class='lv-name'>" + l[0] + "</div><div class='lv-head'>" + l[1] + "</div><p>" + l[2] + "</p></div>"; });
+    $("levers").innerHTML = lh;
+
+    var cut = Math.min(gap / 3, vals.life), earn = gap / 3, boost = available + cut + earn, my = null;
+    for (var z = 0; z <= 20; z++) { if (totalNeed(goals(z)) <= boost) { my = z; break; } }
+    if (my === null) earn = gap - cut;
+    $("mix").innerHTML = "<div class='out-label' style='color:var(--green)'>A realistic mix</div><p>Cut lifestyle by <b>" + usd(cut) + "</b> a month, bring home <b>" + usd(earn) + "</b> more" +
+      (my ? ", and push your goal dates back about <b>" + my + " year" + (my > 1 ? "s" : "") + "</b>" + (function () { var g = gs.filter(function (x) { return x.amt; })[1] || gs.filter(function (x) { return x.amt; })[0]; return g ? " (for example, " + g.name.toLowerCase() + " in " + (g.years + my) + " years instead of " + g.years + ")" : ""; })() : "") +
+      ". Small moves on several levers are easier to stick with than one big sacrifice.</p>";
+  }
+
+  document.querySelectorAll("input").forEach(function (el) { el.addEventListener("input", calc); });
+  document.querySelectorAll("form").forEach(function (f) { f.addEventListener("submit", function (e) { e.preventDefault(); }); });
+  calc();
+  MB.sendBox("sendBox", "moneyplan", "your money plan");
+})();
+</script>
+</body>
+</html>

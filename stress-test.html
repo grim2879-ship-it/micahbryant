@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Bad Tuesday Stress Test | Micah Bryant</title>
+<meta name="description" content="A 3-minute stress test: how much breathing room do you really have? Free, no account.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="test-shell" id="app">
+  <!-- intro -->
+  <div id="intro">
+    <div class="eyebrow">The One Bad Tuesday stress test</div>
+    <h1 style="font-size:clamp(36px,5.5vw,56px)">How much breathing room do you really have?</h1>
+    <p class="lede">A few quick questions, about two minutes. Built for business owners, 1099 professionals, and families. Answer with rough ranges; nobody needs exact numbers.</p>
+    <button class="btn" id="start">Start the stress test</button>
+    <p class="hero-note">No account, no sales call. You'll see your score right away.</p>
+  </div>
+
+  <!-- questions -->
+  <div id="quiz" hidden>
+    <div class="q-count" id="qcount"></div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="q" id="q"></div>
+    <div class="q-nav">
+      <button class="linkbtn" id="back">&larr; Back</button>
+    </div>
+  </div>
+
+  <!-- result -->
+  <div id="result" hidden>
+    <div class="eyebrow">Your result</div>
+    <span class="badge" id="badge"></span>
+    <div class="result-score"><span class="n" id="score"></span><span class="of">/ 100 resilience score</span></div>
+    <div class="meter"><i id="pin"></i></div>
+    <div class="meter-labels"><span>Fragile</span><span>Stable</span><span>Resilient</span></div>
+    <p class="headline-result" id="headline"></p>
+    <p class="fine" id="estnote"></p>
+
+    <div id="suggest"></div>
+
+    <div class="gate" id="gate">
+      <h3>Get your full breakdown</h3>
+      <p class="muted" style="margin:0">See your three weakest points and what to fix first. We'll also email you a copy.</p>
+      <form id="gateForm" novalidate>
+        <div class="field"><label for="fname">First name</label><input id="fname" autocomplete="given-name" required></div>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required></div>
+        <label class="checkline"><input type="checkbox" id="shareMicah" checked> Also send my results to Micah Bryant so he can review them with me</label>
+        <div class="err" id="err"></div>
+        <button class="btn" type="submit" style="margin-top:8px">Show my breakdown</button>
+        <p class="fine">You'll get your breakdown plus a short email series on building financial room. Unsubscribe anytime. Your answers are never sold.</p>
+      </form>
+    </div>
+
+    <div class="breakdown" id="breakdown" hidden>
+      <h2 style="font-size:32px">Your three weakest points</h2>
+      <p class="muted">Ranked from where you're most exposed. Fix them in this order.</p>
+      <div id="weaklist"></div>
+    </div>
+
+    <div class="offer">
+      <h3>Want someone to go through this with your real numbers?</h3>
+      <p>A Zoom strategy review covers where you're fragile and what to fix first. You'll leave with a clear next step, whether or not we work together.</p>
+      <a class="btn" href="book.html">Book a strategy review</a>
+    </div>
+    <p style="margin-top:24px"><button class="linkbtn" id="retake">Retake the test</button></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This stress test is an educational estimate based on the ranges you choose. It is not financial, tax, or legal advice. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var Q = [
+    { id: "earner", title: "How do you earn your income?", hint: "Choose the one that describes most of it.",
+      opts: [["W-2 employee", "w2"], ["1099 / independent contractor", "1099"], ["Business owner", "owner"], ["A mix of these", "mix"]] },
+    { id: "variability", title: "How much does your monthly income change?", hint: "Think about the last 12 months.",
+      opts: [["Barely. About the same every month", 0], ["Some. Up or down 10 to 25%", 1], ["A lot. Swings of 25% or more", 2], ["Unpredictable month to month", 3]] },
+    { id: "costs", title: "Roughly what are your fixed monthly costs?", hint: "Housing, car, insurance, debt payments, utilities, groceries. Personal costs only.",
+      opts: [["Under $3,000", 2000], ["$3,000 to $6,000", 4500], ["$6,000 to $10,000", 8000], ["Over $10,000", 13000]] },
+    { id: "cash", title: "If a $2,000 bill showed up tomorrow, how would you cover it?", hint: "Pick the closest answer. No exact numbers needed.",
+      opts: [["From savings, without much worry", "plenty"], ["From savings, but it would use most of it", "some"], ["Credit card or borrowing", "little"], ["Honestly, I couldn't cover it", "none"]] },
+    { id: "replacement", title: "If you couldn't work for 3 months, what would replace your income?", hint: "Pick the closest answer.",
+      opts: [["Nothing. Income would stop", 3], ["Only my savings", 2], ["A partner's income would partly cover it", 1], ["Disability coverage, or income that continues without me", 0]] },
+    { id: "separation", title: "Is your business money separate from your personal money?", hint: "Separate accounts, and you pay yourself on purpose.",
+      opts: [["Fully separate", 0], ["Partly. Some overlap", 1], ["No, it's all mixed together", 2], ["Doesn't apply. I don't have business income", 0]] }
+  ];
+
+  // Skip questions the other tools already answered
+  var known = { costs: parseFloat(MB.get("monthlySpend")), cash: parseFloat(MB.get("cashSaved")) };
+  Q = Q.filter(function (q) { return !(q.id === "costs" && known.costs > 0) && !(q.id === "cash" && known.cash >= 0); });
+  var answers = {}, i = 0, cashEstimated = false;
+  var $ = function (id) { return document.getElementById(id); };
+
+  function show(id) { ["intro", "quiz", "result"].forEach(function (s) { $(s).hidden = s !== id; }); window.scrollTo(0, 0); }
+
+  function render() {
+    var q = Q[i];
+    $("qcount").textContent = "Question " + (i + 1) + " of " + Q.length;
+    $("bar").style.width = ((i) / Q.length * 100) + "%";
+    var html = "<h2>" + q.title + "</h2><p class='hint'>" + q.hint + "</p><div class='opts'>";
+    q.opts.forEach(function (o, k) {
+      var sel = answers[q.id] && answers[q.id].k === k ? " sel" : "";
+      html += "<button class='opt" + sel + "' data-k='" + k + "'>" + o[0] + "</button>";
+    });
+    $("q").innerHTML = html + "</div>";
+    $("back").style.visibility = i === 0 ? "hidden" : "visible";
+    $("q").querySelectorAll(".opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var k = +b.getAttribute("data-k");
+        answers[q.id] = { k: k, v: q.opts[k][1], label: q.opts[k][0] };
+        b.classList.add("sel");
+        setTimeout(function () { if (i < Q.length - 1) { i++; render(); } else { finish(); } }, 180);
+      });
+    });
+  }
+
+  function compute() {
+    var costs = known.costs > 0 ? known.costs : answers.costs.v;
+    var cash;
+    if (known.cash >= 0) { cash = known.cash; cashEstimated = false; }
+    else { cash = { plenty: costs * 2, some: 2500, little: 500, none: 0 }[answers.cash.v]; cashEstimated = true; }
+    var weekly = costs / 4.33;
+    var weeks = cash / weekly;
+    var parts = {
+      cash: Math.min(weeks / 26, 1),              // 6 months of costs = full marks
+      replacement: (3 - answers.replacement.v) / 3,
+      stability: (3 - answers.variability.v) / 3,
+      separation: (2 - answers.separation.v) / 2
+    };
+    var score = Math.round(parts.cash * 50 + parts.replacement * 25 + parts.stability * 15 + parts.separation * 10);
+    var band = score < 40 ? "fragile" : score < 70 ? "stable" : "resilient";
+    return { weeks: weeks, parts: parts, score: score, band: band };
+  }
+
+  function weeksText(w) {
+    if (w < 1) return "less than a week";
+    if (w < 2) return "about 1 week";
+    if (w >= 52) return "more than a year";
+    return "about " + Math.round(w) + " weeks";
+  }
+
+  var R;
+  function finish() {
+    R = compute();
+    $("bar").style.width = "100%";
+    $("score").textContent = R.score;
+    var b = $("badge"); b.className = "badge " + R.band; b.textContent = R.band;
+    $("pin").style.left = R.score + "%";
+    var lines = {
+      fragile: "One bad Tuesday could become a bad quarter.",
+      stable: "You can absorb a hit, but a long one would hurt.",
+      resilient: "You have real room. Now it's about protecting it."
+    };
+    $("headline").textContent = "You have " + weeksText(R.weeks) + " of financial room. " + lines[R.band];
+    $("estnote").textContent = cashEstimated ? "Your cash cushion is estimated from your answers. For a sharper number, add your emergency savings in the money planner." : "Using the numbers you entered in the other tools.";
+    var rk = Object.keys(R.parts).sort(function (a, b) { return R.parts[a] - R.parts[b]; }).slice(0, 3);
+    MB.saveResult("stress", { title: "One Bad Tuesday stress test", url: "stress-test.html", m: { v: R.score, l: "Resilience score", b: "up", f: "n" }, pct: R.score,
+      headline: "Resilience score " + R.score + "/100 (" + R.band + "): " + weeksText(R.weeks) + " of financial room.",
+      lines: rk.map(function (k, n) { return "Fix #" + (n + 1) + ": " + advice[k].name; }) });
+    MB.suggest("suggest", "stress");
+    show("result");
+  }
+
+  var advice = {
+    cash: { name: "Cash on hand",
+      fix: "Your cash cushion covers {weeks} of fixed costs. Aim first for one month, then three. If your income varies, aim for six. Keep it somewhere separate from spending money so it doesn't get used up gradually." },
+    replacement: { name: "Income replacement",
+      fix: "If you couldn't work, your income would largely stop. This is the gap that turns an injury or illness into a financial crisis. Find out what replacement options exist for your situation, especially if you're self-employed and have no employer coverage." },
+    stability: { name: "Income stability",
+      fix: "Uneven income needs a different system: pay yourself a fixed amount from a holding account, and let good months refill it. Your fixed costs should be built around your low months, not your average." },
+    separation: { name: "Business and personal separation",
+      fix: "When business and personal money mix, you can't see either one clearly, and a bad business month quietly drains your household. Separate accounts and a regular owner's draw are the first step." }
+  };
+
+  function breakdown() {
+    var ranked = Object.keys(R.parts).sort(function (a, b) { return R.parts[a] - R.parts[b]; }).slice(0, 3);
+    var html = "";
+    ranked.forEach(function (key, n) {
+      var a = advice[key], pct = Math.round(R.parts[key] * 100);
+      html += "<div class='weak'><div class='rank'>Fix #" + (n + 1) + "</div><h3>" + a.name + "</h3>" +
+        "<div class='bar'><div style='width:" + Math.max(pct, 3) + "%'></div></div>" +
+        "<p>" + a.fix.replace("{weeks}", weeksText(R.weeks)) + "</p></div>";
+    });
+    $("weaklist").innerHTML = html;
+    return ranked[0];
+  }
+
+  function submitLead(name, email, weakest) {
+    var ml = (window.SITE_CONFIG || {}).mailerlite || {};
+    if (!ml.accountId || !ml.formId) return;
+    var fd = new FormData();
+    fd.append("fields[name]", name);
+    fd.append("fields[email]", email);
+    fd.append("fields[earner_type]", answers.earner.v);
+    fd.append("fields[score_band]", R.band);
+    fd.append("fields[weakest_area]", weakest);
+    fd.append("fields[resilience_score]", R.score);
+    fd.append("ml-submit", "1");
+    fd.append("anticsrf", "true");
+    try {
+      fetch("https://assets.mailerlite.com/jsonp/" + ml.accountId + "/forms/" + ml.formId + "/subscribe",
+        { method: "POST", body: fd, mode: "no-cors" }).catch(function () {});
+    } catch (e) {}
+  }
+
+  $("gateForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("fname").value.trim(), email = $("email").value.trim();
+    if (!name) { $("err").textContent = "Please add your first name."; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $("err").textContent = "Please enter a valid email."; return; }
+    $("err").textContent = "";
+    var weakest = breakdown();
+    submitLead(name, email, advice[weakest].name.toLowerCase());
+    MB.set("c_name", name); MB.set("c_email", email);
+    if ($("shareMicah").checked) MB.send({ name: name, email: email, tool: "Stress test", summary: MB.summaryText(["stress"]), share: true, clientCopy: false }).catch(function () {});
+    $("gate").hidden = true;
+    $("breakdown").hidden = false;
+    $("breakdown").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  $("start").addEventListener("click", function () { i = 0; show("quiz"); render(); });
+  $("back").addEventListener("click", function () { if (i > 0) { i--; render(); } });
+  $("retake").addEventListener("click", function () {
+    answers = {}; i = 0; $("gate").hidden = false; $("breakdown").hidden = true; show("quiz"); render();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retirement Accounts Checkup | Micah Bryant</title>
+<meta name="description" content="Are you getting your full employer match? What about old 401(k)s, Roth versus traditional, and saving for your kids? A free 3-minute checkup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free checkup</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">Are your retirement accounts doing their job?</h1>
+    <p class="lede">Free employer money you might be missing, old 401(k)s from past jobs, Roth or traditional, and saving for your kids. Three minutes, and you'll know what to fix first.</p>
+  </div>
+
+  <form id="f" novalidate>
+    <div class="plan-step first">
+      <div class="step-label">Step 1 &middot; Your plan at work</div>
+      <div class="q-grid">
+        <div class="field"><label for="age">Your age</label><input id="age" inputmode="numeric" value="34"></div>
+        <div class="field"><label for="sal">Yearly pay before taxes</label><div class="money"><span>$</span><input id="sal" inputmode="numeric" value="65000"></div></div>
+        <div class="field"><label for="plan">Retirement plan through work</label><select id="plan"><option value="401k">401(k)</option><option value="403b">403(b)</option><option value="457">457</option><option value="none">None offered</option><option value="self">I'm self-employed</option></select></div>
+      </div>
+      <div class="q-grid" id="matchRow">
+        <div class="field"><label for="you">You contribute: <b id="youv"></b> of pay</label><input id="you" type="range" min="0" max="25" step="1" value="3"></div>
+        <div class="field"><label for="mpct">Employer matches: <b id="mpctv"></b> of what you put in</label><input id="mpct" type="range" min="0" max="100" step="25" value="50"></div>
+        <div class="field"><label for="mupto">Up to: <b id="muptov"></b> of your pay</label><input id="mupto" type="range" min="0" max="10" step="1" value="6"><small>Not sure? Check your benefits portal or ask HR. "50% up to 6%" is common.</small></div>
+      </div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-label">Step 2 &middot; Everything else</div>
+      <div class="q-grid">
+        <div class="field"><label for="oldN">Retirement plans left at old jobs</label><input id="oldN" inputmode="numeric" value="1"></div>
+        <div class="field"><label for="oldBal">Their total balance (rough)</label><div class="money"><span>$</span><input id="oldBal" inputmode="numeric" value="12000"></div></div>
+        <div class="field"><label for="ira">Money in IRAs or Roth IRAs</label><div class="money"><span>$</span><input id="ira" inputmode="numeric" value="0"></div></div>
+      </div>
+      <div class="field"><label>In retirement, do you think you'll pay a bigger or smaller share of your income in taxes than you do now?</label><small style="display:block;margin:-2px 0 8px">This decides whether it's better to pay the tax now (Roth) or later (traditional). You might pay a bigger share if you'll have a lot saved, your mortgage and kids' deductions will be gone, or you think tax rates will rise. You might pay a smaller share if your income will drop a lot.</small><div class="opts row" id="tax"><button type="button" class="opt" data-v="higher">A bigger share</button><button type="button" class="opt" data-v="same">About the same</button><button type="button" class="opt" data-v="lower">A smaller share</button><button type="button" class="opt sel" data-v="unsure">Not sure</button></div></div>
+      <div class="field"><label>Saving for your children's education?</label><div class="opts row" id="kids"><button type="button" class="opt" data-v="yes">Yes, already saving</button><button type="button" class="opt" data-v="want">I have kids, not saving yet</button><button type="button" class="opt sel" data-v="na">Doesn't apply</button></div></div>
+    </div>
+  </form>
+
+  <div class="plan-step results">
+    <div class="step-label">Your checkup</div>
+    <div class="result-hero">
+      <div>
+        <div class="out-label" id="freeLbl">Free money you're leaving behind</div>
+        <div class="big-num" id="free"></div>
+        <p class="muted" id="freeSub"></p>
+      </div>
+      <div class="path-card" id="rate"></div>
+    </div>
+    <h3 class="sub-h">What to fix, in order</h3>
+    <div class="ev-items fixes" id="fixes"></div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Want help setting it up right?</h3>
+    <p>I help with 401(k) and 403(b) rollovers, IRAs and Roth IRAs, 529 education plans, annuities, and IULs for retirement income. We'll start with your goals and go from there.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">Educational checkup using the numbers you enter and hypothetical growth. It is not tax advice; ask a CPA about your tax situation. Contribution limits and plan rules vary by plan and change yearly. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Content is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var n = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var short = function (v) { return v >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M" : v >= 1e4 ? "$" + Math.round(v / 1e3) + "K" : usd(v); };
+  var tax = MB.get("rTax") || "unsure", kids = MB.get("rKids") || "na";
+  MB.bind({ age: "age", sal: "grossIncome", you: "rYou", mpct: "rMatch", mupto: "rUpto", oldN: "rOldN", oldBal: "rOldBal", ira: "rIra" });
+  if (MB.get("rPlan")) $("plan").value = MB.get("rPlan");
+  [["tax", function (v) { tax = v; MB.set("rTax", v); }, tax], ["kids", function (v) { kids = v; MB.set("rKids", v); }, kids]].forEach(function (g) {
+    var el = $(g[0]);
+    el.querySelectorAll(".opt").forEach(function (b) {
+      b.classList.toggle("sel", b.dataset.v === g[2]);
+      b.addEventListener("click", function () { el.querySelectorAll(".opt").forEach(function (x) { x.classList.toggle("sel", x === b); }); g[1](b.dataset.v); calc(); });
+    });
+  });
+
+  function calc() {
+    var age = n("age"), sal = n("sal"), plan = $("plan").value, you = +$("you").value / 100, mp = +$("mpct").value / 100, up = +$("mupto").value / 100;
+    var oldN = n("oldN"), oldBal = n("oldBal"), ira = n("ira");
+    MB.set("rPlan", plan);
+    $("youv").textContent = Math.round(you * 100) + "%"; $("mpctv").textContent = Math.round(mp * 100) + "%"; $("muptov").textContent = Math.round(up * 100) + "%";
+    var hasPlan = plan !== "none" && plan !== "self";
+    $("matchRow").style.display = hasPlan ? "" : "none";
+    var maxMatch = hasPlan ? sal * up * mp : 0, gotMatch = hasPlan ? sal * Math.min(you, up) * mp : 0, left = maxMatch - gotMatch;
+    var yrs = Math.max(65 - age, 1), fv = left * ((Math.pow(1.06, yrs) - 1) / 0.06);
+    var total = (hasPlan ? you : 0) + (hasPlan ? Math.min(you, up) * mp : 0);
+    var captured = maxMatch ? Math.round(gotMatch / maxMatch * 100) : 100;
+
+    if (hasPlan) {
+      $("freeLbl").textContent = left > 0 ? "Free money you're leaving behind" : "Employer match";
+      $("free").textContent = left > 0 ? usd(left) + "/yr" : "Captured";
+      $("freeSub").textContent = left > 0 ? "Your employer would add this if you raised your contribution to " + Math.round(up * 100) + "%. Over " + yrs + " years, that's about " + short(fv) + " at a hypothetical 6% growth." : "You're getting the full " + usd(maxMatch) + " a year your employer offers. Nice.";
+    } else {
+      $("freeLbl").textContent = plan === "self" ? "Self-employed" : "No plan at work";
+      $("free").textContent = "Your move";
+      $("freeSub").textContent = plan === "self" ? "There's no employer match, but self-employed plans and IRAs let you build retirement savings with tax advantages." : "No plan at work doesn't mean no plan. An IRA or Roth IRA lets you save with tax advantages on your own.";
+    }
+    var tgt = 0.10, pctNow = Math.round(total * 100);
+    $("rate").className = "path-card " + (total >= 0.15 ? "ok" : total >= tgt ? "ok" : total >= 0.05 ? "mid" : "low");
+    $("rate").innerHTML = "<div class='out-label'>Saving for retirement</div><div class='pc-num'>" + pctNow + "% of pay</div><p>" + (hasPlan ? "Including your employer's match. " : "") + "A common target is at least 10% of your gross pay, the same 10% the Expert Financial Analysis uses. " + (total >= tgt ? "You're there." : "That's about " + usd(sal * (tgt - total) / 12) + " a month more to reach it.") + "</p>";
+
+    var F = [];
+    if (hasPlan && left > 0) F.push(["Raise your contribution to " + Math.round(up * 100) + "% to get the full match", "It's the easiest return available: " + usd(left) + " a year your employer adds for free.", 0]);
+    if (oldN > 0) F.push(["Decide what to do with " + (oldN === 1 ? "the plan" : "the " + oldN + " plans") + " at old jobs (" + usd(oldBal) + ")", "Old accounts are easy to lose track of, may carry fees, and aren't part of one strategy. Rolling them into one place can simplify things.", 1]);
+    if (total < tgt) F.push(["Work toward saving 10% of your pay", "Raise it 1% at a time, or every time you get a raise. The money planner shows where it can come from.", 0, "money-plan.html"]);
+    if (!hasPlan) F.push(["Open an IRA or Roth IRA", plan === "self" ? "Or a self-employed plan. Either way, automate a monthly contribution." : "Set up an automatic monthly contribution so it happens without thinking.", 1]);
+    var roth = tax === "higher" || (tax === "unsure" && age < 35) ? "Roth" : tax === "lower" ? "Traditional" : "A mix";
+    F.push([roth === "Roth" ? "Lean toward Roth contributions" : roth === "Traditional" ? "Lean toward traditional (pre-tax) contributions" : "Consider a mix of Roth and traditional",
+      roth === "Roth" ? "You pay taxes now and take it out tax-free later. That helps most if you'll pay a bigger share in taxes in retirement" + (age < 35 && tax === "unsure" ? ", which is common for people early in their careers." : ".") : roth === "Traditional" ? "You save on taxes now and pay them later, which helps most if you'll pay a smaller share in taxes in retirement." : "Not knowing is normal. Splitting between both gives you flexibility later. Ask a CPA about your situation.", 1]);
+    if (kids === "want") F.push(["Start saving for your kids' education", "A 529 plan grows tax-advantaged for education. Even a small monthly amount adds up over 10 to 18 years.", 1]);
+    if (age < 55) F.push(["Consider an IUL as a second retirement bucket", "Growth tied to the market without market losses, tax-advantaged retirement income through policy loans, and protection for your family. Best when you have years to fund it.", 1, "iul-explained.html"]);
+    F.push(["Plan income you can't outlive", "Savings are half of retirement. The other half is a steady paycheck. A fixed indexed annuity protects savings from market losses and can turn them into guaranteed income for life.", 1, "iul-explained.html"]);
+    $("fixes").innerHTML = F.map(function (x, i) { return "<div class='ev-item fix'><span class='fx-n'>" + (i + 1) + "</span><span><b>" + x[0] + "</b>" + (x[2] ? " <em class='mh'>Micah can help</em>" : "") + "<br><small>" + x[1] + (x[3] ? " <a href='" + x[3] + "'>Open tool</a>" : "") + "</small></span></div>"; }).join("");
+
+    MB.saveResult("retire", { title: "Retirement accounts checkup", url: "retirement-accounts.html",
+      calc: { sal: sal, you: you, mp: mp, up: up, hasPlan: hasPlan },
+      m: hasPlan ? { v: captured, l: "Employer match captured", b: "up", f: "%" } : { v: pctNow, l: "Saving for retirement (% of pay)", b: "up", f: "%" }, pct: hasPlan ? captured : Math.min(100, Math.round(total / tgt * 100)),
+      headline: hasPlan ? (left > 0 ? "Leaving " + usd(left) + "/yr of employer match behind." : "Getting the full employer match.") : "No plan at work: an IRA or Roth IRA is the next step.",
+      lines: ["Saving: " + pctNow + "% of pay" + (hasPlan ? " including match" : ""), "Old plans: " + oldN + " (" + usd(oldBal) + ")", "Leaning: " + roth + (kids === "want" ? "; wants to start a 529" : ""), "Plan at work: " + ({ "401k": "401(k)", "403b": "403(b)", "457": "457", none: "none", self: "self-employed" })[plan]] });
+  }
+  document.querySelectorAll("#f input, #f select").forEach(function (el) { el.addEventListener("input", calc); el.addEventListener("change", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "retire", "your retirement checkup");
+})();
+</script>
+</body>
+</html>

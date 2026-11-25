@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Your Next Income | Micah Bryant</title>
+<meta name="description" content="Want different work, your own business, or more time? Map the move from where you are to where you want to be, without an unsupported leap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free planner</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">Build your next income without betting your current one.</h1>
+    <p class="lede">Better pay, your own business, independent work, or simply more time. Map the move from where you are to where you want to be, with checkpoints that tell you when it's safe to take the next step.</p>
+  </div>
+
+  <form id="f" novalidate>
+    <div class="plan-step first">
+      <div class="step-label">Step 1 &middot; Where you want to go</div>
+      <div class="opts tgrid" id="moves"></div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-label">Step 2 &middot; Today versus the goal</div>
+      <div class="vs">
+        <div class="vs-col">
+          <h3>Today</h3>
+          <div class="field"><label for="nowInc">Monthly take-home pay</label><div class="money"><span>$</span><input id="nowInc" inputmode="numeric" value="4500"></div></div>
+          <div class="field"><label for="nowHrs">Hours you work in a typical week</label><input id="nowHrs" inputmode="numeric" value="55"></div>
+        </div>
+        <div class="vs-col goal">
+          <h3>The goal</h3>
+          <div class="field"><label for="goalInc">Monthly take-home you want</label><div class="money"><span>$</span><input id="goalInc" inputmode="numeric" value="7500"></div></div>
+          <div class="field"><label for="goalHrs">Hours a week you'd want to work</label><input id="goalHrs" inputmode="numeric" value="40"></div>
+          <div class="field"><label for="yrs">Years to get there</label><input id="yrs" inputmode="numeric" value="3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-label">Step 3 &middot; What you have to work with</div>
+      <div class="q-grid">
+        <div class="field"><label for="spare">Hours a week you could give this right now</label><input id="spare" inputmode="numeric" value="6"><small>Be realistic about your energy after work.</small></div>
+        <div class="field"><label for="ess">Monthly essentials</label><div class="money"><span>$</span><input id="ess" inputmode="numeric" value="3200"></div><small>Housing, food, transportation, insurance, minimum debt payments.</small></div>
+        <div class="field"><label for="cush">Savings you could fall back on</label><div class="money"><span>$</span><input id="cush" inputmode="numeric" value="5000"></div></div>
+        <div class="field"><label for="newInc">Monthly income from the new path so far</label><div class="money"><span>$</span><input id="newInc" inputmode="numeric" value="0"></div><small>Side income, a raise already in motion, first customers. Use 0 if you haven't started.</small></div>
+      </div>
+    </div>
+  </form>
+
+  <div class="plan-step results">
+    <div class="step-label">Your transition map</div>
+    <div class="result-hero">
+      <div>
+        <div class="out-label">The move</div>
+        <div class="big-num" id="gapNum"></div>
+        <p class="muted" id="gapSub"></p>
+      </div>
+      <div class="path-card" id="ready"></div>
+    </div>
+
+    <h3 class="sub-h">Three checkpoints</h3>
+    <p class="muted" style="margin-top:-6px">Each one has to hold before the next step makes sense. This is how you change your income without an unsupported leap.</p>
+    <div class="checkpoints" id="cps"></div>
+
+    <h3 class="sub-h">Protect the transition</h3>
+    <div class="flag" id="protect"></div>
+
+    <h3 class="sub-h">Who it takes, and when</h3>
+    <p class="muted" style="margin-top:-6px" id="whoNote"></p>
+    <div class="who" id="who"></div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Don't just get a plan. Get help building it.</h3>
+    <p>In a conversation, we'll pressure-test the move, set the checkpoints with your real numbers, protect your household while you make the switch, and figure out who you need now and who can wait.</p>
+    <a class="btn" href="book.html">Book a conversation</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This planner is an educational estimate based on what you enter. It does not guarantee any income or business result. Specialist work (legal, tax, investment, branding, marketing, career services) is done by qualified professionals you choose, under their own agreements with you. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Content is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var n = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var MOVES = {
+    career: { t: "A higher-paying career", s: "Employee to a better role", newWhat: "the new role", cp1: "A clear target role, with the skills gap mapped", who: [["Career strategy", "Target roles and how to position yourself for them", "At the start", "me"], ["Skills or credentials", "Finding the right training or certification", "Only if there is a gap", "me"], ["Negotiation", "Salary and offer negotiation (try the <a href='negotiate.html'>negotiation planner</a>)", "When an offer comes", "me"]] },
+    business: { t: "My own business", s: "Employee to business owner", newWhat: "the business", cp1: "A first paying customer for a clearly defined offer", who: [["Business model", "What you sell, to whom, and at what price", "At the start", "me"], ["Brand and marketing", "Name, positioning, and how customers find you", "Once the offer works", "me"], ["CPA", "Bookkeeping and taxes", "When money comes in regularly"], ["Attorney", "Entity, contracts, agreements", "When you form an entity, sign contracts, or hire"], ["Business banking", "Separate accounts, later financing", "When revenue is steady"], ["Benefits", "Health coverage for you, then benefits and bonuses for your first hires", "When you leave your job, then when you hire", "me"]] },
+    indie: { t: "Independent work", s: "Employee to independent professional", newWhat: "your independent work", cp1: "A defined service with your first two paying clients", who: [["Service design", "What you offer and how you price it", "At the start", "me"], ["Positioning and marketing", "Who it is for and how they find you", "After your first clients", "me"], ["CPA", "Self-employment and quarterly taxes", "Before your first quarterly payment"], ["Attorney", "Client agreements", "When you sign real contracts"], ["Health and income coverage", "Replacing what your employer covered", "Before you leave your job", "me"]] },
+    owner: { t: "A business that runs without me", s: "Owner to less operational dependence", newWhat: "systems and people", cp1: "Your top 5 recurring tasks documented and handed off", who: [["Operations help", "Systems, processes, delegation", "At the start"], ["Hiring", "The right people in key seats", "When a seat needs filling"], ["CPA", "Owner pay and profit planning", "At your next planning season"], ["Attorney", "Buy-sell and continuity", "If you have partners"], ["Protection", "Key-person and owner income coverage", "Now, while it still depends on you", "me"], ["Benefits and bonuses", "Group benefits and bonus plans that keep your key people", "As you hand off to a team", "me"]] },
+    freedom: { t: "More financial freedom", s: "High earner to more options", newWhat: "income you don't trade time for", cp1: "Surplus defined and directed every month", who: [["Tax planning", "A CPA strategy for what you keep", "When income gets complex"], ["Retirement accounts", "401(k)s, IRAs, Roths, IULs, and annuities", "Now", "me"], ["Investment adviser", "Investing beyond what Micah offers", "When surplus is ready to invest"], ["Income diversification", "Assets or ventures that pay without your hours", "Once the foundation is solid"]] },
+    time: { t: "More time, same income", s: "Overworked to more time", newWhat: "a restructured week", cp1: "Your costs and income mapped, so you know your real number", who: [["Financial restructuring", "Lower fixed costs and debt", "At the start"], ["Alternative income", "A source that does not need your hours", "Once your number is clear"], ["Work redesign", "Fewer hours or a different role", "When the numbers allow"], ["Protection", "Keeping the household safe", "Before hours or income change", "me"]] }
+  };
+  var qm = (new URLSearchParams(location.search).get("move") || "").toLowerCase();
+  var move = MOVES[qm] ? qm : (MB.get("tMove") || "business");
+  if (MOVES[qm]) MB.set("tMove", qm);
+  $("moves").innerHTML = Object.keys(MOVES).map(function (k) { return "<button type='button' class='opt tcard" + (k === move ? " sel" : "") + "' data-k='" + k + "'><b>" + MOVES[k].t + "</b><span>" + MOVES[k].s + "</span></button>"; }).join("");
+  $("moves").querySelectorAll(".opt").forEach(function (b) {
+    b.addEventListener("click", function () { move = b.dataset.k; MB.set("tMove", move); $("moves").querySelectorAll(".opt").forEach(function (x) { x.classList.toggle("sel", x === b); }); calc(); });
+  });
+  MB.bind({ nowInc: "takeHome", nowHrs: "hoursNow", goalInc: "goalIncome", goalHrs: "goalHours", yrs: "transitionYears", spare: "spareHours", ess: "essentials", cush: "cashSaved", newInc: "newIncome" });
+
+  function calc() {
+    var M = MOVES[move], nowInc = n("nowInc"), goalInc = n("goalInc"), nowHrs = n("nowHrs"), goalHrs = n("goalHrs"), yrs = Math.max(n("yrs"), 0.5);
+    var ess = n("ess"), cush = n("cush"), newInc = n("newInc"), spare = n("spare");
+    var incGap = goalInc - nowInc, hrsGap = nowHrs - goalHrs;
+    var replacing = move === "business" || move === "indie" || move === "time" || move === "freedom";
+    var target = replacing ? goalInc : Math.max(incGap, 0);
+    var runway = ess ? cush / ess : 0;
+
+    $("gapNum").textContent = (incGap >= 0 ? "+" : "") + usd(incGap) + "/mo";
+    $("gapSub").textContent = (hrsGap > 0 ? hrsGap + " fewer hours a week, " : hrsGap < 0 ? Math.abs(hrsGap) + " more hours a week, " : "the same hours, ") + "in about " + yrs + " year" + (yrs === 1 ? "" : "s") + ". " + M.s + ".";
+
+    var cp = [
+      { t: "Prove it", g: M.cp1, num: replacing ? Math.round(target * 0.1) : null, when: Math.max(Math.round(yrs * 12 * 0.25), 2) },
+      { t: "Cover the basics", g: replacing ? usd(ess) + " a month from " + M.newWhat + ", three months in a row" : "An offer or raise that covers your essentials with room to spare", num: replacing ? ess : null, when: Math.max(Math.round(yrs * 12 * 0.6), 4) },
+      { t: "Make the switch", g: usd(goalInc) + " a month" + (goalHrs < nowHrs ? " on about " + goalHrs + " hours a week" : "") + ", with 6 months of essentials saved", num: target, when: Math.round(yrs * 12) }
+    ];
+    var progress = replacing ? (target ? Math.min(newInc / target, 1) : 0) : (incGap > 0 ? Math.min(newInc / incGap, 1) : 1);
+    $("cps").innerHTML = cp.map(function (c, i) {
+      var hit = c.num !== null ? newInc >= c.num && c.num > 0 : false;
+      return "<div class='cp" + (hit ? " hit" : "") + "'><div class='cp-n'>" + (hit ? "&#10003;" : i + 1) + "</div><div><div class='lv-name'>Checkpoint " + (i + 1) + " &middot; around month " + c.when + "</div><h3>" + c.t + "</h3><p>" + c.g + (c.num !== null && i === 0 ? " (about " + usd(c.num) + " a month)" : "") + "</p></div></div>";
+    }).join("");
+
+    var hoursNote = spare < 5 ? "With under 5 spare hours a week, this works best if others carry pieces of the build. That's where coordinated help matters most." : "Your " + spare + " hours a week is enough to steer, as long as the right people handle the specialist work.";
+    $("ready").className = "path-card " + (runway >= 6 ? "ok" : runway >= 3 ? "mid" : "low");
+    $("ready").innerHTML = "<div class='out-label'>Your cushion</div><div class='pc-num'>" + (runway >= 1 ? Math.floor(runway) + " month" + (Math.floor(runway) === 1 ? "" : "s") : "Under 1 month") + "</div><p>of essentials saved. " + (runway >= 6 ? "That's a solid base for a transition." : "Aim for 6 months before you leave your current income. Build it while the new path proves itself.") + " " + hoursNote + "</p>";
+
+    $("protect").innerHTML = "<b>Changing your income is the riskiest time to be unprotected.</b> " +
+      (move === "business" || move === "indie" ? "Leaving a job can mean losing employer health, disability, and life coverage at the moment your income is least certain. " : move === "owner" ? "While you step back, the business still depends on you. Key-person and owner income coverage keep it standing. " : "If your income changes, make sure your coverage changes with it. ") +
+      "<a href='dime-calculator.html'>Check your life insurance need</a> or <a href='stress-test.html'>take the stress test</a> to see how much a bad month would hurt mid-transition.";
+
+    $("whoNote").innerHTML = "For your path from Step 1, <b>" + M.s.toLowerCase() + "</b>. Not all at once, and not from day one: outside help comes in as the move grows, scaled to its size. <a href='#moves'>Change your path</a>";
+    var mine = M.who.filter(function (w) { return w[3] === "me"; }), theirs = M.who.filter(function (w) { return w[3] !== "me"; });
+    var row = function (w) { return "<div class='kv'><span>" + w[0] + "</span><b>" + w[1] + "<small class='when'>" + w[2] + "</small></b></div>"; };
+    $("who").className = theirs.length ? "who" : "who solo";
+    $("who").innerHTML = "<div class='who-own'><div class='lv-name'>What Micah handles</div>" + mine.map(row).join("") + "<ul><li>Organizing the plan and checkpoints</li><li>Protecting your household during the move</li><li>Getting you ready for each professional: what to bring, what to ask, and joining the meeting if you want</li><li>Tracking progress and checking in</li></ul></div>" +
+      (theirs.length ? "<div class='who-co'><div class='lv-name'>Who Micah helps you prepare for</div>" + theirs.map(row).join("") + "</div>" : "");
+
+    MB.set("monthlySpend", MB.get("monthlySpend") || String(ess));
+    MB.saveResult("transition", { title: "Your next income", url: "income-transition.html",
+      m: { v: Math.round(progress * 100), l: "Progress toward your new income", b: "up", f: "%" }, pct: Math.round(progress * 100), goal: goalInc, target: replacing ? target : Math.max(incGap, 0), replacing: replacing, now: nowInc, ess: ess, cp1: cp[0].num,
+      headline: M.t + ": " + (incGap >= 0 ? "+" : "") + usd(incGap) + "/mo in about " + yrs + " year" + (yrs === 1 ? "" : "s") + ".",
+      lines: ["New path so far: " + usd(newInc) + "/mo (" + Math.round(progress * 100) + "% of the way)", "Next checkpoint: " + (newInc >= (cp[0].num || Infinity) ? cp[1].t : cp[0].t), "Cushion: " + (runway >= 1 ? Math.floor(runway) + " months" : "under 1 month") + " of essentials", "Hours: " + nowHrs + " now, " + goalHrs + " goal, " + spare + " spare for the build"] });
+  }
+  document.querySelectorAll("#f input").forEach(function (el) { el.addEventListener("input", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "transition", "your transition map");
+})();
+</script>
+</body>
+</html>

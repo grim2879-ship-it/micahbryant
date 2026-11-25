@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Independence Number Calculator | Micah Bryant</title>
+<meta name="description" content="What would it take for your life to run without a paycheck? Build your own independence number from your real spending, then see the path to it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free calculator</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">What's your independence number?</h1>
+    <p class="lede">The amount you'd need set aside for your life to run without a paycheck. We'll build it from your real spending in four short steps, then show where your current path leads and how to get there.</p>
+    <p class="muted" id="fromPlan" hidden>Some answers were filled in from the money planner. Change anything that's different.</p>
+  </div>
+
+  <form id="f" novalidate>
+    <!-- 1 -->
+    <div class="plan-step first">
+      <div class="step-label">Step 1 &middot; Your life today</div>
+      <div class="q-grid">
+        <div class="field"><label for="age">Your age</label><input id="age" inputmode="numeric" value="35"></div>
+        <div class="field"><label for="spend">What you spend in a typical month now</label><div class="money"><span>$</span><input id="spend" inputmode="numeric" value="4500"></div><small>Everything except saving and investing. <a href="money-plan.html">Not sure? Work it out in the money planner.</a></small></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="plan-step">
+      <div class="step-label">Step 2 &middot; The life you want</div>
+      <h2 class="step-h">When work is optional, will you spend more or less than today?</h2>
+      <div class="field"><label for="adj">Compared with today: <b id="adjv"></b></label><input id="adj" type="range" min="-40" max="50" step="5" value="0"><small>Less if you'll downsize or live simply. More if you'll travel or take up expensive hobbies.</small></div>
+      <div class="q-grid">
+        <div class="field"><label for="mort">Mortgage or rent payment that will be gone by then</label><div class="money"><span>$</span><input id="mort" inputmode="numeric" value="0"></div><small>Example: a mortgage paid off before you get there. Leave at 0 if not.</small></div>
+        <div class="field"><label for="kids">Costs for children that will be gone by then</label><div class="money"><span>$</span><input id="kids" inputmode="numeric" value="0"></div><small>Childcare, activities, tuition you won't be paying anymore.</small></div>
+        <div class="field"><label for="health">Health coverage you'll pay for yourself</label><div class="money"><span>$</span><input id="health" inputmode="numeric" value="0"></div><small>If your employer pays for it now, add a monthly estimate here.</small></div>
+      </div>
+      <div class="flag good" id="lifeline"></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="plan-step">
+      <div class="step-label">Step 3 &middot; Income that keeps coming without work</div>
+      <div class="q-grid">
+        <div class="field"><label for="ss">Social Security estimate (monthly)</label><div class="money"><span>$</span><input id="ss" inputmode="numeric" value="1800"></div><small>Your statement at ssa.gov shows an estimate. Use 0 if you plan to get there long before you can claim it.</small></div>
+        <div class="field"><label for="pension">Pension or guaranteed income (monthly)</label><div class="money"><span>$</span><input id="pension" inputmode="numeric" value="0"></div><small>Pensions, annuity income, other guaranteed payments.</small></div>
+        <div class="field"><label for="other">Other ongoing income (monthly)</label><div class="money"><span>$</span><input id="other" inputmode="numeric" value="0"></div><small>Rental income, royalties, part-time work you'd keep doing by choice.</small></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="plan-step">
+      <div class="step-label">Step 4 &middot; Where you are now</div>
+      <div class="q-grid">
+        <div class="field"><label for="target">Age you want work to be optional</label><input id="target" inputmode="numeric" value="62"></div>
+        <div class="field"><label for="saved">Already saved toward this</label><div class="money"><span>$</span><input id="saved" inputmode="numeric" value="40000"></div><small>Retirement accounts and long-term savings. Not your emergency fund.</small></div>
+        <div class="field"><label for="monthly">What you put toward it each month now</label><div class="money"><span>$</span><input id="monthly" inputmode="numeric" value="500"></div><small>Include any employer match.</small></div>
+      </div>
+      <details class="assume">
+        <summary>Assumptions (change any of these)</summary>
+        <div class="assume-grid three">
+          <div class="field"><label for="wr">Yearly withdrawal rate: <b id="wrv"></b></label><input id="wr" type="range" min="3" max="6" step="0.25" value="4"><small>How much of the total you'd draw each year. Lower is more cautious and needs a bigger number.</small></div>
+          <div class="field"><label for="gr">Assumed yearly growth: <b id="grv"></b></label><input id="gr" type="range" min="0" max="9" step="0.5" value="6"><small>Hypothetical. No rate of growth is guaranteed.</small></div>
+          <div class="field"><label for="inf">Yearly inflation: <b id="infv"></b></label><input id="inf" type="range" min="0" max="6" step="0.5" value="3"><small>Everything below is shown in today's dollars, so you can compare it with your life now.</small></div>
+        </div>
+      </details>
+    </div>
+  </form>
+
+  <!-- RESULTS -->
+  <div class="plan-step results">
+    <div class="step-label">Your result</div>
+    <div class="err" id="ageErr"></div>
+    <div class="result-hero">
+      <div>
+        <div class="out-label">Your independence number</div>
+        <div class="big-num" id="num"></div>
+        <p class="muted" id="numsub"></p>
+      </div>
+      <div class="path-card" id="pathcard"></div>
+    </div>
+
+    <h3 class="sub-h">How we got there</h3>
+    <ol class="math" id="math"></ol>
+
+    <h3 class="sub-h">Your path, in today's dollars</h3>
+    <div class="chart" id="chart"></div>
+    <div class="chart-key"><span><i class="ln cur"></i>Your current path</span><span><i class="ln need"></i>The path that reaches your number</span><span><i class="ln tgt"></i>Your number</span></div>
+
+    <h3 class="sub-h">Milestones to aim for</h3>
+    <div class="need-table" id="miles"></div>
+
+    <div id="leverWrap">
+      <h3 class="sub-h">Ways to close the gap</h3>
+      <p class="muted" style="margin:-4px 0 20px">Each of these closes the gap on its own. Most plans use a mix.</p>
+      <div class="levers" id="levers"></div>
+    </div>
+
+    <div class="flag" style="margin-top:28px">Want this as your long-term goal in the money planner? <a href="money-plan.html" id="toPlan">Add it to your plan &rarr;</a></div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Want to build a real plan around your number?</h3>
+    <p>A review looks at your actual income, protection, and timeline, including what could knock the plan off track and how to guard against it.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This calculator is a hypothetical, educational illustration based on the information and assumptions you enter. It does not predict or guarantee results and is not financial, tax, legal, or investment advice. Social Security amounts are your own estimate. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var short = function (v) { return v >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M" : v >= 1e4 ? "$" + Math.round(v / 1e3) + "K" : usd(v); };
+  var pct = function (v) { return (v * 100).toFixed(2).replace(/\.?0+$/, "") + "%"; };
+
+  MB.bind({ age: "age", spend: "monthlySpend", ss: "ssMonthly", pension: "pensionMonthly", other: "otherIncome", target: "indepAge", saved: "longSaved", monthly: "monthlySaving", mort: "housingGone", kids: "kidsGone", health: "healthAdd" });
+  if (document.querySelector(".prefilled")) $("fromPlan").hidden = false;
+
+  // value of a balance after n years with monthly contributions, in today's dollars
+  function project(start, monthly, years, rr) {
+    var rm = Math.pow(1 + rr, 1 / 12) - 1, n = Math.round(years * 12);
+    return start * Math.pow(1 + rr, years) + (rm === 0 ? monthly * n : monthly * (Math.pow(1 + rm, n) - 1) / rm);
+  }
+  function neededMonthly(start, target, years, rr) {
+    var rm = Math.pow(1 + rr, 1 / 12) - 1, n = Math.round(years * 12), rem = target - start * Math.pow(1 + rr, years);
+    if (rem <= 0) return 0; if (n <= 0) return Infinity;
+    return rm === 0 ? rem / n : rem * rm / (Math.pow(1 + rm, n) - 1);
+  }
+
+  function chart(age, years, saved, monthly, need, target, rr) {
+    var W = 720, H = 280, L = 64, R = 16, T = 16, B = 36;
+    var pts = [], maxV = target;
+    for (var y = 0; y <= years; y++) {
+      var c = project(saved, monthly, y, rr), nd = project(saved, need, y, rr);
+      pts.push([y, c, nd]); maxV = Math.max(maxV, c, nd);
+    }
+    maxV *= 1.08;
+    var X = function (y) { return L + (years ? y / years : 0) * (W - L - R); }, Y = function (v) { return T + (1 - v / maxV) * (H - T - B); };
+    var line = function (i) { return pts.map(function (p, k) { return (k ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[i]).toFixed(1); }).join(""); };
+    var g = "", step = Math.pow(10, Math.floor(Math.log10(maxV / 4))), tick = Math.ceil(maxV / 4 / step) * step;
+    for (var v = 0; v <= maxV; v += tick) g += "<line x1='" + L + "' x2='" + (W - R) + "' y1='" + Y(v) + "' y2='" + Y(v) + "' class='gl'/><text x='" + (L - 8) + "' y='" + (Y(v) + 4) + "' class='ax' text-anchor='end'>" + short(v) + "</text>";
+    var every = years > 30 ? 10 : 5;
+    for (var a = 0; a <= years; a += every) g += "<text x='" + X(a) + "' y='" + (H - 12) + "' class='ax' text-anchor='middle'>Age " + (age + a) + "</text>";
+    if (years % every > 2) g += "<text x='" + X(years) + "' y='" + (H - 12) + "' class='ax' text-anchor='end'>Age " + (age + years) + "</text>";
+    var svg = "<svg viewBox='0 0 " + W + " " + H + "' role='img' aria-label='Projected savings by age compared with your independence number'>" + g +
+      "<line x1='" + L + "' x2='" + (W - R) + "' y1='" + Y(target) + "' y2='" + Y(target) + "' class='tgt'/>" +
+      (need > monthly ? "<path d='" + line(2) + "' class='need'/>" : "") +
+      "<path d='" + line(1) + "' class='cur'/></svg>";
+    $("chart").innerHTML = svg;
+    return pts;
+  }
+
+  function calc() {
+    var age = num("age"), spend = num("spend"), adj = +$("adj").value / 100;
+    var mort = num("mort"), kids = num("kids"), health = num("health");
+    var ss = num("ss"), pension = num("pension"), other = num("other");
+    var target = num("target"), saved = num("saved"), monthly = num("monthly");
+    var wr = +$("wr").value / 100, gr = +$("gr").value / 100, inf = +$("inf").value / 100;
+    var rr = (1 + gr) / (1 + inf) - 1;
+    $("adjv").textContent = adj === 0 ? "about the same" : (adj > 0 ? "+" : "") + Math.round(adj * 100) + "%";
+    $("wrv").textContent = pct(wr); $("grv").textContent = pct(gr); $("infv").textContent = pct(inf);
+
+    var years = target - age;
+    if (!(age > 0) || years <= 0) { $("ageErr").textContent = "The age you want work to be optional needs to be later than your age today."; return; }
+    $("ageErr").textContent = "";
+
+    var future = Math.max(spend * (1 + adj) - mort - kids + health, 0);
+    var income = ss + pension + other;
+    var gapM = Math.max(future - income, 0), gapY = gapM * 12;
+    var number = gapY / wr;
+    $("lifeline").innerHTML = "<b>When work is optional, you'd spend about " + usd(future) + " a month</b> in today's dollars" + (future !== spend ? ", compared with " + usd(spend) + " now." : ", the same as now.");
+
+    var proj = project(saved, monthly, years, rr);
+    var need = neededMonthly(saved, number, years, rr);
+    var share = number ? Math.min(proj / number, 9.99) : 1;
+    var supports = proj * wr / 12 + income;
+
+    $("num").textContent = number === 0 ? "$0" : short(number);
+    $("numsub").textContent = number === 0 ? "Your ongoing income already covers the life you described." : "in today's dollars, to cover " + usd(gapM) + " a month that other income won't";
+
+    var on = proj >= number;
+    $("pathcard").className = "path-card " + (on ? "ok" : share >= 0.6 ? "mid" : "low");
+    $("pathcard").innerHTML = "<div class='out-label'>Where your current path leads</div><div class='pc-num'>" + short(proj) + "</div>" +
+      "<p>By age " + target + ", saving " + usd(monthly) + " a month. That's <b>" + Math.round(share * 100) + "% of your number</b>, enough to support about <b>" + usd(supports) + " a month</b> with your other income" + (on ? ". You're on track." : ", versus the " + usd(future) + " you'd want.") + "</p>";
+
+    $("math").innerHTML =
+      "<li><b>" + usd(future) + "</b> a month: the life you want, based on today's spending of " + usd(spend) + (adj ? ", adjusted " + (adj > 0 ? "up " : "down ") + Math.abs(Math.round(adj * 100)) + "%" : "") + (mort || kids ? ", minus costs that will be gone" : "") + (health ? ", plus health coverage" : "") + ".</li>" +
+      "<li><b>&minus;" + usd(income) + "</b> a month that keeps coming without work (Social Security, pension, other income).</li>" +
+      "<li><b>= " + usd(gapM) + "</b> a month, or " + usd(gapY) + " a year, that your savings need to produce.</li>" +
+      "<li><b>&divide; " + pct(wr) + "</b> a year withdrawal rate. To draw " + usd(gapY) + " a year at " + pct(wr) + ", you need about <b>" + usd(number) + "</b>. A lower rate is more cautious and needs a bigger number.</li>";
+
+    chart(age, years, saved, monthly, need === Infinity ? monthly : need, number, rr);
+
+    var mh = "<div class='nt-row nt-head'><span>Age</span><span>Your current path</span><span>On track for your number</span></div>";
+    var step = years > 25 ? 10 : 5;
+    for (var y = step; y < years; y += step) {
+      var c = project(saved, monthly, y, rr), n = project(saved, Math.max(need, monthly), y, rr);
+      mh += "<div class='nt-row'><span>" + (age + y) + "</span><span>" + usd(c) + "</span><span><b>" + usd(n) + "</b></span></div>";
+    }
+    mh += "<div class='nt-row nt-total'><span>" + target + " (your goal)</span><span>" + usd(proj) + "</span><span><b>" + usd(Math.max(number, proj)) + "</b></span></div>";
+    $("miles").innerHTML = mh;
+
+    var lines = ["Covers: " + usd(gapM) + " a month of spending", "Your current path: " + short(proj) + " by age " + target + " (" + Math.round(share * 100) + "%)"];
+    if (on) { $("leverWrap").hidden = true; }
+    else {
+      $("leverWrap").hidden = false;
+      var extraYears = null;
+      for (var e = 1; e <= 25; e++) { if (project(saved, monthly, years + e, rr) >= number) { extraYears = e; break; } }
+      var supportedSpend = proj * wr / 12 + income;
+      var L = [
+        ["Save more", "Put " + usd(need) + " a month toward it", "That's " + usd(need - monthly) + " more than now. Raises and paid-off debts are the easiest places to find it.", need - monthly <= monthly ? "ok" : "hard"],
+        ["Work longer", extraYears ? "At your current " + usd(monthly) + " a month, work becomes optional at " + (target + extraYears) : "At your current saving, working longer alone won't close it", extraYears ? "That's " + extraYears + " more year" + (extraYears > 1 ? "s" : "") + " of saving and growth. Saving more brings the date closer." : "Even 25 more years isn't enough at your current saving.", extraYears && extraYears <= 5 ? "ok" : extraYears ? "hard" : "no"],
+        ["Spend less later", "Plan on " + usd(supportedSpend) + " a month", "That's what your current path supports with your other income, versus the " + usd(future) + " you described.", supportedSpend >= future * 0.8 ? "ok" : "hard"],
+        ["More guaranteed income", "Add " + usd(Math.max(future - supportedSpend, 0)) + " a month of income", "Income that doesn't depend on work or markets, such as a pension, rental income, or an annuity, shrinks the number your savings need to reach.", "hard"]
+      ];
+      var lh = ""; L.forEach(function (l) { lh += "<div class='lever " + l[3] + "'><div class='lv-name'>" + l[0] + "</div><div class='lv-head'>" + l[1] + "</div><p>" + l[2] + "</p></div>"; });
+      $("levers").innerHTML = lh;
+      lines.push("To close the gap: save " + usd(need) + " a month");
+    }
+    MB.set("indepNumber", Math.round(number)); MB.set("indepYears", years);
+    MB.saveResult("independence", { m: { v: Math.round(Math.min(share, 1) * 100), l: "Of your independence number", b: "up", f: "%" }, pct: Math.round(Math.min(share, 1) * 100), title: "Independence number", headline: "Your number: " + short(number) + " to make work optional at " + target + ".", lines: lines, url: "independence-number.html" });
+  }
+
+  $("toPlan").addEventListener("click", function () { MB.set("g3a", String(Math.round(num("target") ? MB.get("indepNumber") : 0))); MB.set("g3y", String(MB.get("indepYears"))); MB.set("g3n", "Financial independence"); MB.set("g3s", $("saved").value); });
+  document.querySelectorAll("#f input").forEach(function (el) { el.addEventListener("input", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "independence", "your independence number");
+})();
+</script>
+</body>
+</html>

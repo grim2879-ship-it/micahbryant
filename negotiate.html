@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salary Negotiation Planner | Micah Bryant</title>
+<meta name="description" content="Asking for a raise or negotiating an offer? Get your number, your range, what this one conversation is worth, and what to say.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free planner</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">Walk into the pay conversation with a number and a plan.</h1>
+    <p class="lede">Asking for a raise or negotiating a new offer? Get your ask, your range, what this one conversation is worth over the years, and exactly what to say.</p>
+  </div>
+
+  <form id="f" novalidate>
+    <div class="plan-step first">
+      <div class="step-label">Step 1 &middot; Your situation</div>
+      <div class="field"><label>What are you negotiating?</label><div class="seg wide" id="kind"><button type="button" data-k="raise" class="on">A raise where I work</button><button type="button" data-k="offer">A new job offer</button></div></div>
+      <div class="q-grid">
+        <div class="field"><label for="role">Your role or job title</label><input id="role" placeholder="e.g. Industrial electrician, nurse, account manager"></div>
+        <div class="field"><label for="ind">Industry</label><input id="ind" placeholder="e.g. Manufacturing, healthcare, tech"></div>
+        <div class="field"><label for="exp">Years of experience</label><input id="exp" inputmode="numeric" value="5"></div>
+      </div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-label">Step 2 &middot; The numbers</div>
+      <div class="q-grid">
+        <div class="field"><label for="cur">Current yearly pay</label><div class="money"><span>$</span><input id="cur" inputmode="numeric" value="62000"></div></div>
+        <div class="field" id="offerF" hidden><label for="off">Their offer</label><div class="money"><span>$</span><input id="off" inputmode="numeric" value="68000"></div></div>
+        <div class="field"><label for="lo">Market range you found: low</label><div class="money"><span>$</span><input id="lo" inputmode="numeric" value="60000"></div></div>
+        <div class="field"><label for="hi">Market range: high</label><div class="money"><span>$</span><input id="hi" inputmode="numeric" value="78000"></div><small>Look up similar job postings in your area and the U.S. Bureau of Labor Statistics' Occupational Outlook Handbook.</small></div>
+        <div class="field"><label for="min">Your walk-away number</label><div class="money"><span>$</span><input id="min" inputmode="numeric" value="66000"></div><small>The lowest you'd accept and still feel good.</small></div>
+      </div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-label">Step 3 &middot; Your leverage</div>
+      <p class="hint muted">Pick everything that's true. This is what you'll point to.</p>
+      <div class="opts row multi" id="lev">
+        <button type="button" class="opt" data-v="results">I've delivered measurable results</button>
+        <button type="button" class="opt" data-v="more">I've taken on more responsibility</button>
+        <button type="button" class="opt" data-v="skill">My skills are hard to find</button>
+        <button type="button" class="opt" data-v="cert">I've earned a new certification</button>
+        <button type="button" class="opt" data-v="other">I have another offer or interest</button>
+        <button type="button" class="opt" data-v="tenure">It's been over a year since my last raise</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="plan-step results">
+    <div class="step-label">Your negotiation plan</div>
+    <div class="result-hero">
+      <div>
+        <div class="out-label">Your ask</div>
+        <div class="big-num" id="ask"></div>
+        <p class="muted" id="askSub"></p>
+      </div>
+      <div class="path-card ok" id="worth"></div>
+    </div>
+    <div class="range3" id="range"></div>
+
+    <h3 class="sub-h">What to say</h3>
+    <div class="script" id="script"></div>
+
+    <h3 class="sub-h">If they say the budget is fixed</h3>
+    <p class="muted" style="margin-top:-6px">Pay isn't the only thing that moves. Ask for one of these instead:</p>
+    <div class="moves" id="alts"></div>
+
+    <div class="flag" style="margin-top:20px"><b>Before the raise lands, decide its job.</b> Raises tend to disappear into lifestyle. Put part of it toward your goals first: <a href="retirement-accounts.html">bump your retirement contribution</a> or update your <a href="money-plan.html">money plan</a>. <em class="mh">Micah can help</em> practice the conversation and plan the raise.</div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Want to practice before the real thing?</h3>
+    <p>We'll rehearse the conversation, sharpen what you'll say, and plan what the raise does for your goals once you get it.</p>
+    <a class="btn" href="book.html">Book a conversation</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">Educational planning tool. Results depend on your employer, market, and situation; no outcome is guaranteed. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Content is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var n = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var r500 = function (v) { return Math.round(v / 500) * 500; };
+  var kind = MB.get("nKind") || "raise", lev = [];
+  try { lev = JSON.parse(MB.get("nLev") || "[]"); } catch (e) {}
+  MB.bind({ role: "career", ind: "industry", exp: "yearsExp", cur: "grossIncome", off: "nOffer", lo: "nLo", hi: "nHi", min: "nMin" });
+  function setKind(k) { kind = k; MB.set("nKind", k); $("kind").querySelectorAll("button").forEach(function (b) { b.classList.toggle("on", b.dataset.k === k); }); $("offerF").hidden = k !== "offer"; }
+  $("kind").querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { setKind(b.dataset.k); calc(); }); });
+  setKind(kind);
+  $("lev").querySelectorAll(".opt").forEach(function (b) {
+    b.classList.toggle("sel", lev.indexOf(b.dataset.v) !== -1);
+    b.addEventListener("click", function () { var i = lev.indexOf(b.dataset.v); if (i === -1) lev.push(b.dataset.v); else lev.splice(i, 1); b.classList.toggle("sel"); MB.set("nLev", JSON.stringify(lev)); calc(); });
+  });
+
+  function calc() {
+    var cur = n("cur"), off = n("off"), lo = n("lo"), hi = n("hi"), min = n("min"), exp = n("exp");
+    var role = $("role").value.trim(), ind = $("ind").value.trim();
+    var base = kind === "offer" ? off : cur;
+    var strength = lev.length;
+    var mid = lo && hi ? (lo + hi) / 2 : base * 1.08;
+    // anchor toward the top of the range, more so with more leverage
+    var ask = hi ? lo + (hi - lo) * Math.min(0.75 + strength * 0.05, 1) : base * (1.08 + strength * 0.01);
+    ask = r500(Math.max(ask, base * 1.03, min));
+    var goal = r500(Math.max(min, (ask + Math.max(base, min)) / 2));
+    var gain = goal - cur;
+    var yrs = 10, worth = 0;
+    for (var y = 0; y < yrs; y++) worth += gain * Math.pow(1.03, y);
+
+    $("ask").textContent = usd(ask);
+    $("askSub").textContent = (hi ? "Near the top of the " + usd(lo) + " to " + usd(hi) + " range you found" : "About " + Math.round((ask / base - 1) * 100) + "% above " + (kind === "offer" ? "their offer" : "your current pay")) + (strength >= 3 ? ", backed by strong leverage." : strength ? "." : ". Pick what you can point to above to back up your ask.");
+    $("worth").innerHTML = "<div class='out-label'>What this conversation is worth</div><div class='pc-num'>" + (gain > 0 ? usd(worth) : "$0") + "</div><p>" + (gain > 0 ? "Landing " + usd(goal) + " instead of " + usd(cur) + " is about " + usd(worth) + " over 10 years, because every future raise builds on it." : "Set your walk-away and range above to see what's at stake.") + "</p>";
+    $("range").innerHTML = "<div><span>Walk away below</span><b>" + usd(min) + "</b></div><div class='mid'><span>Good outcome</span><b>" + usd(goal) + "</b></div><div class='top'><span>Open with</span><b>" + usd(ask) + "</b></div>";
+
+    var proof = { results: "the results I've delivered", more: "the added responsibility I've taken on", skill: "skills that are hard to find in this role", cert: "my new certification", other: "the other interest I'm seeing in my experience", tenure: "the time since my last pay review" };
+    var why = lev.map(function (k) { return proof[k]; });
+    var whyText = why.length ? why.slice(0, -1).join(", ") + (why.length > 1 ? ", and " : "") + why[why.length - 1] : "the value I bring" + (exp ? " with " + exp + " years of experience" : "");
+    var lines = kind === "raise" ? [
+      ["Set up the conversation", "Ask for a time on their calendar, the way you would for any review. Don't spring it on them in passing or catch them on a busy day."],
+      ["Open", "\"Thanks for making time. I'd like to talk about my pay and where I'm headed here.\""],
+      ["Say what's changed", "\"Over the past year, " + (why.length ? "I've focused on " + esc(whyText) : "I've focused on the value I bring to the team") + ". I like the work, and I want to keep growing here.\""],
+      ["Ask, then stop talking", "\"I'd like my pay to be " + usd(ask) + ".\" Then pause and let them respond, even if the silence feels long."],
+      ["If they counter", "\"I appreciate that. Can we get closer to " + usd(goal) + "?\""],
+      ["If it's not now", "\"What would I need to show, and by when, to get there?\" Then ask to put that review date on the calendar."]
+    ] : [
+      ["Open with enthusiasm", "\"I'm excited about this role and want to make it work.\""],
+      ["Say where you are", "\"Based on " + esc(whyText) + ", I was hoping for something closer to " + usd(ask) + ".\""],
+      ["Ask, then stop talking", "\"Is there flexibility to get there?\" Then pause and let them answer."],
+      ["If they counter", "\"If we can land at " + usd(goal) + ", I'm ready to accept today.\""]
+    ];
+    $("script").innerHTML = lines.map(function (l, i) { return "<div class='sc-line'><span class='fx-n'>" + (i + 1) + "</span><div><div class='lv-name'>" + l[0] + "</div><p>" + l[1] + "</p></div></div>"; }).join("");
+    var alts = kind === "raise"
+      ? [["A review date", "A pay review in 6 months, in writing"], ["A title change", "Sets up your next raise and your next job"], ["Training or certification", "Paid for by the company"], ["Flexibility", "Remote days or a better schedule"], ["More time off", "Extra PTO days"], ["A bonus", "A one-time bonus or performance bonus"]]
+      : [["A signing bonus", "Covers the gap on base pay"], ["A 6-month review", "A pay review in writing"], ["More time off", "Extra PTO from day one"], ["Remote or flexible work", "Saves commuting time and money"], ["A start date", "Time to rest between jobs"], ["Retirement match", "Ask how the match works and when it vests"]];
+    $("alts").innerHTML = alts.map(function (a) { return "<a href='#' onclick='return false'><b>" + a[0] + "</b><span>" + a[1] + "</span></a>"; }).join("");
+
+    MB.saveResult("negotiate", { title: "Salary negotiation", url: "negotiate.html",
+      headline: (kind === "raise" ? "Asking for a raise to " : "Negotiating an offer up to ") + usd(ask) + (gain > 0 ? ", worth about " + usd(worth) + " over 10 years." : "."),
+      lines: [(role || ind || exp ? "Role: " + [role, ind, exp ? exp + " yrs experience" : ""].filter(Boolean).join(", ") : ""), "Pay now: " + usd(cur) + (kind === "offer" ? "; offer " + usd(off) : ""), "Market range: " + usd(lo) + " to " + usd(hi), "Plan: ask " + usd(ask) + ", aim for " + usd(goal) + ", walk away below " + usd(min), (lev.length ? "Can point to: " + lev.map(function (k) { return proof[k]; }).join("; ") : "")].filter(Boolean) });
+  }
+  document.querySelectorAll("#f input").forEach(function (el) { el.addEventListener("input", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "negotiate", "your negotiation plan");
+})();
+</script>
+</body>
+</html>

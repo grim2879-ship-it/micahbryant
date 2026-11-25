@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Key Leadership Risk Calculator | Micah Bryant</title>
+<meta name="description" content="What would an unplanned loss of a key leader cost your organization? A free estimate and continuity readiness check.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a href="#advisers">For advisers</a>
+      <a class="btn small" href="book.html">Book a conversation</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free tool for leadership teams</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">What would losing a key leader cost your organization?</h1>
+    <p class="lede">Organizations plan for equipment failures and lost contracts. Fewer plan for the sudden loss of the person who holds the key relationships. This estimate puts a number on that risk and checks how ready you are.</p>
+  </div>
+
+  <div class="calc-grid">
+    <form class="calc-form" id="f" novalidate>
+      <h3>The role</h3>
+      <div class="field"><label for="role">Role (optional)</label><input id="role" placeholder="e.g. President, head of sales, operations lead"></div>
+      <div class="field"><label for="comp">Yearly total compensation</label><div class="money"><span>$</span><input id="comp" inputmode="numeric" value="250000"></div></div>
+      <div class="field"><label for="rev">Yearly revenue this person influences</label><div class="money"><span>$</span><input id="rev" inputmode="numeric" value="6000000"></div><small>Relationships they hold, deals they close, contracts they manage.</small></div>
+      <div class="field"><label for="risk">Share of that revenue at risk during a transition: <b id="riskv"></b></label><input id="risk" type="range" min="0" max="60" step="5" value="15"></div>
+
+      <h3>The transition</h3>
+      <div class="field"><label for="fill">Months to find a replacement</label><input id="fill" inputmode="numeric" value="6"></div>
+      <div class="field"><label for="ramp">Months for the replacement to be fully effective</label><input id="ramp" inputmode="numeric" value="6"></div>
+      <div class="field"><label for="rec">Recruiting cost, as a share of yearly pay: <b id="recv"></b></label><input id="rec" type="range" min="0" max="50" step="5" value="30"><small>Search fees, relocation, signing bonus. Change this to your own estimate.</small></div>
+      <div class="field"><label for="n">Number of leaders in roles like this</label><input id="n" inputmode="numeric" value="3"></div>
+
+      <h3>Continuity readiness</h3>
+      <div id="checks"></div>
+    </form>
+
+    <div class="calc-out" aria-live="polite">
+      <div class="out-label" id="outlabel">Cost of one unplanned loss</div>
+      <div class="big" id="cost"></div>
+      <div class="sub" id="costsub"></div>
+      <div class="out-rows">
+        <div><span>Recruiting and hiring</span><b id="c1"></b></div>
+        <div><span>Revenue at risk while the seat is empty</span><b id="c2"></b></div>
+        <div><span>Revenue at risk while the replacement ramps up</span><b id="c3"></b></div>
+        <div><span>Across all <span id="nn"></span> similar roles</span><b id="all"></b></div>
+        <div class="hl"><span>Continuity readiness</span><b id="ready"></b></div>
+      </div>
+      <p class="fine">Ramp-up assumes half the transition risk on average while the new leader gets up to speed. An estimate for discussion, not a forecast.</p>
+    </div>
+  </div>
+
+  <div class="horizons">
+    <h2>Where continuity planning usually breaks down.</h2>
+    <div id="gaps" class="gaps"></div>
+  </div>
+
+  <section id="advisers" class="advisers">
+    <div class="eyebrow">For CPAs, attorneys, and bankers</div>
+    <h2>I work alongside your client's advisers, not around them.</h2>
+    <p class="lede">At this level, decisions involve several people and existing relationships. Here's how I fit in.</p>
+    <div class="grid-3">
+      <div class="principle"><div class="num">01</div><h3>Discovery before recommendations</h3><p>Needs are discovered, not assumed. I start with the organization's goals and the plans already in place, then look for gaps.</p></div>
+      <div class="principle"><div class="num">02</div><h3>I stay in my lane</h3><p>I focus on protection and planning. Tax and legal questions stay with you. I'll confirm what I can offer before proposing anything.</p></div>
+      <div class="principle"><div class="num">03</div><h3>You stay informed</h3><p>With the client's permission, you get a summary of what we discussed and anything recommended, including the downsides.</p></div>
+    </div>
+    <div class="offer">
+      <h3>Talk about working together</h3>
+      <p>Choose "Partnership, referrals, or collaboration" when you book, and we'll talk about how referrals would work for your clients.</p>
+      <a class="btn" href="book.html">Book a partnership conversation</a>
+    </div>
+  </section>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:24px 0 96px">
+    <h3>Want to look at your organization's continuity plan?</h3>
+    <p>An initial conversation focuses on discovery: who the key people are, what's already in place, and where the gaps might be. What can be offered at the organization level is confirmed case by case.</p>
+    <a class="btn" href="book.html">Book a conversation</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This calculator gives an educational estimate based on the information you enter. It is not a forecast, a recommendation to buy any product, or financial, tax, or legal advice. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state. Services available at the organization level are subject to confirmation.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var short = function (v) { return v >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M" : v >= 1e4 ? "$" + Math.round(v / 1e3) + "K" : usd(v); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+
+  var CHECKS = [
+    ["succ", "A documented succession plan for each key role", "Most organizations know who the key people are. Fewer have written down who steps in, and how, if one of them is gone tomorrow."],
+    ["interim", "Interim leaders named for each key role", "Naming an interim in advance prevents a scramble and keeps clients and staff confident while you search."],
+    ["kp", "Key-person coverage reviewed in the last two years", "Coverage set up years ago often doesn't match today's revenue, debt, or leadership team."],
+    ["own", "Ownership transfer agreements in place and funded", "An agreement without the money to carry it out can force a sale, or leave heirs as partners."],
+    ["retain", "Retention benefits for leaders you can't afford to lose", "If a competitor can easily hire your best people away, that's continuity risk too."],
+    ["coord", "CPA, attorney, and other advisers working from the same plan", "When each adviser sees only part of the picture, gaps fall between them."]
+  ];
+  var ans = {}, h = "";
+  CHECKS.forEach(function (c) {
+    h += "<div class='check-row'><div class='check-q'>" + c[1] + "</div><div class='seg' data-k='" + c[0] + "'><button type='button' data-v='1'>Yes</button><button type='button' data-v='0'>No</button><button type='button' data-v='0'>Not sure</button></div></div>";
+  });
+  $("checks").innerHTML = h;
+  $("checks").querySelectorAll(".seg").forEach(function (s) {
+    s.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        ans[s.getAttribute("data-k")] = +b.getAttribute("data-v");
+        s.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+        calc();
+      });
+    });
+  });
+
+  function calc() {
+    var comp = num("comp"), rev = num("rev"), risk = +$("risk").value / 100, fill = num("fill"), ramp = num("ramp"), rec = +$("rec").value / 100, n = Math.max(num("n"), 1);
+    $("riskv").textContent = Math.round(risk * 100) + "%"; $("recv").textContent = Math.round(rec * 100) + "%";
+    var c1 = comp * rec, c2 = rev * risk * fill / 12, c3 = rev * risk * 0.5 * ramp / 12, cost = c1 + c2 + c3;
+    var role = $("role").value.trim();
+    $("outlabel").textContent = "Cost of losing " + (role ? "your " + role : "one key leader") + " unexpectedly";
+    $("cost").textContent = short(cost);
+    $("costsub").textContent = "about " + (comp ? (cost / comp).toFixed(1) : "0") + "× this person's yearly pay";
+    $("c1").textContent = usd(c1); $("c2").textContent = usd(c2); $("c3").textContent = usd(c3);
+    $("nn").textContent = n; $("all").textContent = usd(cost * n);
+    var yes = CHECKS.filter(function (c) { return ans[c[0]] === 1; }).length;
+    $("ready").textContent = yes + " of " + CHECKS.length;
+    var missing = CHECKS.filter(function (c) { return ans[c[0]] !== 1; });
+    var gh = "";
+    missing.forEach(function (c, i) { gh += "<div class='weak'><div class='rank'>" + (Object.prototype.hasOwnProperty.call(ans, c[0]) ? "Gap" : "Not answered yet") + "</div><h3>" + esc(c[1]) + "</h3><p>" + c[2] + "</p></div>"; });
+    MB.saveResult("leadership", { title: "Key leadership risk", url: "leadership-risk.html", m: { v: yes, l: "Continuity steps in place (out of 6)", b: "up", f: "n" }, pct: Math.round(yes / 6 * 100),
+      headline: "Losing " + (role ? "your " + role : "one key leader") + " unexpectedly could cost about " + usd(cost) + ".",
+      lines: ["If it happened in all " + n + " key roles: " + usd(cost * n), "Continuity steps in place: " + yes + " of " + CHECKS.length].concat(missing.slice(0, 3).map(function (c) { return "Gap: " + c[1]; })) });
+    $("gaps").innerHTML = gh || "<p class='muted'>Strong readiness on every point. The next step is keeping the plan current as people and revenue change.</p>";
+  }
+  document.querySelectorAll("#f input").forEach(function (el) { el.addEventListener("input", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "leadership", "your leadership risk estimate");
+})();
+</script>
+</body>
+</html>

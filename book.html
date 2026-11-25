@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Strategy Review | Micah Bryant</title>
+<meta name="description" content="A Zoom conversation about where your finances are fragile and what to fix first.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a href="stress-test.html">Stress test</a>
+    </div>
+  </div>
+</nav>
+
+<section style="padding-top:72px">
+  <div class="wrap book-grid">
+    <div>
+      <div class="eyebrow">Strategy review</div>
+      <h1 style="font-size:clamp(36px,5vw,52px)">Let's find where your finances are fragile.</h1>
+      <p class="lede">A Zoom conversation about what's working, what's exposed, and what to fix first. You'll leave with a clear next step, whether or not we work together.</p>
+      <h3 style="font-size:20px">What to expect</h3>
+      <ul class="checklist">
+        <li>We'll talk through your income, your obligations, and the people who depend on you.</li>
+        <li>I'll show you where you're most exposed, using your numbers instead of averages.</li>
+        <li>If a product could help, you'll hear what it costs and when it's the wrong choice.</li>
+        <li>No pressure and no obligation. You decide what happens next.</li>
+      </ul>
+      <p class="muted" style="font-size:15px">Please join from a computer with your camera on. We'll be looking at numbers that are hard to read on a phone.</p>
+      <p class="muted" style="font-size:15px">Already booked? <a href="prepare.html">Answer a few questions before we meet</a> so we can start where you are.</p>
+      <p class="muted" style="font-size:15px">Not ready to talk yet? <a href="stress-test.html">Take the 3-minute stress test</a> first.</p>
+    </div>
+    <div class="cal-box" id="cal">
+      <div class="cal-fallback" id="calFallback">
+        <h3>Pick a time</h3>
+        <p>Choose a time that works for you on my calendar.</p>
+        <a class="btn" data-link="calendlyUrl" href="#" target="_blank" rel="noopener">Open my calendar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:56px">
+  <div class="wrap">
+    <div class="eyebrow">Where this fits</div>
+    <h2>You're at step 2.</h2>
+    <ol class="journey">
+      <li class="done"><b>Free tools</b><span>Work through them at your own pace. Your plan builds as you go.</span></li>
+      <li class="here"><b>Book a conversation</b><span>Pick a time on my calendar. No cost, no obligation.</span></li>
+      <li><b>Before we meet</b><span>Two minutes of questions about you, your work, and your goals.</span></li>
+      <li><b>Meeting 1: Understand</b><span>Where you want to go, and an Expert Financial Analysis of where you stand.</span></li>
+      <li><b>Meeting 2: Decide</b><span>Your options side by side, including what each costs and what you give up.</span></li>
+      <li><b>Build it and keep it moving</b><span>I put the policies and strategies in place and handle the paperwork. You update your plan here each month, and we review together once or twice a year, or sooner when life changes.</span></li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a href="index.html">Home</a>
+        <a href="stress-test.html">Stress test</a>
+        <a href="careers.html">Careers in financial services</a>
+      </div>
+      <div>&copy; <span id="year"></span> Micah Bryant</div>
+    </div>
+    <p class="disclosure">Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state. Content on this site is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script>
+// Embed Calendly inline once a real link is set in config.js
+(function () {
+  var url = (window.SITE_CONFIG || {}).calendlyUrl || "";
+  if (!url || url.indexOf("YOUR-LINK") !== -1) return;
+  var box = document.getElementById("cal");
+  var div = document.createElement("div");
+  div.className = "calendly-inline-widget";
+  var full = window.MB_withSource ? window.MB_withSource(url) : url;
+  div.setAttribute("data-url", full + (full.indexOf("?") === -1 ? "?" : "&") + "hide_gdpr_banner=1");
+  div.style.minWidth = "320px"; div.style.height = "700px";
+  var s = document.createElement("script");
+  s.src = "https://assets.calendly.com/assets/external/widget.js"; s.async = true;
+  var fb = document.getElementById("calFallback");
+  fb.hidden = true; box.appendChild(div);
+  s.onerror = function () { div.remove(); fb.hidden = false; };
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life Insurance Calculator (DIME Method) | Micah Bryant</title>
+<meta name="description" content="How much life insurance do you actually need? A free DIME calculator: debt, income, mortgage, and education.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free calculator</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">How much life insurance do you actually need?</h1>
+    <p class="lede">The DIME method adds up what your family would need to cover: <b>D</b>ebt, <b>I</b>ncome, <b>M</b>ortgage, and <b>E</b>ducation. Then it subtracts what you already have. It takes about two minutes.</p>
+  </div>
+
+  <div class="calc-grid">
+    <form class="calc-form" id="f" novalidate>
+      <h3><span class="dot d1"></span>Debt</h3>
+      <div class="field"><label for="debt">Debts other than your mortgage</label><div class="money"><span>$</span><input id="debt" inputmode="numeric" value="25000"></div><small>Car loans, credit cards, student loans, personal loans.</small></div>
+      <div class="field"><label for="final">Final expenses</label><div class="money"><span>$</span><input id="final" inputmode="numeric" value="15000"></div><small>Funeral and end-of-life costs. Change this to your own estimate.</small></div>
+
+      <h3><span class="dot d2"></span>Income</h3>
+      <div class="field"><label for="income">Your yearly income</label><div class="money"><span>$</span><input id="income" inputmode="numeric" value="70000"></div></div>
+      <div class="field"><label for="yrs">Years your family would need it replaced: <b id="yrsv"></b></label><input id="yrs" type="range" min="1" max="25" step="1" value="10"><small>Often until your youngest child is independent, or until a spouse could retire.</small></div>
+
+      <h3><span class="dot d3"></span>Mortgage</h3>
+      <div class="field"><label for="mort">Mortgage balance remaining</label><div class="money"><span>$</span><input id="mort" inputmode="numeric" value="220000"></div><small>Enter 0 if you rent.</small></div>
+      <div class="field"><label for="mortyrs">Years left on the mortgage</label><input id="mortyrs" inputmode="numeric" value="24"></div>
+
+      <h3><span class="dot d4"></span>Education</h3>
+      <div class="field"><label for="kids">Children you'd want to fund education for</label><input id="kids" inputmode="numeric" value="2"></div>
+      <div class="field"><label for="edu">Education cost per child</label><div class="money"><span>$</span><input id="edu" inputmode="numeric" value="60000"></div><small>Your own estimate: trade school, community college, or a 4-year degree.</small></div>
+      <div class="field"><label for="young">Age of your youngest child</label><input id="young" inputmode="numeric" value="4"></div>
+
+      <h3>What you already have</h3>
+      <div class="field"><label for="own">Individual life insurance you own</label><div class="money"><span>$</span><input id="own" inputmode="numeric" value="0"></div></div>
+      <div class="field"><label for="emp">Life insurance through work</label><div class="money"><span>$</span><input id="emp" inputmode="numeric" value="70000"></div><small>Usually ends if you leave or lose the job.</small></div>
+      <label class="checkline"><input type="checkbox" id="countemp" checked> Count my work coverage</label>
+      <div class="field"><label for="sav">Savings your family could use</label><div class="money"><span>$</span><input id="sav" inputmode="numeric" value="10000"></div></div>
+    </form>
+
+    <div class="calc-out" aria-live="polite">
+      <div class="out-label">Estimated coverage gap</div>
+      <div class="big" id="gapv"></div>
+      <div class="sub" id="gapsub"></div>
+      <div class="stack" id="stack"></div>
+      <div class="out-rows">
+        <div><span><i class="dot d1"></i>Debt + final expenses</span><b id="vd"></b></div>
+        <div><span><i class="dot d2"></i>Income replacement</span><b id="vi"></b></div>
+        <div><span><i class="dot d3"></i>Mortgage payoff</span><b id="vm"></b></div>
+        <div><span><i class="dot d4"></i>Education</span><b id="ve"></b></div>
+        <div><span>Total need</span><b id="vt"></b></div>
+        <div><span>Minus what you already have</span><b id="vh"></b></div>
+        <div class="hl"><span>How long the need lasts</span><b id="dur"></b></div>
+      </div>
+      <p class="fine" id="note"></p>
+    </div>
+  </div>
+
+  <div class="horizons">
+    <h2>What the number doesn't tell you.</h2>
+    <div class="grid-3">
+      <div class="principle"><div class="num">01</div><h3>How long you need it</h3><p>Most of this need shrinks over time as debts get paid and kids grow up. That affects whether term coverage, permanent coverage, or a mix fits the job.</p></div>
+      <div class="principle"><div class="num">02</div><h3>Whether work coverage is enough</h3><p>Coverage through work usually ends when the job does, and it often equals only one or two years of salary. Try turning it off above to see your gap without it.</p></div>
+      <div class="principle"><div class="num">03</div><h3>What it costs</h3><p>The price depends on your age, health, the term length, and the type of policy. Run the <a href="product-checklist.html">"What job does it need to do?" checklist</a> before you buy any policy, from anyone.</p></div>
+    </div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin-bottom:96px">
+    <h3>Want to see what closing your gap would actually cost?</h3>
+    <p>In a review, we'll check your number against your real situation and compare options side by side, with the downsides of each.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This calculator gives an educational estimate based on the information you enter, using the DIME method. It is not a recommendation to buy any product and is not financial, tax, or legal advice. Actual coverage needs depend on your full situation. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var short = function (v) { return v >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M" : v >= 1e4 ? "$" + Math.round(v / 1e3) + "K" : usd(v); };
+
+  MB.bind({ income: "grossIncome", debt: "otherDebt", mort: "mortgage", mortyrs: "mortYears", kids: "kidsCount", young: "youngestAge", own: "ownLife", emp: "workLife", sav: "cashSaved" });
+  function calc() {
+    var yrs = +$("yrs").value; $("yrsv").textContent = yrs + " years";
+    var D = num("debt") + num("final"), I = num("income") * yrs, M = num("mort"), E = num("kids") * num("edu");
+    var total = D + I + M + E;
+    var have = num("own") + ($("countemp").checked ? num("emp") : 0) + num("sav");
+    var gap = Math.max(total - have, 0);
+    var kidsYrs = num("kids") > 0 ? Math.max(22 - num("young"), 0) : 0;
+    var dur = Math.max(yrs, num("mortyrs"), kidsYrs);
+
+    $("gapv").textContent = gap === 0 ? "$0" : short(gap);
+    $("gapsub").textContent = gap === 0 ? "What you have already covers this estimate." : "of additional coverage to fully cover your family";
+    $("vd").textContent = usd(D); $("vi").textContent = usd(I); $("vm").textContent = usd(M); $("ve").textContent = usd(E);
+    $("vt").textContent = usd(total); $("vh").textContent = "−" + usd(have);
+    $("dur").textContent = dur ? "About " + Math.round(dur) + " years" : "—";
+    var parts = [[D, "d1"], [I, "d2"], [M, "d3"], [E, "d4"]], h = "";
+    parts.forEach(function (p) { if (total > 0 && p[0] > 0) h += "<div class='" + p[1] + "' style='width:" + (p[0] / total * 100) + "%'></div>"; });
+    $("stack").innerHTML = h;
+    var biggest = parts.slice().sort(function (a, b) { return b[0] - a[0]; })[0][1];
+    var names = { d1: "debt", d2: "replacing your income", d3: "your mortgage", d4: "education" };
+    $("note").textContent = total ? "The biggest piece of your need is " + names[biggest] + ". " + (dur ? "Most of it lasts about " + Math.round(dur) + " years, until " + (dur === num("mortyrs") && num("mort") ? "the mortgage is paid off" : dur === kidsYrs ? "your youngest is about 22" : "your income no longer needs replacing") + "." : "") : "";
+    MB.saveResult("dime", { title: "Life insurance need (DIME)", url: "dime-calculator.html", m: { v: Math.round(gap), l: "Coverage gap", b: "down", f: "$" }, pct: total ? Math.min(100, Math.round(have / total * 100)) : 100,
+      headline: gap ? "Estimated coverage gap: " + usd(gap) + "." : "What you have covers the estimate.",
+      lines: ["Total need " + usd(total) + ": debt " + usd(D) + ", income " + usd(I) + ", mortgage " + usd(M) + ", education " + usd(E), "Already have " + usd(have) + ($("countemp").checked ? " (including work coverage)" : ""), dur ? "Need lasts about " + Math.round(dur) + " years" : ""].filter(Boolean) });
+  }
+  ["debt","final","income","yrs","mort","mortyrs","kids","edu","young","own","emp","countemp","sav"].forEach(function (id) { $(id).addEventListener("input", calc); $(id).addEventListener("change", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "dime", "your life insurance estimate");
+})();
+</script>
+</body>
+</html>

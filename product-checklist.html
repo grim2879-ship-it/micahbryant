@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>"What Job Does It Need to Do?" Checklist | Micah Bryant</title>
+<meta name="description" content="A free checklist to fill out before buying any financial product, from anyone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="test-shell tool">
+  <div class="eyebrow">Free checklist</div>
+  <h1 style="font-size:clamp(34px,5vw,52px)">Before you buy anything, ask what job it needs to do.</h1>
+  <p class="lede">Use this before signing up for any insurance policy, annuity, or financial product, from anyone. That includes me. If you can't answer these questions, you're not ready to decide yet.</p>
+
+  <div class="tool-step">
+    <div class="step-label">Step 1</div>
+    <h2>What are you considering?</h2>
+    <div class="field"><label for="product">Product name or type (optional)</label><input id="product" placeholder="e.g. term life policy, indexed annuity"></div>
+  </div>
+
+  <div class="tool-step">
+    <div class="step-label">Step 2</div>
+    <h2>What job does it need to do?</h2>
+    <p class="hint">Pick the main one. If you can't pick, that's the first warning sign.</p>
+    <div class="opts" id="jobs"></div>
+  </div>
+
+  <div class="tool-step">
+    <div class="step-label">Step 3</div>
+    <h2>Can you answer these?</h2>
+    <p class="hint">Be honest. "Not sure" counts as no.</p>
+    <div id="checks"></div>
+  </div>
+
+  <button class="btn" id="see">See my result</button>
+  <div class="err" id="err"></div>
+
+  <div id="out" hidden>
+    <div class="verdict" id="verdict"></div>
+    <div id="asklist"></div>
+    <div class="tool-actions">
+      <button class="btn ghost" id="copy">Copy my questions</button>
+      <button class="btn ghost" id="print">Print or save as PDF</button>
+      <span class="fine" id="copied"></span>
+    </div>
+    <div id="sendBox"></div>
+    <div class="offer">
+      <h3>Want a second opinion on something you're considering?</h3>
+      <p>Bring the product and this checklist to a review. I'll go through what it costs, what it limits, and whether it fits the job, even if you're buying it from someone else.</p>
+      <a class="btn" href="book.html">Book a review</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This checklist is educational and is not financial, tax, or legal advice. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var JOBS = {
+    income: { label: "Replace my income if I'm sick or injured",
+      ask: ["How long is the waiting period before benefits start?", "Does it pay if I can't do my own job, or only if I can't do any job?", "How much of my income does it replace, and for how long?"] },
+    family: { label: "Protect my family if I die",
+      ask: ["How long will my family actually need this protection?", "Would term coverage do this job for less? Why or why not?", "How was the coverage amount calculated?"] },
+    retirement: { label: "Create retirement income I can't outlive",
+      ask: ["Which part of the income is guaranteed, and which part is projected?", "What happens to the money if I die early?", "How does inflation affect this income over 20 years?"] },
+    marketloss: { label: "Protect savings from market loss",
+      ask: ["What am I giving up in exchange for protection (caps, participation rates, time)?", "How long is my money committed, and what does it cost to get out early?", "What exactly is the growth tied to, and how is it calculated?"] },
+    access: { label: "Build cash I can access later",
+      ask: ["How many years until the cash value exceeds what I've paid in?", "How do loans or withdrawals affect the policy and the death benefit?", "What happens if returns come in lower than the illustration?"] },
+    care: { label: "Cover long-term care or health costs",
+      ask: ["What exactly triggers the benefits?", "Can the premiums go up later?", "What does it not cover?"] },
+    other: { label: "Something else / I'm not sure",
+      ask: ["What specific problem in my life does this solve?", "What would happen if I didn't buy it?", "Who benefits most if I buy it: me or the seller?"] }
+  };
+  var CHECKS = [
+    ["Can you say in one sentence what job this does for you?", "What job, exactly, does this do for me?"],
+    ["Do you know the total cost over the first 10 years, including fees and charges?", "What is the total cost over 10 years, including every fee and charge?"],
+    ["Do you know what happens if you stop paying or need the money early?", "What happens if I stop paying or need my money early? What are the surrender charges?"],
+    ["Has someone shown you a simpler or cheaper option that does the same job?", "What's the simplest, cheapest option that does this job, and why is this one better?"],
+    ["Do you know the worst realistic outcome, not just the best one?", "What does this look like in a bad scenario, not just the illustrated one?"],
+    ["Is the guaranteed part clearly separate from the projected part?", "Which numbers are guaranteed, and which are only projected?"],
+    ["Does it fit your budget even in a bad month?", "Can I keep paying for this in my worst month, not just an average one?"],
+    ["Have you checked whether something you already have does this job?", "Do I already have coverage (employer, existing policy) that does this job?"],
+    ["Do you know how the person selling it gets paid?", "How are you paid if I buy this?"],
+    ["Could you explain how it works to a friend?", "Can you explain how this works in plain language, step by step?"]
+  ];
+  var job = null, answers = {};
+  var $ = function (id) { return document.getElementById(id); };
+
+  var jh = "";
+  Object.keys(JOBS).forEach(function (k) { jh += "<button class='opt' data-job='" + k + "'>" + JOBS[k].label + "</button>"; });
+  $("jobs").innerHTML = jh;
+  $("jobs").querySelectorAll(".opt").forEach(function (b) {
+    b.addEventListener("click", function () {
+      job = b.getAttribute("data-job");
+      $("jobs").querySelectorAll(".opt").forEach(function (x) { x.classList.toggle("sel", x === b); });
+    });
+  });
+
+  var ch = "";
+  CHECKS.forEach(function (c, i) {
+    ch += "<div class='check-row'><div class='check-q'>" + c[0] + "</div><div class='seg' data-i='" + i + "'>" +
+      "<button data-v='yes'>Yes</button><button data-v='no'>No</button><button data-v='unsure'>Not sure</button></div></div>";
+  });
+  $("checks").innerHTML = ch;
+  $("checks").querySelectorAll(".seg").forEach(function (s) {
+    s.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        answers[s.getAttribute("data-i")] = b.getAttribute("data-v");
+        s.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      });
+    });
+  });
+
+  var questionsText = "";
+  $("see").addEventListener("click", function () {
+    if (!job) { $("err").textContent = "Pick the job it needs to do in Step 2."; return; }
+    if (Object.keys(answers).length < CHECKS.length) { $("err").textContent = "Answer all 10 questions in Step 3."; return; }
+    $("err").textContent = "";
+    var yes = 0, missing = [];
+    CHECKS.forEach(function (c, i) { if (answers[i] === "yes") yes++; else missing.push(c[1]); });
+    var band = yes >= 9 ? ["ready", "You're ready to decide.", "You understand what this does, what it costs, and what could go wrong. Make the call that fits your situation."]
+             : yes >= 6 ? ["ask", "Ask a few more questions first.", "You're close, but there are gaps. Get answers to the questions below in writing before you sign."]
+             : ["wait", "Don't buy yet.", "There's too much you don't know about this product. That's not a judgment on the product. You just don't have enough to decide."];
+    var name = $("product").value.trim();
+    $("verdict").className = "verdict " + band[0];
+    $("verdict").innerHTML = "<div class='score-line'>" + yes + " of 10 answered</div><h2>" + band[1] + "</h2><p>" + band[2] + "</p>";
+    var all = missing.concat(JOBS[job].ask);
+    var h = "<h3>Questions to ask" + (name ? " about your " + name.replace(/[<>]/g, "") : "") + "</h3><ol class='asks'>";
+    all.forEach(function (q) { h += "<li>" + q + "</li>"; });
+    $("asklist").innerHTML = h + "</ol>";
+    questionsText = "Questions to ask" + (name ? " about " + name : "") + ":\n" + all.map(function (q, i) { return (i + 1) + ". " + q; }).join("\n");
+    MB.saveResult("checklist", { title: "Before-you-buy checklist", url: "product-checklist.html",
+      headline: (name ? name + ": " : "") + band[1] + " (" + yes + " of 10 answered)",
+      lines: ["Job: " + JOBS[job].label].concat(all.slice(0, 5)) });
+    MB.sendBox("sendBox", "checklist", "your questions to ask");
+    $("out").hidden = false;
+    $("out").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  $("copy").addEventListener("click", function () {
+    try {
+      navigator.clipboard.writeText(questionsText).then(function () { $("copied").textContent = "Copied."; }, function () { $("copied").textContent = "Copy didn't work here. Select the list and copy it."; });
+    } catch (e) { $("copied").textContent = "Copy didn't work here. Select the list and copy it."; }
+  });
+  $("print").addEventListener("click", function () { try { window.print(); } catch (e) {} });
+})();
+</script>
+</body>
+</html>

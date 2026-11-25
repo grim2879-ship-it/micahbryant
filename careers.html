@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Careers in Financial Services | Micah Bryant</title>
+<meta name="description" content="Interested in building a career in financial services? Tell me a little about yourself and I'll reply by email.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+    </div>
+  </div>
+</nav>
+
+<main class="test-shell tool">
+  <div class="eyebrow">Careers in financial services</div>
+  <h1 style="font-size:clamp(34px,5vw,52px)">Thinking about building a career in this work?</h1>
+  <p class="lede">Tell me a little about yourself and why you're interested. I read every answer and reply by email, usually with a few questions of my own.</p>
+
+  <div class="flag" style="margin-bottom:8px">What to know up front: this work takes licensing, training, and consistent effort over time. Results depend entirely on what you put in. I'd rather you hear that now than later.</div>
+
+  <form name="careers" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="cf" novalidate>
+    <input type="hidden" name="form-name" value="careers">
+    <p hidden><label>Leave this empty <input name="bot-field"></label></p>
+
+    <div class="tool-step">
+      <div class="step-label">About you</div>
+      <div class="sb-row">
+        <div class="field"><label for="c_name">Full name</label><input id="c_name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="c_email">Email</label><input id="c_email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="c_phone">Phone (optional)</label><input id="c_phone" name="phone" type="tel" autocomplete="tel"></div>
+      </div>
+      <div class="sb-row">
+        <div class="field"><label for="c_state">State you live in</label><input id="c_state" name="state" required></div>
+        <div class="field" style="grid-column: span 2"><label for="c_now">What do you do now?</label><input id="c_now" name="current_work" placeholder="Your current job or situation" required></div>
+      </div>
+    </div>
+
+    <div class="tool-step">
+      <div class="step-label">Why this work</div>
+      <div class="field"><label for="c_why">Why are you interested in financial services?</label><textarea id="c_why" name="why" rows="4" required placeholder="What made you look into this? What appeals to you about it?"></textarea></div>
+      <div class="field"><label for="c_goal">What are you hoping to build?</label>
+        <select id="c_goal" name="goal" required>
+          <option value="">Choose one</option>
+          <option>Extra income alongside my current work</option>
+          <option>A full-time career</option>
+          <option>A business with my own team, eventually</option>
+          <option>Not sure yet, still exploring</option>
+        </select></div>
+      <div class="sb-row">
+        <div class="field"><label for="c_hours">Hours you could commit each week</label>
+          <select id="c_hours" name="hours" required>
+            <option value="">Choose one</option><option>Under 10</option><option>10 to 20</option><option>20 to 40</option><option>40+</option>
+          </select></div>
+        <div class="field" style="grid-column: span 2"><label for="c_lic">Do you have an insurance license?</label>
+          <select id="c_lic" name="licensed" required>
+            <option value="">Choose one</option><option>Yes</option><option>I'm working on it</option><option>No, not yet</option>
+          </select></div>
+      </div>
+      <div class="field"><label for="c_q">Anything you want to ask me? (optional)</label><textarea id="c_q" name="questions" rows="3"></textarea></div>
+    </div>
+
+    <div class="err" id="cerr"></div>
+    <button class="btn" type="submit" style="margin-top:12px">Send</button>
+    <p class="fine">I'll reply by email. Your information is only used to respond to you and is never sold.</p>
+  </form>
+
+  <div id="cdone" hidden>
+    <div class="verdict ready">
+      <div class="score-line">Received</div>
+      <h2>Thanks. I'll reply by email.</h2>
+      <p>I read every response personally. Keep an eye on your inbox, and check your spam folder just in case.</p>
+    </div>
+    <p style="margin-top:24px"><a href="index.html">Back to the home page</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Becoming an agent requires passing state licensing exams and meeting carrier and agency requirements. No specific income or results are promised or implied.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script>
+(function () {
+  var f = document.getElementById("cf"), err = document.getElementById("cerr");
+  f.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var missing = Array.prototype.filter.call(f.querySelectorAll("[required]"), function (el) { return !el.value.trim(); });
+    if (missing.length) { err.textContent = "Please fill in every question except the optional ones."; missing[0].focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) { err.textContent = "Please enter a valid email."; f.email.focus(); return; }
+    err.textContent = "";
+    var btn = f.querySelector("button"); btn.disabled = true; btn.textContent = "Sending...";
+    var body = new URLSearchParams(new FormData(f)).toString();
+    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body })
+      .then(function (r) { if (!r.ok) throw new Error(); f.hidden = true; document.getElementById("cdone").hidden = false; window.scrollTo(0, 0); })
+      .catch(function () { btn.disabled = false; btn.textContent = "Send"; err.textContent = "That didn't go through. Please try again in a minute."; });
+  });
+})();
+</script>
+</body>
+</html>

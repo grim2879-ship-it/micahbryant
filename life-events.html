@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life Event Planner | Micah Bryant</title>
+<meta name="description" content="Getting married, having a baby, buying a home, changing jobs? See what changes, what to do, and what to save for.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free planner</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">Something big is changing. Here's what to do about it.</h1>
+    <p class="lede">Marriage, a baby, a new home, a new job. Big life changes move your money in ways that are easy to miss. Pick what's happening, and get a checklist of what changes, what to do, and what to save for.</p>
+  </div>
+
+  <div class="plan-step first">
+    <div class="step-label">Step 1 &middot; What's happening in the next year or two?</div>
+    <p class="hint muted">Pick everything that applies.</p>
+    <div class="opts tgrid" id="evs"></div>
+  </div>
+
+  <div class="plan-step" id="planWrap">
+    <div class="step-label">Step 2 &middot; Your checklist</div>
+    <div class="progress-box" id="evProg" style="margin-bottom:18px"></div>
+    <div id="cards"></div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Want help with the parts that matter most?</h3>
+    <p>Items marked "Micah can help" are things we can take care of together. For the rest, I'll help you figure out what to do first, and who to talk to if you need someone else.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">General educational checklists. Enrollment windows, tax rules, and coverage options vary by plan, employer, and state. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc., and is not a mortgage broker, attorney, or tax adviser. Content is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  // [text, micahCanHelp, toolHref]
+  var E = {
+    married: { t: "Getting married", s: "Two financial lives becoming one", save: "Wedding and joint costs", tools: [["Money planner", "money-plan.html"], ["Life insurance calculator", "dime-calculator.html"]],
+      items: [["Decide how you'll combine or coordinate money: joint, separate, or both", 0, "money-plan.html"], ["Set shared goals for the next 5 years", 0, "money-plan.html"], ["Review life and income protection now that someone depends on you", 1, "dime-calculator.html"], ["Update beneficiaries on policies and retirement accounts", 1], ["Build a joint emergency fund", 0, "stress-test.html"], ["Compare both employers' health plans and pick the better setup", 1], ["Write or update your wills so each of you is taken care of", 1]] },
+    baby: { t: "Having a baby", s: "New person, new costs, new responsibility", save: "First-year baby costs", tools: [["Life insurance calculator", "dime-calculator.html"], ["Money planner", "money-plan.html"]],
+      items: [["Add the baby to your health coverage within your plan's enrollment window", 1], ["Get life insurance on both parents, sized to the years they'll depend on you", 1, "dime-calculator.html"], ["Protect your income if you can't work", 1], ["Write a will and name a guardian", 1], ["Add childcare and baby costs to your budget", 0, "money-plan.html"], ["Start education savings, even a small amount", 1]] },
+    buyhome: { t: "Buying a home", s: "Your biggest purchase, and a big new bill", save: "Down payment and closing costs", tools: [["Debt freedom planner", "debt-freedom.html"], ["Money planner", "money-plan.html"]],
+      items: [["Save the down payment and closing costs separately from your emergency fund", 0, "money-plan.html"], ["Pay down high-interest debt before you apply", 0, "debt-freedom.html"], ["Know what payment fits your budget, not just what a lender approves", 0, "money-plan.html"], ["Keep an emergency fund for repairs after you move in", 0, "stress-test.html"], ["Make sure the mortgage would be covered if something happened to you", 1, "dime-calculator.html"], ["Get homeowners insurance quotes early", 0], ["Make a will so the home goes where you want it to", 1]] },
+    rent: { t: "Renting or moving", s: "Upfront costs and a new monthly number", save: "Deposit, first month, and moving costs", tools: [["Money planner", "money-plan.html"]],
+      items: [["Budget for first month, deposit, and moving costs", 0, "money-plan.html"], ["Check that the new rent fits your monthly plan", 0, "money-plan.html"], ["Get renters insurance", 0], ["Update your address on policies and accounts", 1], ["Keep your emergency fund intact through the move", 0, "stress-test.html"]] },
+    newjob: { t: "New job or raise", s: "More income, if you decide its job first", save: "", tools: [["Money planner", "money-plan.html"], ["Your next income", "income-transition.html"]],
+      items: [["Decide what the extra income goes to before lifestyle grows", 1, "money-plan.html"], ["Enroll in benefits and get the full retirement match", 0], ["Check if coverage through work is enough, since it usually ends when the job does", 1, "dime-calculator.html"], ["Negotiate the offer, if it's not final yet", 1], ["Raise your savings rate with the raise", 0, "independence-number.html"]] },
+    jobloss: { t: "Losing a job or income", s: "Protect the household while you regroup", save: "", tools: [["Stress test", "stress-test.html"], ["Your next income", "income-transition.html"]],
+      items: [["Cut to essentials and see how long your cash lasts", 0, "stress-test.html"], ["Line up health coverage before your current plan ends", 1], ["Replace life coverage that came with the job", 1], ["File for unemployment right away", 0], ["Avoid cashing out retirement accounts if you can", 0], ["Map what's next: a better role, independent work, or a business", 1, "income-transition.html"]] },
+    business: { t: "Starting a business", s: "Build it without betting your paycheck", save: "Startup costs", tools: [["Your next income", "income-transition.html?move=business"], ["Stress test", "stress-test.html"]],
+      items: [["Define the offer, the customer, and the price", 1, "income-transition.html?move=business"], ["Set checkpoints before you leave your job", 1, "income-transition.html?move=business"], ["Build 6 months of essentials first", 0, "stress-test.html"], ["Plan for health and income coverage once you leave", 1], ["Open separate business accounts", 0], ["Set up benefits for your first hires, and a bonus plan for key people", 1]] },
+    college: { t: "A child heading to college", s: "A big bill with a known date", save: "College costs", tools: [["Money planner", "money-plan.html"]],
+      items: [["Estimate the real cost after aid", 0], ["Know the financial aid deadlines", 0], ["Decide how much you'll pay versus loans or work", 0, "money-plan.html"], ["Protect your own retirement first", 0, "independence-number.html"], ["Make sure tuition would be covered if something happened to you", 1, "dime-calculator.html"]] },
+    parent: { t: "Caring for a parent", s: "Time, money, and decisions", save: "Your share of care, per month", ongoing: 1, tools: [["Money planner", "money-plan.html"]],
+      items: [["Talk about their wishes, coverage, and paperwork", 0], ["Get powers of attorney and health directives in place", 0], ["Look at long-term care options and costs", 1], ["Budget for what you'll contribute", 0, "money-plan.html"], ["Protect your own income while you give care", 1], ["Make sure they have a will, and update yours while you're at it", 1]] },
+    retire: { t: "Nearing retirement", s: "Turning savings into a paycheck", save: "", tools: [["Independence Number", "independence-number.html"]],
+      items: [["Know your independence number and where you stand", 0, "independence-number.html"], ["Plan income you can't outlive", 1], ["Plan for Medicare at 65", 1], ["Decide when to claim Social Security", 0], ["Review coverage and beneficiaries", 1], ["Get your will up to date", 1]] },
+    windfall: { t: "A windfall or inheritance", s: "Give it a job before it disappears", save: "", tools: [["Money planner", "money-plan.html"], ["Debt freedom planner", "debt-freedom.html"]],
+      items: [["Park it somewhere safe while you decide", 0], ["Pay off high-interest debt", 0, "debt-freedom.html"], ["Fill your emergency fund", 0, "stress-test.html"], ["Ask a CPA about taxes before you spend or move it", 0], ["Decide what job the rest does", 1, "money-plan.html"], ["Update your will so it covers what you now have", 1]] }
+  };
+  var state = {};
+  try { state = JSON.parse(MB.get("lifeEvents") || "{}"); } catch (e) {}
+  state.sel = state.sel || []; state.done = state.done || {}; state.amt = state.amt || {}; state.mo = state.mo || {};
+  var qe = new URLSearchParams(location.search).get("event");
+  if (qe && E[qe] && state.sel.indexOf(qe) === -1) state.sel.push(qe);
+
+  $("evs").innerHTML = Object.keys(E).map(function (k) { return "<button type='button' class='opt tcard" + (state.sel.indexOf(k) !== -1 ? " sel" : "") + "' data-k='" + k + "'><b>" + E[k].t + "</b><span>" + E[k].s + "</span></button>"; }).join("");
+  $("evs").querySelectorAll(".opt").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var k = b.dataset.k, i = state.sel.indexOf(k);
+      if (i === -1) state.sel.push(k); else state.sel.splice(i, 1);
+      b.classList.toggle("sel"); render();
+    });
+  });
+
+  function render() {
+    if (!state.sel.length) { $("planWrap").hidden = true; MB.set("lifeEvents", JSON.stringify(state)); return; }
+    $("planWrap").hidden = false;
+    $("cards").innerHTML = state.sel.map(function (k) {
+      var e = E[k];
+      var items = e.items.map(function (it, i) {
+        var id = k + "-" + i, on = !!state.done[id];
+        return "<label class='ev-item" + (on ? " on" : "") + "'><input type='checkbox' data-id='" + id + "'" + (on ? " checked" : "") + "><span>" + esc(it[0]) + (it[1] ? " <em class='mh'>Micah can help</em>" : "") + (it[2] ? " <a href='" + it[2] + "'>Open tool</a>" : "") + "</span></label>";
+      }).join("");
+      var save = e.save ? "<div class='ev-save'><div class='field'><label>" + e.save + (e.ongoing ? "" : ", total") + "</label><div class='money'><span>$</span><input inputmode='numeric' data-amt='" + k + "' value='" + esc(state.amt[k] || "") + "' placeholder='" + (e.ongoing ? "e.g. 400" : "Your estimate") + "'></div></div><div class='field'><label>" + (e.ongoing ? "Months until it starts" : "Months until it happens") + "</label><input inputmode='numeric' data-mo='" + k + "' value='" + esc(state.mo[k] || "") + "' placeholder='" + (e.ongoing ? "0 if it already has" : "e.g. 12") + "'></div><div class='ev-need' data-need='" + k + "'></div></div>" : "";
+      return "<div class='ev-card'><div class='ev-head'><h3>" + e.t + "</h3><span class='ev-count' data-count='" + k + "'></span></div>" + save + "<div class='ev-items'>" + items + "</div><div class='fine'>Helpful tools: " + e.tools.map(function (t) { return "<a href='" + t[1] + "'>" + t[0] + "</a>"; }).join(" &middot; ") + "</div></div>";
+    }).join("");
+    $("cards").querySelectorAll("input[type=checkbox]").forEach(function (c) { c.addEventListener("change", function () { state.done[c.dataset.id] = c.checked; c.parentNode.classList.toggle("on", c.checked); update(); }); });
+    $("cards").querySelectorAll("[data-amt]").forEach(function (el) { el.addEventListener("input", function () { state.amt[el.dataset.amt] = el.value; update(); }); });
+    $("cards").querySelectorAll("[data-mo]").forEach(function (el) { el.addEventListener("input", function () { state.mo[el.dataset.mo] = el.value; update(); }); });
+    update();
+  }
+
+  function update() {
+    var total = 0, done = 0, monthly = 0, ongoing = 0, lines = [];
+    state.sel.forEach(function (k) {
+      var e = E[k], d = 0;
+      e.items.forEach(function (it, i) { total++; if (state.done[k + "-" + i]) { done++; d++; } });
+      var c = document.querySelector("[data-count='" + k + "']"); if (c) c.innerHTML = "<span class='mini'><span style='width:" + Math.max(Math.round(d / e.items.length * 100), 4) + "%'></span></span>";
+      var amt = parseFloat(String(state.amt[k] || "").replace(/[^0-9.]/g, "")) || 0, mo = parseFloat(String(state.mo[k] || "").replace(/[^0-9.]/g, "")) || 0;
+      var need = document.querySelector("[data-need='" + k + "']");
+      var status = e.t + ": " + (d === e.items.length ? "done" : d ? "in progress" : "not started");
+      if (e.ongoing) {
+        if (need) need.innerHTML = !amt ? "" : mo ? "Budget <b>" + usd(amt) + " a month</b> once care starts. Until then, set aside <b>" + usd(amt * 3 / mo) + " a month</b> to build a 3-month cushion of " + usd(amt * 3) + ", so the first bills don't come out of your emergency fund." : "Budget <b>" + usd(amt) + " a month</b> for care, starting now. Add it to your <a href='money-plan.html'>money plan</a> as a regular bill.";
+        if (amt) { ongoing += amt; if (mo) monthly += amt * 3 / mo; }
+        lines.push(status + (amt ? "; care share " + usd(amt) + "/mo" + (mo ? " starting in " + mo + " months, cushion " + usd(amt * 3 / mo) + "/mo until then" : " now") : ""));
+      } else {
+        if (need) need.innerHTML = amt && mo ? "Set aside <b>" + usd(amt / mo) + " a month</b>" : "";
+        if (amt && mo) monthly += amt / mo;
+        lines.push(status + (amt && mo ? "; saving " + usd(amt / mo) + "/mo toward " + usd(amt) : ""));
+      }
+    });
+    var pct = total ? Math.round(done / total * 100) : 0;
+    var msg = pct === 0 ? ["Every plan starts with one checkbox.", "Pick the easiest item below and knock it out today."]
+      : pct < 25 ? ["Good start.", "The hardest part is starting, and you already did."]
+      : pct < 50 ? ["You're building momentum.", "Keep going. Each one makes the next one easier."]
+      : pct < 75 ? ["Halfway there.", "The big stuff is getting handled. Keep it rolling."]
+      : pct < 100 ? ["Almost done.", "Just a few left. Finish strong."]
+      : ["All done. Nice work.", "You're ready for what's coming. Check back if anything changes."];
+    $("evProg").innerHTML = "<div class='pb-top'><b>" + msg[0] + "</b></div><div class='bar'><div style='width:" + Math.max(pct, 3) + "%'></div></div><p>" + msg[1] + (monthly ? " Saving for these events: about <b>" + usd(monthly) + " a month</b> in total. Add it to your <a href='money-plan.html'>money plan</a> as a goal." : "") + (ongoing ? " Plus <b>" + usd(ongoing) + " a month</b> for ongoing care." : "") + (monthly || ongoing ? "" : " Add a cost and a date to any event to see what to set aside each month.") + "</p>";
+    MB.set("lifeEvents", JSON.stringify(state));
+    MB.saveResult("events", { title: "Life events", url: "life-events.html",
+      m: { v: pct, l: "Life event steps done", b: "up", f: "%" }, pct: pct,
+      headline: (function () { var nx = null; state.sel.some(function (k) { return E[k].items.some(function (it, i) { if (!state.done[k + "-" + i]) { nx = it[0]; return true; } }); }); return state.sel.map(function (k) { return E[k].t; }).join(", ") + (nx ? ". Next: " + nx.charAt(0).toLowerCase() + nx.slice(1) + "." : ": all done."); })(), lines: lines.slice(0, 4) });
+  }
+  render();
+  MB.sendBox("sendBox", "events", "your life event checklist");
+})();
+</script>
+</body>
+</html>

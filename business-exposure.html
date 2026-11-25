@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owner Exposure Check | Micah Bryant</title>
+<meta name="description" content="How much of your business depends on you, and how much of your personal life depends on the business? A free check for business owners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free tool for business owners</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">What happens to the business if you're out for six months?</h1>
+    <p class="lede">A successful business can still leave its owner exposed. This check shows how much of the business depends on you, how much of your personal life depends on the business, and where the two overlap.</p>
+  </div>
+
+  <div class="calc-grid">
+    <form class="calc-form" id="f" novalidate>
+      <h3>The business</h3>
+      <div class="field"><label for="rev">Yearly revenue</label><div class="money"><span>$</span><input id="rev" inputmode="numeric" value="1200000"></div></div>
+      <div class="field"><label for="exp">Monthly operating expenses</label><div class="money"><span>$</span><input id="exp" inputmode="numeric" value="85000"></div><small>Payroll, rent, equipment, materials, everything it takes to keep the doors open.</small></div>
+      <div class="field"><label for="cash">Business cash on hand</label><div class="money"><span>$</span><input id="cash" inputmode="numeric" value="90000"></div></div>
+
+      <h3>How much it depends on you</h3>
+      <div class="field"><label for="dep">Revenue that depends on you personally: <b id="depv"></b></label><input id="dep" type="range" min="0" max="100" step="5" value="60"><small>Your relationships, your selling, your hands on the work. Be honest.</small></div>
+      <div class="field"><label for="mr">Months it could run normally without you</label><input id="mr" inputmode="numeric" value="1"></div>
+      <div class="field"><label for="pay">Your yearly pay from the business</label><div class="money"><span>$</span><input id="pay" inputmode="numeric" value="140000"></div><small>Salary plus draws or distributions.</small></div>
+
+      <h3>Where it reaches your personal life</h3>
+      <div class="field"><label for="pg">Business debt you've personally guaranteed</label><div class="money"><span>$</span><input id="pg" inputmode="numeric" value="200000"></div><small>Loans, lines of credit, equipment financing, leases you signed for.</small></div>
+      <div class="field"><label for="partners">Do you have business partners?</label>
+        <div class="seg wide" id="partners"><button type="button" data-v="0" class="on">No</button><button type="button" data-v="1">Yes</button></div></div>
+      <div id="partnerFields" hidden>
+        <div class="field"><label for="val">Rough value of the business</label><div class="money"><span>$</span><input id="val" inputmode="numeric" value="1500000"></div></div>
+        <div class="field"><label for="own">Your ownership share: <b id="ownv"></b></label><input id="own" type="range" min="5" max="95" step="5" value="50"></div>
+      </div>
+
+      <div class="field"><label for="emps">Do you have employees?</label>
+        <div class="seg wide" id="emps"><button type="button" data-v="0" class="on">No</button><button type="button" data-v="1">Yes</button></div></div>
+
+      <h3>Continuity checklist</h3>
+      <div id="checks"></div>
+    </form>
+
+    <div class="calc-out" aria-live="polite">
+      <div class="out-label">Owner dependence</div>
+      <div class="big" id="score"></div>
+      <div class="sub" id="band"></div>
+      <div class="meter dark"><i id="pin"></i></div>
+      <div class="out-rows">
+        <div><span>Revenue at risk if you're out 6 months</span><b id="risk"></b></div>
+        <div><span>Months the cash would last through that</span><b id="runway"></b></div>
+        <div><span>Personal guarantees on business debt</span><b id="pgv"></b></div>
+        <div><span>Your pay that would stop or shrink</span><b id="payv"></b></div>
+        <div id="buyrow" hidden><span>To buy out your share (or a partner's)</span><b id="buy"></b></div>
+        <div class="hl"><span>Exposure worth discussing</span><b id="total"></b></div>
+      </div>
+      <p class="fine" id="note"></p>
+    </div>
+  </div>
+
+  <div class="horizons">
+    <h2>Your biggest gaps, in order.</h2>
+    <div id="gaps" class="gaps"></div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:56px 0 96px">
+    <h3>Want to go through this with your real numbers?</h3>
+    <p>A review looks at the owner level first: your income, your guarantees, and what keeps your family secure if the business has a bad stretch. Business-owned coverage options depend on your situation, and we'll confirm what's available before recommending anything. I also help owners with group benefits, health spending accounts, and bonus plans for key employees.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This tool gives an educational estimate based on the information you enter. It is not a valuation, a recommendation to buy any product, or financial, tax, or legal advice. Talk with your CPA and attorney about business structure, agreements, and taxes. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var short = function (v) { return v >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M" : v >= 1e4 ? "$" + Math.round(v / 1e3) + "K" : usd(v); };
+  var partners = false;
+
+  var CHECKS = [
+    ["plan", "A written plan for who runs things if you can't", "Write down who makes decisions, signs checks, and talks to key clients if you're out. Even one page beats nothing."],
+    ["second", "Someone else can run payroll and pay bills", "If only you can move money, a short absence stops the business. Give a trusted person access and a written process."],
+    ["separate", "Business and personal money are fully separate", "Mixed money hides problems on both sides. Separate accounts and a regular owner's draw come first."],
+    ["protect", "Coverage that replaces your income if you can't work", "Your pay comes from a business that depends on you. If you can't work, both can stop at once."],
+    ["life", "Life coverage that would pay off your personal guarantees", "Guaranteed business debt can land on your family. Coverage sized to those guarantees keeps it from becoming theirs."],
+    ["buysell", "A funded buy-sell agreement with your partners", "Without one, a partner's death or exit can leave you in business with their heirs, or without the money to buy them out.", "partners"],
+    ["benefits", "Benefits that help you hire and keep good people", "Health, dental, disability, and a health spending account make your offer competitive without a big raise, and replacing a good employee usually costs far more. Micah can help set these up.", "emps"],
+    ["bonus", "A bonus plan that rewards and keeps your key people", "A bonus tied to staying and performing gives your best people a reason to stay, and the business can usually deduct it as pay. Micah can help design one.", "emps"]
+  ];
+  var emps = false;
+  var ans = {};
+  var h = "";
+  CHECKS.forEach(function (c) {
+    h += "<div class='check-row' data-row='" + c[0] + "'" + (c[3] ? " hidden" : "") + "><div class='check-q'>" + c[1] + "</div><div class='seg' data-k='" + c[0] + "'><button type='button' data-v='1'>Yes</button><button type='button' data-v='0'>No</button><button type='button' data-v='0'>Not sure</button></div></div>";
+  });
+  $("checks").innerHTML = h;
+  $("checks").querySelectorAll(".seg").forEach(function (s) {
+    s.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        ans[s.getAttribute("data-k")] = +b.getAttribute("data-v");
+        s.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+        calc();
+      });
+    });
+  });
+  $("partners").querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      partners = b.getAttribute("data-v") === "1";
+      $("partners").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      $("partnerFields").hidden = !partners;
+      document.querySelector("[data-row='buysell']").hidden = !partners;
+      calc();
+    });
+  });
+
+  $("emps").querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      emps = b.getAttribute("data-v") === "1"; MB.set("bizEmployees", emps ? "1" : "0");
+      $("emps").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      ["benefits", "bonus"].forEach(function (k) { document.querySelector("[data-row='" + k + "']").hidden = !emps; });
+      calc();
+    });
+  });
+  if (MB.get("bizEmployees") === "1") setTimeout(function () { $("emps").querySelector("[data-v='1']").click(); }, 0);
+
+  MB.bind({ rev: "bizRevenue", exp: "bizExpenses", cash: "bizCash", pay: "ownerPay", pg: "guarantees" });
+  function calc() {
+    var rev = num("rev"), exp = num("exp"), cash = num("cash"), dep = +$("dep").value / 100, mr = num("mr"), pay = num("pay"), pg = num("pg");
+    $("depv").textContent = Math.round(dep * 100) + "%";
+    $("ownv").textContent = $("own").value + "%";
+    var gapMonths = Math.max(6 - mr, 0);
+    var risk = rev / 12 * gapMonths * dep;
+    var shortfall = gapMonths ? risk / gapMonths : 0;
+    var runway = shortfall > 0 ? cash / shortfall : Infinity;
+    var payLost = pay / 2 * dep;
+    var active = CHECKS.filter(function (c) { return !c[3] || (c[3] === "partners" ? partners : emps); });
+    var missing = active.filter(function (c) { return ans[c[0]] !== 1; });
+    var reserveMonths = exp ? cash / exp : 0;
+    var score = Math.round(dep * 40 + Math.max(1 - mr / 12, 0) * 25 + Math.max(1 - reserveMonths / 6, 0) * 15 + missing.length / active.length * 20);
+    var buy = partners ? num("val") * (+$("own").value / 100) : 0;
+
+    $("score").textContent = score + " / 100";
+    $("band").textContent = score >= 65 ? "High. The business, and your household, lean heavily on you." : score >= 40 ? "Moderate. A long absence would hurt both the business and your household." : "Lower. The business could carry itself for a while.";
+    $("pin").style.left = score + "%";
+    $("risk").textContent = usd(risk);
+    $("runway").textContent = runway === Infinity ? "Not at risk" : runway >= 24 ? "24+ months" : (runway < 1 ? "Under 1 month" : Math.round(runway) + " months");
+    $("pgv").textContent = usd(pg);
+    $("payv").textContent = usd(payLost);
+    $("buyrow").hidden = !partners; $("buy").textContent = usd(buy);
+    $("total").textContent = short(risk + pg + payLost + buy);
+    $("note").textContent = "Assumes revenue that depends on you drops while you're out, starting after the " + mr + " month" + (mr === 1 ? "" : "s") + " the business could run without you. This is an estimate for discussion, not a valuation.";
+
+    var g = [];
+    if (dep >= 0.5) g.push(["Revenue tied to you", Math.round(dep * 100) + "% of revenue depends on you personally. Start moving key relationships and tasks to others, and protect the income in the meantime."]);
+    if (runway !== Infinity && runway < 6) g.push(["Thin cash runway", "Business cash would last about " + (runway < 1 ? "less than a month" : Math.round(runway) + " months") + " through a 6-month absence. Building reserves buys time for everything else."]);
+    if (pg > 0) g.push(["Personal guarantees", usd(pg) + " of business debt could become your family's problem. Make sure it's covered if something happens to you."]);
+    missing.forEach(function (c) { g.push([c[1], c[2]]); });
+    var gh = "";
+    g.slice(0, 5).forEach(function (x, i) { gh += "<div class='weak'><div class='rank'>Gap #" + (i + 1) + "</div><h3>" + x[0] + "</h3><p>" + x[1] + "</p></div>"; });
+    MB.saveResult("business", { title: "Owner exposure check", url: "business-exposure.html", m: { v: score, l: "Owner dependence score", b: "down", f: "n" }, pct: 100 - score,
+      headline: "Owner dependence " + score + "/100, with about " + short(risk + pg + payLost + buy) + " of exposure worth discussing.",
+      lines: ["Revenue at risk if out 6 months: " + usd(risk), "Cash would last: " + $("runway").textContent, "Personal guarantees: " + usd(pg)].concat(g.slice(0, 3).map(function (x) { return "Gap: " + x[0]; })) });
+    $("gaps").innerHTML = gh || "<p class='muted'>No major gaps based on your answers. The next step is keeping it that way as the business grows.</p>";
+  }
+  document.querySelectorAll("#f input").forEach(function (el) { el.addEventListener("input", calc); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  calc();
+  MB.sendBox("sendBox", "business", "your owner exposure check");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debt Freedom Planner | Micah Bryant</title>
+<meta name="description" content="List your debts and see your debt-free date, the interest you'd save, and the order to pay things off.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free planner</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">When could you be debt-free?</h1>
+    <p class="lede">List what you owe outside your mortgage. You'll see your debt-free date, how much interest a plan saves compared with paying minimums, and the order to pay things off.</p>
+  </div>
+
+  <div class="plan-step first">
+    <div class="step-label">Step 1 &middot; What you owe</div>
+    <div class="debt-head"><span>Debt</span><span>Balance</span><span>Interest rate</span><span>Minimum payment</span><span></span></div>
+    <div id="rows"></div>
+    <button class="linkbtn" id="add" type="button">+ Add another debt</button>
+    <p class="fine">Leave out a leased car unless you plan to buy it. Leave out your mortgage; that's part of the bigger plan.</p>
+  </div>
+
+  <div class="plan-step">
+    <div class="step-label">Step 2 &middot; Your plan</div>
+    <div class="q-grid">
+      <div class="field"><label for="extra">Extra you could put toward debt each month</label><div class="money"><span>$</span><input id="extra" inputmode="numeric" value="200"></div><small>On top of the minimums. The money planner can help you find it.</small></div>
+      <div class="field"><label>Payoff order</label><div class="seg wide" id="method"><button type="button" data-v="snow" class="on">Smallest balance first</button><button type="button" data-v="aval">Highest rate first</button></div><small id="methodNote"></small></div>
+    </div>
+  </div>
+
+  <div class="plan-step results">
+    <div class="step-label">Your result</div>
+    <div class="result-hero">
+      <div>
+        <div class="out-label">Debt-free in</div>
+        <div class="big-num" id="when"></div>
+        <p class="muted" id="whensub"></p>
+      </div>
+      <div class="path-card ok" id="compare"></div>
+    </div>
+    <h3 class="sub-h">Your payoff order</h3>
+    <div class="need-table" id="order"></div>
+    <div class="flag" style="margin-top:20px" id="roll"></div>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Want help building the plan around this?</h3>
+    <p>Debt is one of four areas in the Expert Financial Analysis, along with goals, saving, and protection. In a review, we look at all four together, so paying off debt doesn't leave your family unprotected.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">This planner is an educational estimate. It assumes fixed interest rates, no new charges, and the payments you enter each month. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc., and is not a mortgage broker or lender. Content is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var n = function (v) { var x = parseFloat(String(v).replace(/[^0-9.]/g, "")); return isNaN(x) ? 0 : x; };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var method = MB.get("debtMethod") || "snow";
+  var debts;
+  try { debts = JSON.parse(MB.get("debts") || "null"); } catch (e) {}
+  if (!debts || !debts.length) debts = [
+    { name: "Credit card", bal: "4200", rate: "24.9", min: "120" },
+    { name: "Car loan", bal: "14500", rate: "7.5", min: "390" },
+    { name: "Personal loan", bal: "2800", rate: "13", min: "95" }
+  ];
+  if (MB.get("debtExtra")) $("extra").value = MB.get("debtExtra");
+
+  function rowsHtml() {
+    $("rows").innerHTML = debts.map(function (d, i) {
+      return "<div class='debt-row'>" +
+        "<input aria-label='Debt name' data-i='" + i + "' data-k='name' value='" + esc(d.name) + "'>" +
+        "<div class='money'><span>$</span><input aria-label='Balance' inputmode='numeric' data-i='" + i + "' data-k='bal' value='" + esc(d.bal) + "'></div>" +
+        "<div class='money'><input aria-label='Interest rate' inputmode='decimal' data-i='" + i + "' data-k='rate' value='" + esc(d.rate) + "'><span style='padding:0 14px 0 4px'>%</span></div>" +
+        "<div class='money'><span>$</span><input aria-label='Minimum payment' inputmode='numeric' data-i='" + i + "' data-k='min' value='" + esc(d.min) + "'></div>" +
+        "<button class='linkbtn' type='button' data-del='" + i + "' aria-label='Remove'>&times;</button></div>";
+    }).join("");
+    $("rows").querySelectorAll("input").forEach(function (el) {
+      el.addEventListener("input", function () { debts[+el.dataset.i][el.dataset.k] = el.value; calc(); });
+    });
+    $("rows").querySelectorAll("[data-del]").forEach(function (b) {
+      b.addEventListener("click", function () { debts.splice(+b.dataset.del, 1); if (!debts.length) debts.push({ name: "", bal: "", rate: "", min: "" }); rowsHtml(); calc(); });
+    });
+  }
+
+  function simulate(list, extra, order) {
+    var ds = list.map(function (d) { return { name: d.name || "Debt", bal: n(d.bal), r: n(d.rate) / 100 / 12, min: n(d.min), paidAt: 0 }; }).filter(function (d) { return d.bal > 0; });
+    if (!ds.length) return { months: 0, interest: 0, ds: [], stuck: false };
+    var budget = ds.reduce(function (s, d) { return s + d.min; }, 0) + extra, interest = 0, m = 0;
+    while (ds.some(function (d) { return d.bal > 0.005; }) && m < 600) {
+      m++;
+      ds.forEach(function (d) { if (d.bal > 0) { var i = d.bal * d.r; d.bal += i; interest += i; } });
+      var left = budget;
+      ds.forEach(function (d) { if (d.bal > 0) { var p = Math.min(d.min, d.bal); d.bal -= p; left -= p; } });
+      var targets = ds.filter(function (d) { return d.bal > 0.005; }).sort(order);
+      targets.forEach(function (d) { if (left <= 0) return; var p = Math.min(left, d.bal); d.bal -= p; left -= p; });
+      ds.forEach(function (d) { if (d.bal <= 0.005 && !d.paidAt) { d.bal = 0; d.paidAt = m; } });
+    }
+    return { months: m, interest: interest, ds: ds, stuck: m >= 600 };
+  }
+  var snow = function (a, b) { return a.bal - b.bal; }, aval = function (a, b) { return b.r - a.r || a.bal - b.bal; };
+  var when = function (m) { var d = new Date(); d.setMonth(d.getMonth() + m); return d.toLocaleDateString("en-US", { month: "long", year: "numeric" }); };
+  var span = function (m) { var y = Math.floor(m / 12), mo = m % 12; return (y ? y + " yr" + (y > 1 ? "s" : "") : "") + (y && mo ? " " : "") + (mo ? mo + " mo" : "") || "0 mo"; };
+
+  function calc() {
+    var extra = n($("extra").value);
+    MB.set("debts", JSON.stringify(debts)); MB.set("debtExtra", $("extra").value); MB.set("debtMethod", method);
+    $("methodNote").textContent = method === "snow" ? "Quick wins first. Each payoff frees up money for the next one." : "Saves the most interest. Wins come slower.";
+    var plan = simulate(debts, extra, method === "snow" ? snow : aval);
+    var base = simulate(debts, 0, snow);
+    var totalBal = debts.reduce(function (s, d) { return s + n(d.bal); }, 0), mins = debts.reduce(function (s, d) { return s + n(d.min); }, 0);
+    MB.set("debtPay", String(Math.round(mins + extra)));
+    if (!plan.ds.length) { $("when").textContent = "Now"; $("whensub").textContent = "Add a debt above to see your plan."; $("compare").innerHTML = ""; $("order").innerHTML = ""; $("roll").textContent = ""; return; }
+    if (plan.stuck) { $("when").textContent = "50+ yrs"; $("whensub").textContent = "These payments don't keep up with the interest. A payment needs to rise, or a rate needs to come down."; }
+    else { $("when").textContent = span(plan.months); $("whensub").textContent = "Debt-free around " + when(plan.months) + ", paying " + usd(mins + extra) + " a month toward " + usd(totalBal) + " of debt."; }
+    var saved = base.interest - plan.interest, faster = base.months - plan.months;
+    $("compare").innerHTML = "<div class='out-label'>Compared with minimums only</div><div class='pc-num'>" + (base.stuck ? "Never paid off" : usd(Math.max(saved, 0)) + " saved") + "</div><p>" +
+      (base.stuck ? "Minimum payments alone wouldn't pay these off." : "Minimums alone would take " + span(base.months) + " and cost " + usd(base.interest) + " in interest. Your plan" + (faster > 0 ? " finishes " + span(faster) + " sooner and" : "") + " costs " + usd(plan.interest) + ".") + "</p>";
+    var rows = plan.ds.slice().sort(function (a, b) { return a.paidAt - b.paidAt; });
+    $("order").innerHTML = "<div class='nt-row nt-head'><span>Order</span><span>Paid off</span><span>When</span></div>" + rows.map(function (d, i) {
+      return "<div class='nt-row'><span><small>#" + (i + 1) + "</small>" + esc(d.name) + "</span><span>" + (d.paidAt ? span(d.paidAt) : "&mdash;") + "</span><span><b>" + (d.paidAt ? when(d.paidAt) : "&mdash;") + "</b></span></div>";
+    }).join("");
+    $("roll").innerHTML = "<b>How it works:</b> pay the minimum on everything, and put the extra " + usd(extra) + " toward <b>" + esc(rows[0].name) + "</b>. When it's paid off, roll its whole payment into the next one. Each payoff makes the next one faster.";
+    MB.saveResult("debt", { title: "Debt freedom planner", url: "debt-freedom.html", m: { v: Math.round(totalBal), l: "Total debt", b: "down", f: "$" }, months: plan.stuck ? null : plan.months, pay: mins + extra, rate: totalBal ? debts.reduce(function (a, d) { return a + n(d.bal) * n(d.rate); }, 0) / totalBal : 0,
+      headline: plan.stuck ? "Current payments don't keep up with the interest." : "Debt-free in about " + span(plan.months) + " (" + when(plan.months) + ").",
+      lines: ["Total debt " + usd(totalBal) + "; paying " + usd(mins + extra) + "/mo (" + usd(extra) + " extra)", base.stuck ? "Minimums alone would never pay it off" : "Saves about " + usd(Math.max(saved, 0)) + " in interest vs. minimums", "Order: " + rows.map(function (d) { return d.name; }).join(", ")] });
+  }
+
+  $("method").querySelectorAll("button").forEach(function (b) {
+    if (b.dataset.v === method) { $("method").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); }
+    b.addEventListener("click", function () { method = b.dataset.v; $("method").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); calc(); });
+  });
+  $("add").addEventListener("click", function () { debts.push({ name: "", bal: "", rate: "", min: "" }); rowsHtml(); });
+  $("extra").addEventListener("input", calc);
+  rowsHtml(); calc();
+  MB.sendBox("sendBox", "debt", "your debt freedom plan");
+})();
+</script>
+</body>
+</html>

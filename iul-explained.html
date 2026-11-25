@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protected Growth and Being Your Own Bank, Explained | Micah Bryant</title>
+<meta name="description" content="The two big ideas behind indexed universal life: growth without market losses, and borrowing against your own cash value. How they work, what they cost, and who they're wrong for.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap calc-shell">
+  <div class="calc-intro">
+    <div class="eyebrow">Free explainer</div>
+    <h1 style="font-size:clamp(34px,5vw,52px)">Protected growth and being your own bank, explained honestly.</h1>
+    <p class="lede">These are the two big ideas behind indexed universal life (IUL): growth tied to the market without market losses, and borrowing against money you've built instead of from a bank. Try both below. You'll see how they work, what they cost, and who they're wrong for.</p>
+    <div class="flag" id="fit"></div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-t="growth" role="tab">1 &middot; Protected growth</button>
+    <button class="tab" data-t="bank" role="tab">2 &middot; Be your own bank</button>
+  </div>
+
+  <!-- PROTECTED GROWTH -->
+  <section class="tabpane" id="t-growth">
+    <h2 class="step-h">Growth linked to the market, without the market's losses</h2>
+    <p class="muted">An IUL doesn't invest your money in the market. It credits interest based on how a market index performed, within limits: a <b>floor</b> and, on most strategies, a <b>cap</b>. Every IUL has a floor of at least 0%, so a down year credits nothing instead of losing value, and some companies guarantee a small minimum above that. The cap is the most it credits in a great year. Some companies offer strategies with no cap, usually in exchange for a lower participation rate or a fee. Either way, you give up some of the best years to avoid the worst ones.</p>
+
+    <div class="calc-grid" style="margin-top:20px">
+      <form class="calc-form" id="g" novalidate>
+        <div class="field"><label>Pick a 10-year market story</label><div class="seg wide grid2" id="story"><button type="button" data-s="early" class="on">Crash early</button><button type="button" data-s="late">Crash late</button><button type="button" data-s="strong">Strong decade</button><button type="button" data-s="flat">Choppy decade</button></div><small>Hypothetical yearly index returns, chosen to show how the floor and cap behave. Not a prediction or past results.</small></div>
+        <div class="field"><label for="cap">Cap: <b id="capv"></b></label><input id="cap" type="range" min="6" max="15" step="0.5" value="10"><small>The most credited in any one year. Slide all the way right for a strategy with no cap.</small></div>
+        <div class="field"><label for="floor">Floor: <b id="floorv"></b></label><input id="floor" type="range" min="0" max="2" step="0.5" value="0"><small>Never below 0%. Some companies guarantee a little more.</small></div>
+        <div class="field"><label for="part">Participation: <b id="partv"></b></label><input id="part" type="range" min="50" max="150" step="5" value="100"><small>The share of the index's gain that counts, before the cap. Uncapped strategies usually come with a lower rate.</small></div>
+        <div class="field"><label for="cost">Policy costs, per year: <b id="costv"></b></label><input id="cost" type="range" min="0" max="3" step="0.25" value="1"><small>A simplified stand-in. Real charges depend on your age, health, and coverage amount, and are highest in early years.</small></div>
+      </form>
+      <div>
+        <div class="chart" id="gchart"></div>
+        <div class="chart-key"><span><i class="ln" style="border-top-color:#9aa0a6"></i>Market index (no protection, no fees)</span><span><i class="ln"></i>Index-linked crediting, after policy costs</span></div>
+        <div class="g-stats" id="gstats"></div>
+      </div>
+    </div>
+    <div class="flag" id="glesson" style="margin-top:18px"></div>
+
+    <div class="give">
+      <div><div class="lv-name">What it does</div><p>Credits interest tied to an index, with a floor so market drops don't reduce your credited value.</p></div>
+      <div><div class="lv-name">What you give up</div><p>Gains above the cap (if your strategy has one), index dividends, and part of every year's growth to policy costs. Caps can change.</p></div>
+      <div><div class="lv-name">Who it's wrong for</div><p>Anyone without an emergency fund or protection in place, or who can't fund it for years. Early years build slowly.</p></div>
+    </div>
+  </section>
+
+  <!-- BE YOUR OWN BANK -->
+  <section class="tabpane" id="t-bank" hidden>
+    <h2 class="step-h">Use your money without taking it out</h2>
+    <p class="muted">Once your policy has built cash value, you can borrow against it. The cash value never leaves the policy, so it keeps growing as if you never touched it. You're borrowing the insurance company's money, with your cash value as the collateral.</p>
+
+    <div class="how3">
+      <div><span>1</span><b>Build cash value</b><p>Fund the policy for a few years. Early years build slowly, because costs come out first.</p></div>
+      <div><span>2</span><b>Borrow against it</b><p>No credit check, no application, no repayment schedule. You decide when and how much to pay back.</p></div>
+      <div><span>3</span><b>Your money keeps growing</b><p>The full cash value keeps being credited, as if it never left. The loan charges interest, so your net growth is a little less.</p></div>
+    </div>
+
+    <h3 class="sub-h" style="margin-top:28px">Two jobs, two policies</h3>
+    <p class="muted" style="margin-top:-6px">Each job gets its own policy, so borrowing for an opportunity never cuts into the money meant for retirement.</p>
+    <div class="give two">
+      <div><div class="lv-name">Policy 1 &middot; Your opportunity fund</div><p>Funded from what you save each month. Borrow for a business, a property, a car, or an emergency without asking a bank. Pay it back on your schedule, and use it again for the next opportunity.</p></div>
+      <div><div class="lv-name">Policy 2 &middot; Your retirement income</div><p>Usually funded by moving money over from your current retirement accounts, such as an old 401(k) or IRA. In retirement, borrow a set amount each year as income. Loans are generally not taxed as income while the policy stays in force, and the cash value keeps being credited.</p><p class="fine">Money taken out of a 401(k) or IRA to fund a policy is taxed as a withdrawal, plus a penalty before 59&frac12;. On the flip side, any growth after the switch can be accessed tax-free through policy loans, as long as the policy stays in force.</p></div>
+    </div>
+
+    <div class="calc-grid" style="margin-top:24px">
+      <form class="calc-form" id="b" novalidate>
+        <div class="field"><label>Use it as</label><div class="seg wide" id="use"><button type="button" data-u="opp" class="on">Opportunity fund</button><button type="button" data-u="ret">Retirement income</button></div></div>
+        <div class="field"><label for="cv">Cash value in the policy</label><div class="money"><span>$</span><input id="cv" inputmode="numeric" value="40000"></div></div>
+        <div class="field" id="drawF" hidden><label for="draw">Income you take each year</label><div class="money"><span>$</span><input id="draw" inputmode="numeric" value="12000"></div></div>
+        <div class="field" id="drawY" hidden><label for="drawYrs">For how many years</label><input id="drawYrs" inputmode="numeric" value="15"></div>
+        <div class="field" id="amtF"><label for="amt">Amount you borrow</label><div class="money"><span>$</span><input id="amt" inputmode="numeric" value="15000"></div><small>A car, a business purchase, a home repair.</small></div>
+        <div class="field" id="repayF"><label>Paying it back</label><div class="seg wide" id="repay"><button type="button" data-r="yes" class="on">On my own schedule</button><button type="button" data-r="no">Not paying it back</button></div></div>
+        <div class="field" id="yrsField"><label for="yrsb">Years to pay it back</label><input id="yrsb" inputmode="numeric" value="3"></div>
+        <div class="q-grid">
+          <div class="field"><label for="cr">Crediting on cash value: <b id="crv"></b></label><input id="cr" type="range" min="0" max="10" step="0.25" value="6"><small>Hypothetical. Not guaranteed.</small></div>
+          <div class="field"><label for="lr">Policy loan rate: <b id="lrv"></b></label><input id="lr" type="range" min="3" max="9" step="0.25" value="5"></div>
+        </div>
+      </form>
+      <div>
+        <div class="chart" id="bchart"></div>
+        <div class="chart-key"><span><i class="ln"></i>Cash value, still credited on the full amount</span><span><i class="ln need"></i>What's left after the loan</span><span><i class="ln" style="border-top:3px dotted #9aa0a6"></i>If you'd withdrawn it instead (and paid it back the same way)</span></div>
+        <div class="g-stats three" id="bstats"></div>
+      </div>
+    </div>
+    <div class="flag" id="blesson" style="margin-top:18px"></div>
+
+    <div class="give">
+      <div><div class="lv-name">What keeps it working</div><p>Pay at least what the policy needs to stay in force, and keep the loan well below the cash value.</p></div>
+      <div><div class="lv-name">What you give up</div><p>Loan interest, which trims your net growth. Unpaid, the loan and its interest come out of the death benefit.</p></div>
+      <div><div class="lv-name">Who it's wrong for</div><p>Anyone who would let the loan keep growing unchecked. If it outgrows the cash value, the policy can lapse, and that can create a tax bill.</p></div>
+    </div>
+    <p class="fine" style="margin-top:12px">This assumes the policy keeps crediting the full cash value while the loan is out. Many indexed policies offer loans that work this way; with others, the borrowed portion earns a different rate. Ask which kind of loan a policy has before you buy it.</p>
+  </section>
+
+  <div class="plan-step">
+    <div class="step-label">IUL or annuity?</div>
+    <h2 class="step-h">Two ways to protect money from market losses</h2>
+    <div class="cmp">
+      <div class="cmp-h"></div><div class="cmp-h">Indexed universal life (IUL)</div><div class="cmp-h">Fixed indexed annuity</div>
+      <div>Protected from market losses</div><div>Yes, with a floor</div><div>Yes, with a floor</div>
+      <div>Life insurance for your family</div><div>Yes</div><div>No</div>
+      <div>Borrow from it (opportunity fund)</div><div>Yes, through policy loans</div><div>Limited withdrawals, usually with a surrender period</div>
+      <div>Retirement income</div><div>Tax-advantaged policy loans</div><div>Guaranteed income for life, if you choose that option</div>
+      <div>Costs</div><div>Insurance charges, highest in early years</div><div>No insurance charges; surrender charges if you leave early</div>
+      <div>Best fit</div><div>Younger, with years to fund it and people to protect</div><div>Closer to retirement, wanting a paycheck you can't outlive</div>
+    </div>
+  </div>
+
+  <div class="plan-step">
+    <div class="step-label">Where this fits</div>
+    <h2 class="step-h">A tool for later in the order, not the starting point</h2>
+    <p class="muted">Goals first, then expenses, then the job each dollar needs to do, then the strategy. Products come last. An IUL usually makes sense only after the foundation is in place: steady cash flow, an emergency fund, protection for the people who depend on you, and high-interest debt under control.</p>
+    <div id="stageNote"></div>
+    <p style="margin-top:14px">Before you buy one from anyone, run the <a href="product-checklist.html">before-you-buy checklist</a>, and ask to see the guaranteed column of the illustration next to the projected one.</p>
+  </div>
+
+  <div id="sendBox"></div>
+
+  <div class="offer" style="margin:40px 0 96px">
+    <h3>Want to see whether it fits your situation?</h3>
+    <p>We'll look at your foundation first. If an IUL makes sense, you'll see a real illustration side by side with the guaranteed values, what it costs, and when it's the wrong choice.</p>
+    <a class="btn" href="book.html">Book a review</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disclosure">Educational illustration only, using hypothetical numbers. It is not a policy illustration, offer, or projection. Indexed universal life is life insurance, not an investment in the market or a bank account. Crediting is subject to caps, participation rates, and floors set by the insurer, which can change. Policy charges reduce cash value and can cause it to fall even when the index credits 0%. Policy loans accrue interest, reduce the death benefit and cash value, and can cause the policy to lapse, which may result in taxes. Guarantees depend on the claims-paying ability of the insurer. Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Content is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var usd = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
+  var n = function (id) { var v = parseFloat(String($(id).value).replace(/[^0-9.]/g, "")); return isNaN(v) ? 0 : v; };
+  var pc = function (v) { return (Math.round(v * 1000) / 10) + "%"; };
+  var STORIES = {
+    early: [-0.30, 0.18, 0.12, 0.15, 0.08, 0.10, -0.05, 0.20, 0.07, 0.11],
+    late: [0.12, 0.15, 0.08, 0.20, 0.10, 0.07, 0.11, 0.18, -0.05, -0.30],
+    strong: [0.20, 0.15, 0.25, -0.05, 0.18, 0.22, 0.10, 0.28, -0.08, 0.16],
+    flat: [0.02, -0.10, 0.05, 0.03, -0.12, 0.08, 0.01, -0.04, 0.06, 0.02]
+  };
+  var story = "early", tab = "growth", seen = { growth: true, bank: false };
+
+  // where they are in the order (from the other tools)
+  var st = MB.stage(), R = MB.results();
+  $("fit").innerHTML = "<b>Before you dive in:</b> both ideas need money you won't need for years. " + (Object.keys(R).length ? "Based on your plan so far, you're in the <b>" + st.name + "</b> stage. " + (st.name === "Build" ? "That usually means building cash and protection first. <a href='my-plan.html'>See your plan</a>." : "That's when this conversation can start to make sense.") : "If you haven't yet, <a href='stress-test.html'>take the stress test</a> first.");
+  $("stageNote").innerHTML = Object.keys(R).length ? "<div class='status-card' style='margin-top:14px'><div class='sc-left'><span class='stage-pill s-" + st.name.toLowerCase() + "'>" + st.name + " stage</span><p>" + st.desc + "</p></div><div class='sc-right'><p class='muted' style='margin:0'>" + (st.name === "Build" ? "Focus first on cash flow, an emergency fund, and protection. The <a href='money-plan.html'>money planner</a> and <a href='debt-freedom.html'>debt planner</a> are the right next steps." : "Your foundation is taking shape. This is the stage where it makes sense to talk about what job extra money should do.") + "</p></div></div>" : "";
+
+  document.querySelectorAll(".tab").forEach(function (t) {
+    t.addEventListener("click", function () {
+      tab = t.dataset.t; seen[tab] = true;
+      document.querySelectorAll(".tab").forEach(function (x) { x.classList.toggle("on", x === t); });
+      $("t-growth").hidden = tab !== "growth"; $("t-bank").hidden = tab !== "bank";
+      save();
+    });
+  });
+  $("story").querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () { story = b.dataset.s; $("story").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); growth(); });
+  });
+
+  var G = {};
+  function growth() {
+    var nocap = +$("cap").value >= 15, cap = nocap ? Infinity : +$("cap").value / 100, floor = +$("floor").value / 100, part = +$("part").value / 100, cost = +$("cost").value / 100;
+    $("capv").textContent = nocap ? "No cap" : pc(cap); $("floorv").textContent = pc(floor); $("partv").textContent = Math.round(part * 100) + "%"; $("costv").textContent = pc(cost);
+    var rs = STORIES[story], m = [10000], c = [10000], worstM = 0, worstC = 0, capped = 0;
+    rs.forEach(function (r) {
+      var cr = Math.min(cap, Math.max(floor, r * part));
+      if (r * part > cap) capped += (r * part - cap);
+      var nm = m[m.length - 1] * (1 + r), nc = c[c.length - 1] * (1 + cr) * (1 - cost);
+      worstM = Math.min(worstM, r); worstC = Math.min(worstC, (1 + cr) * (1 - cost) - 1);
+      m.push(nm); c.push(nc);
+    });
+    var W = 640, H = 260, L = 58, Rr = 12, T = 14, B = 30, all = m.concat(c), lo = Math.min.apply(null, all) * 0.95, hi = Math.max.apply(null, all) * 1.05;
+    var X = function (i) { return L + i / 10 * (W - L - Rr); }, Y = function (v) { return T + (1 - (v - lo) / (hi - lo)) * (H - T - B); };
+    var path = function (a) { return a.map(function (v, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); }).join(""); };
+    var g = "";
+    for (var k = 0; k <= 4; k++) { var v = lo + (hi - lo) * k / 4; g += "<line x1='" + L + "' x2='" + (W - Rr) + "' y1='" + Y(v) + "' y2='" + Y(v) + "' class='gl'/><text x='" + (L - 8) + "' y='" + (Y(v) + 4) + "' class='ax' text-anchor='end'>" + usd(v) + "</text>"; }
+    for (var y = 0; y <= 10; y += 2) g += "<text x='" + X(y) + "' y='" + (H - 10) + "' class='ax' text-anchor='middle'>Yr " + y + "</text>";
+    $("gchart").innerHTML = "<svg viewBox='0 0 " + W + " " + H + "' role='img' aria-label='Hypothetical growth of $10,000: market index versus index-linked crediting'>" + g +
+      "<path d='" + path(m) + "' fill='none' stroke='#9aa0a6' stroke-width='2.5'/><path d='" + path(c) + "' class='cur'/></svg>";
+    var fm = m[10], fc = c[10];
+    $("gstats").innerHTML = "<div><span>Market index</span><b>" + usd(fm) + "</b><small>Worst year: " + pc(worstM) + "</small></div><div><span>Index-linked, after costs</span><b>" + usd(fc) + "</b><small>Worst year: " + pc(worstC) + "</small></div>";
+    var lesson;
+    if (fc > fm) lesson = "<b>In this story the floor won.</b> The crash didn't reduce the credited value, so it ended about " + usd(fc - fm) + " ahead, even after costs" + (nocap ? "" : " and the cap") + ".";
+    else if (nocap) lesson = "<b>In this story the market path still ended ahead,</b> by about " + usd(fm - fc) + ". With no cap, the gap comes from policy costs and the participation rate, so compare those closely on any uncapped strategy.";
+    else lesson = "<b>In this story the cap cost more than the floor saved.</b> The market path ended about " + usd(fm - fc) + " ahead. That's the trade: steadier, but you give up the big years.";
+    lesson += worstC < 0 ? " Notice the worst year is still slightly negative: in a 0% year, policy costs still come out." : "";
+    $("glesson").innerHTML = lesson;
+    G = { story: story, fm: fm, fc: fc };
+    save();
+  }
+
+  var B2 = {}, repay = "yes", use = "opp";
+  $("use").querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      use = b.dataset.u; $("use").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      var ret = use === "ret";
+      $("drawF").hidden = !ret; $("drawY").hidden = !ret; $("amtF").hidden = ret; $("repayF").hidden = ret; $("yrsField").hidden = ret || repay === "no";
+      if (ret && n("cv") < 150000) $("cv").value = "250000";
+      if (!ret && n("cv") >= 150000) $("cv").value = "40000";
+      bank();
+    });
+  });
+  $("repay").querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () { repay = b.dataset.r; $("repay").querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); $("yrsField").hidden = repay === "no"; bank(); });
+  });
+  function bank() {
+    if (use === "ret") { retire(); return; }
+    var cv = n("cv"), amt = Math.min(n("amt"), cv), cr = +$("cr").value / 100, lr = +$("lr").value / 100;
+    var yrs = repay === "yes" ? Math.max(Math.round(n("yrsb")), 1) : 10;
+    $("crv").textContent = pc(cr); $("lrv").textContent = pc(lr);
+    var payYr = repay === "yes" ? (lr ? amt * lr / (1 - Math.pow(1 + lr, -yrs)) : amt / yrs) : 0;
+    var cvs = [], loans = [], nets = [], wds = [], L = amt, interest = 0, Wd = cv - amt;
+    for (var t = 0; t <= yrs; t++) {
+      var c = cv * Math.pow(1 + cr, t);
+      if (t > 0) { var i = L * lr; interest += i; L = L + i - payYr; if (L < 0.5) L = 0; }
+      if (t > 0) Wd = Wd * (1 + cr) + payYr;
+      cvs.push(c); loans.push(L); nets.push(c - L); wds.push(Wd);
+    }
+    var kept = amt * (Math.pow(1 + cr, yrs) - 1);
+    var W = 640, H = 260, Lm = 58, Rr = 12, T = 14, B = 30, all = cvs.concat(nets, wds), lo = Math.min.apply(null, all) * 0.9, hi = Math.max.apply(null, all) * 1.05;
+    var X = function (k) { return Lm + k / yrs * (W - Lm - Rr); }, Y = function (v) { return T + (1 - (v - lo) / (hi - lo)) * (H - T - B); };
+    var path = function (a) { return a.map(function (v, k) { return (k ? "L" : "M") + X(k).toFixed(1) + " " + Y(v).toFixed(1); }).join(""); };
+    var g = "";
+    for (var k = 0; k <= 4; k++) { var v = lo + (hi - lo) * k / 4; g += "<line x1='" + Lm + "' x2='" + (W - Rr) + "' y1='" + Y(v) + "' y2='" + Y(v) + "' class='gl'/><text x='" + (Lm - 8) + "' y='" + (Y(v) + 4) + "' class='ax' text-anchor='end'>" + usd(v) + "</text>"; }
+    var step = yrs > 6 ? 2 : 1;
+    for (var y = 0; y <= yrs; y += step) g += "<text x='" + X(y) + "' y='" + (H - 10) + "' class='ax' text-anchor='middle'>Yr " + y + "</text>";
+    $("bchart").innerHTML = "<svg viewBox='0 0 " + W + " " + H + "' role='img' aria-label='Cash value keeps growing while a loan is out'>" + g +
+      "<path d='" + path(wds) + "' fill='none' stroke='#9aa0a6' stroke-width='2.5' stroke-dasharray='2 5'/><path d='" + path(nets) + "' class='need'/><path d='" + path(cvs) + "' class='cur'/></svg>";
+    var endNet = nets[yrs], endWd = wds[yrs];
+    $("bchart").nextElementSibling.innerHTML = "<span><i class='ln'></i>Cash value, still credited on the full amount</span><span><i class='ln need'></i>What's left after the loan</span><span><i class='ln' style='border-top:3px dotted #9aa0a6'></i>If you'd withdrawn it instead (and paid it back the same way)</span>";
+    var diff = endNet - endWd;
+    $("bstats").innerHTML =
+      "<div><span>Cash value after " + yrs + " years</span><b>" + usd(cvs[yrs]) + "</b><small>Still credited on the full " + usd(cv) + "</small></div>" +
+      "<div><span>Loan interest</span><b>" + usd(interest) + "</b><small>" + (repay === "yes" ? "Over " + yrs + " years of paying it back" : "Added to the loan over 10 years") + "</small></div>" +
+      "<div><span>" + (diff >= 0 ? "Ahead of" : "Behind") + " withdrawing it</span><b>" + usd(Math.abs(diff)) + "</b><small>After year " + yrs + (repay === "yes" ? ", paying back the same amounts" : "") + "</small></div>";
+    var lesson;
+    if (repay === "yes") lesson = "<b>You used " + usd(amt) + " and your full " + usd(cv) + " kept growing the whole time.</b> You'd pay about " + usd(interest) + " in loan interest over " + yrs + " years. " + (diff >= 0 ? "Because the money never left, you still end about " + usd(diff) + " ahead of taking it out and paying yourself back the same way." : "In this example the loan rate is higher than the crediting, so you end about " + usd(-diff) + " behind withdrawing it. That's the 'slightly less' growth, and why the crediting versus loan rate matters.");
+    else lesson = "<b>Not paying it back works, as long as the policy stays funded and the loan stays well below the cash value.</b> After 10 years the loan would be about " + usd(loans[yrs]) + " against a cash value of " + usd(cvs[yrs]) + ". Whatever is unpaid comes out of the death benefit." + (loans[yrs] > cvs[yrs] * 0.8 ? " <b>This one is getting close to the cash value, which is where lapse risk starts.</b>" : "");
+    $("blesson").innerHTML = lesson;
+    B2 = { amt: amt, polInt: interest, kept: kept };
+    save();
+  }
+
+  function retire() {
+    var cv = n("cv"), draw = n("draw"), yrs = Math.max(Math.round(n("drawYrs")), 1), cr = +$("cr").value / 100, lr = +$("lr").value / 100;
+    $("crv").textContent = pc(cr); $("lrv").textContent = pc(lr);
+    var cvs = [cv], loans = [0], nets = [cv], c = cv, L = 0, peak = 0;
+    for (var t = 1; t <= yrs; t++) { L = (L + draw) * (1 + lr); c = c * (1 + cr); cvs.push(c); loans.push(L); nets.push(c - L); peak = Math.max(peak, L / c); }
+    var W = 640, H = 260, Lm = 58, Rr = 12, T = 14, B = 30, all = cvs.concat(nets, loans), lo = 0, hi = Math.max.apply(null, all) * 1.05;
+    var X = function (k) { return Lm + k / yrs * (W - Lm - Rr); }, Y = function (v) { return T + (1 - (v - lo) / (hi - lo)) * (H - T - B); };
+    var path = function (a) { return a.map(function (v, k) { return (k ? "L" : "M") + X(k).toFixed(1) + " " + Y(v).toFixed(1); }).join(""); };
+    var g = "";
+    for (var k = 0; k <= 4; k++) { var v = lo + (hi - lo) * k / 4; g += "<line x1='" + Lm + "' x2='" + (W - Rr) + "' y1='" + Y(v) + "' y2='" + Y(v) + "' class='gl'/><text x='" + (Lm - 8) + "' y='" + (Y(v) + 4) + "' class='ax' text-anchor='end'>" + usd(v) + "</text>"; }
+    var step = yrs > 10 ? 5 : yrs > 5 ? 2 : 1;
+    for (var y = 0; y <= yrs; y += step) g += "<text x='" + X(y) + "' y='" + (H - 10) + "' class='ax' text-anchor='middle'>Yr " + y + "</text>";
+    $("bchart").innerHTML = "<svg viewBox='0 0 " + W + " " + H + "' role='img' aria-label='Retirement income from policy loans'>" + g +
+      "<path d='" + path(loans) + "' fill='none' stroke='#9aa0a6' stroke-width='2.5' stroke-dasharray='2 5'/><path d='" + path(nets) + "' class='need'/><path d='" + path(cvs) + "' class='cur'/></svg>";
+    $("bstats").innerHTML = "<div><span>Income you received</span><b>" + usd(draw * yrs) + "</b><small>" + usd(draw) + " a year for " + yrs + " years</small></div>" +
+      "<div><span>Cash value, still credited</span><b>" + usd(cvs[yrs]) + "</b><small>After year " + yrs + "</small></div>" +
+      "<div><span>Loan balance</span><b>" + usd(loans[yrs]) + "</b><small>Comes out of the death benefit</small></div>";
+    $("blesson").innerHTML = peak > 0.85 ? "<b>This draws too hard.</b> By year " + yrs + " the loan is " + Math.round(loans[yrs] / cvs[yrs] * 100) + "% of the cash value. Past that point the policy can lapse, which can turn years of untaxed loans into a tax bill. Take less per year or for fewer years."
+      : "<b>" + usd(draw) + " a year of retirement income for " + yrs + " years, while the cash value keeps growing.</b> The loan builds up over time and is settled from the death benefit, so your family still receives what's left. The key is keeping the loan well below the cash value for life.";
+    $("bchart").nextElementSibling.innerHTML = "<span><i class='ln'></i>Cash value, still credited</span><span><i class='ln need'></i>What's left after the loans</span><span><i class='ln' style='border-top:3px dotted #9aa0a6'></i>Loan balance</span>";
+    B2 = { amt: draw * yrs, polInt: loans[yrs] - draw * yrs, kept: 0, ret: true };
+    save();
+  }
+
+  function save() {
+    var lines = [];
+    if (seen.growth && G.story) lines.push("Protected growth: tried the '" + ({ early: "crash early", late: "crash late", strong: "strong decade", flat: "choppy decade" })[G.story] + "' story");
+    if (seen.bank && B2.amt) lines.push(B2.ret ? "Retirement income: explored " + usd(B2.amt) + " of income from policy loans" : "Opportunity fund: explored borrowing " + usd(B2.amt) + " (loan interest " + usd(B2.polInt) + ")");
+    lines.push("Stage: " + st.name);
+    MB.saveResult("iul", { title: "Protected growth and being your own bank", url: "iul-explained.html", headline: "Explored " + (seen.bank ? "both IUL ideas" : "protected market-linked growth") + ".", lines: lines });
+  }
+  ["cap", "floor", "part", "cost"].forEach(function (id) { $(id).addEventListener("input", growth); });
+  ["amt", "cv", "yrsb", "lr", "cr", "draw", "drawYrs"].forEach(function (id) { $(id).addEventListener("input", bank); });
+  document.querySelectorAll("form").forEach(function (f) { f.addEventListener("submit", function (e) { e.preventDefault(); }); });
+  growth(); bank();
+  MB.sendBox("sendBox", "iul", "what you explored");
+})();
+</script>
+</body>
+</html>

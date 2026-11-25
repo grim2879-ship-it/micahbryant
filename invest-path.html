@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Path | Micah Bryant</title>
+<meta name="description" content="What changed in the economy this week, and what it can mean for your household or business. Educational, not advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.jr-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 26px}
+.jr-chip{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:8px 15px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.jr-chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.mk-for{margin-top:14px;padding:12px 16px;background:var(--paper-2);border-radius:8px;font-size:16px}
+.mk-for b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:3px}
+.mk-for+.mk-for{margin-top:8px}
+.calc2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.calc2 label{font-size:14px;color:var(--ink-2);display:block;margin-bottom:4px}
+.calc2 input{width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid var(--rule);border-radius:8px;font:inherit;background:#fff}
+.calc2-out{font-size:17px}.calc2-out b{font-family:var(--serif);font-size:30px;font-weight:500;display:block}
+@media(max-width:600px){.calc2{grid-template-columns:1fr}}
+</style>
+<style>
+.pth-goal{font-family:var(--serif);font-size:22px;color:var(--green);margin:-6px 0 24px}
+.pth-step{display:flex;gap:16px;background:#fff;border:1px solid var(--rule);border-radius:10px;padding:20px 22px;margin-bottom:12px}
+.pth-step.done{opacity:.6}.pth-step.done h3{text-decoration:line-through}
+.pth-num{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--green)}
+.pth-step.done .pth-num{background:var(--green);color:#fff}
+.pth-step h3{font-size:21px;margin:2px 0 6px}.pth-step p{margin:0 0 10px;color:var(--ink-2)}
+.pth-tick{font-size:14px;color:var(--ink-2);cursor:pointer;display:inline-flex;gap:6px;align-items:center;margin-left:14px}
+.pth-bar{height:8px;background:var(--paper-2);border-radius:5px;overflow:hidden;margin:4px 0 26px}.pth-bar i{display:block;height:100%;background:var(--green)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <div class="nav-links">
+      <a href="index.html#free">Free tools</a>
+      <a href="my-plan.html">Your plan</a>
+      <a href="stress-test.html">Stress test</a>
+    </div>
+  </div>
+</nav>
+<section style="padding-top:72px">
+  <div class="wrap" style="max-width:820px">
+    <div class="eyebrow">Your path</div>
+    <div class="jr-chips" id="jr"></div>
+    <h1 style="font-size:clamp(34px,5vw,50px)" id="ttl"></h1>
+    <p class="pth-goal" id="goal"></p>
+    <div style="font-size:14px;color:var(--ink-2)" id="prog"></div>
+    <div class="pth-bar"><i id="bar"></i></div>
+    <div id="steps"></div>
+
+    <div class="mk-item" style="margin-top:28px">
+      <div class="eyebrow" style="margin-bottom:8px">This week for you</div>
+      <div id="week"></div>
+      <p style="margin:12px 0 0"><a href="market.html" id="weeklink">Read this week's full update &rarr;</a></p>
+    </div>
+
+    <div class="mk-item" style="background:var(--green-tint);border-color:transparent">
+      <h3>Want help with the next step?</h3>
+      <p>We'll look at where you are on this path, what to strengthen first, and what keeps your money working toward the milestone you care about. No pressure, and you decide what happens next.</p>
+      <p style="margin:18px 0 0"><a class="btn" href="book.html?utm_source=WEBSITE-PATH">Book a review</a></p>
+    </div>
+    <p class="muted" style="font-size:14px">Educational guidance about building your financial foundation. Not investment, tax or legal advice, and not a recommendation to buy or sell anything.</p>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a href="stress-test.html">Stress test</a>
+        <a href="book.html">Book a review</a>
+        <a data-link="youtubeUrl" href="#">YouTube</a>
+        <a href="careers.html">Careers in financial services</a>
+      </div>
+      <div>&copy; <span id="year"></span> Micah Bryant</div>
+    </div>
+    <p class="disclosure">Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state. Content on this site is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script src="weekly.js"></script>
+<script src="paths.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var J = window.JOURNEYS, W = window.WEEKLY;
+  var j = (location.search.match(/j=(\w+)/) || [])[1] || (window.MB && MB.get("journey")) || "ret";
+  if (!J[j]) j = "ret";
+  var done = {}; try { done = JSON.parse((window.MB && MB.get("pathDone")) || "{}"); } catch (e) {}
+  function render() {
+    var P = J[j], d = done[j] || {};
+    document.title = P.n + " | Your Path | Micah Bryant";
+    $("jr").innerHTML = Object.keys(J).map(function (k) { return "<button type='button' class='jr-chip" + (k === j ? " on" : "") + "' data-j='" + k + "'>" + J[k].n + "</button>"; }).join("");
+    $("jr").querySelectorAll("button").forEach(function (b) { b.onclick = function () { j = b.getAttribute("data-j"); if (window.MB) MB.set("journey", j); history.replaceState(null, "", "?j=" + j); render(); }; });
+    $("ttl").textContent = P.n; $("goal").textContent = P.goal;
+    var n = P.steps.filter(function (s, i) { return d[i]; }).length;
+    $("prog").textContent = n + " of " + P.steps.length + " steps in place"; $("bar").style.width = (n / P.steps.length * 100) + "%";
+    $("steps").innerHTML = P.steps.map(function (s, i) {
+      return "<div class='pth-step" + (d[i] ? " done" : "") + "'><div class='pth-num'>" + (d[i] ? "&#10003;" : i + 1) + "</div><div><h3>" + s[0] + "</h3><p>" + s[1] + "</p><a href='" + s[2] + "'>" + s[3] + " &rarr;</a><label class='pth-tick'><input type='checkbox' data-i='" + i + "'" + (d[i] ? " checked" : "") + "> Already in place</label></div></div>";
+    }).join("");
+    $("steps").querySelectorAll("input").forEach(function (c) { c.onchange = function () { done[j] = done[j] || {}; done[j][c.getAttribute("data-i")] = c.checked; if (window.MB) MB.set("pathDone", JSON.stringify(done)); render(); }; });
+    var notes = W.items.filter(function (it) { return it.for[j]; }).map(function (it) { return "<div class='mk-for'><b>" + it.h + "</b>" + it.for[j] + "</div>"; }).join("");
+    $("week").innerHTML = "<div class='mk-src' style='margin:0 0 10px'>As of " + W.asof + "</div>" + notes;
+    $("weeklink").href = "market.html?j=" + j;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
