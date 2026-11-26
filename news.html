@@ -25,6 +25,7 @@
 @media(max-width:980px){.nw-board{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.nw-clock{text-align:left}.nw-board{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -24px 18px;padding:0 24px}.nw-tile{flex:0 0 62%;scroll-snap-align:start}}
 /* next up */
+.nw-next .lbl{color:var(--gold)}
 .nw-next{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;background:var(--green);color:#fff;border-radius:12px;padding:18px 22px;margin-bottom:22px}
 .nw-next .lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.8;font-weight:700}
 .nw-next h3{color:#fff;margin:2px 0 0;font-size:22px}
@@ -56,7 +57,7 @@
 .cal tr.ev.past{color:var(--ink-3)}
 .cal tr.ev.past .imp i{opacity:.45}
 .cal tr.ev.open{background:#fbf9f4}
-.cal tr.ev.mine td.nm b::after{content:"For you";margin-left:8px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--green-tint);color:var(--green);border-radius:10px;padding:2px 7px;vertical-align:2px}
+.cal tr.ev.mine td.nm b::after{content:"For you";margin-left:8px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--gold-tint);color:var(--gold-2);border-radius:10px;padding:2px 7px;vertical-align:2px}
 .cal tr.hol td{color:var(--ink-3);font-style:italic;cursor:default}
 .cal td.tm{white-space:nowrap;width:78px;font-variant-numeric:tabular-nums}
 .cal td.nm b{font-weight:600}

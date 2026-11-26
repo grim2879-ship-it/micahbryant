@@ -39,7 +39,7 @@
   // ---- board ----
   $("board").innerHTML = (W.board || []).map(function (b) {
     var v = String(b[1]), cls = /^[−-]/.test(v) ? "dn" : /^\+/.test(v) ? "up" : "";
-    return "<div class='nw-tile' title='" + esc(b[2]) + "'><small>" + esc(b[0]) + "</small><b class='" + cls + "'>" + esc(v) + "</b><span>" + esc(b[2]) + "</span></div>";
+    return "<div class='nw-tile' title='" + esc(b[2]) + "'><small>" + esc(b[0]) + "</small><b class='" + cls + "' data-count-text='" + esc(v) + "'>" + esc(v) + "</b><span>" + esc(b[2]) + "</span></div>";
   }).join("");
 
   // ---- next up countdown ----
