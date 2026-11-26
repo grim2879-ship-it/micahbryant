@@ -30,3 +30,9 @@
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 })();
+
+// On phones the menu scrolls sideways: keep the current page's link in view
+(function () {
+  var on = document.querySelector(".nav-links a.on"), bar = on && on.parentNode;
+  if (on && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = on.offsetLeft - 24;
+})();
