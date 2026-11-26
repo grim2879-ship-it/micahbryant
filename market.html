@@ -45,21 +45,7 @@
     <div class="jr-chips" id="jr"></div>
     <div id="items"></div>
 
-    <div class="mk-item" id="homes">
-      <h3>What a rate change does to a payment</h3>
-      <p class="muted" style="margin:0">Two numbers: the price and the rate.</p>
-      <p class="mk-rate" id="ratenote"></p>
-      <div class="calc2">
-        <div><label for="pr">Amount you'd borrow</label><input id="pr" inputmode="numeric" value="350000"></div>
-        <div><label for="rt">Interest rate (%)</label><input id="rt" inputmode="decimal" value="6.75"></div>
-      </div>
-      <div class="calc2 calc2-out">
-        <div>Monthly payment<b id="pay"></b></div>
-        <div>Each half-point higher adds<b id="half"></b></div>
-      </div>
-      <div class="mk-src">Principal and interest on a 30-year fixed loan. Taxes, insurance and any HOA come on top. An estimate, not a quote.</div>
-    </div>
-
+    <div id="tool"></div>
     <div class="mk-item mk-cta">
       <h3>See your whole path</h3>
       <p id="pathline">Pick where you are above, and see the steps that strengthen your foundation and keep your money working toward your next milestone.</p>
@@ -89,6 +75,7 @@
 <script src="shared.js"></script>
 <script src="weekly.js"></script>
 <script src="paths.js"></script>
+<script src="tools.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -110,15 +97,9 @@
     $("pathbtn").href = "invest-path.html" + (J[j] ? "?j=" + j : "");
     $("pathline").textContent = J[j] ? J[j].pitch : "Pick where you are above, and see the steps that strengthen your foundation and keep your money working toward your next milestone.";
   }
-  if (W.rate && W.rate.v) { $("rt").value = W.rate.v; $("ratenote").textContent = "Starts at this week's average 30-year fixed rate, " + W.rate.v + "% (" + W.rate.src + "). Change it to your own quote."; }
-  function pmt() {
-    var p = parseFloat(String($("pr").value).replace(/[^0-9.]/g, "")) || 0, r = parseFloat($("rt").value) || 0;
-    var f = function (rate) { var i = rate / 100 / 12, n = 360; return i ? p * i / (1 - Math.pow(1 + i, -n)) : p / n; };
-    var a = f(r), b = f(r + 0.5), u = function (v) { return "$" + Math.round(v).toLocaleString("en-US"); };
-    $("pay").textContent = u(a) + "/mo"; $("half").textContent = u(b - a) + "/mo";
-  }
-  $("pr").oninput = pmt; $("rt").oninput = pmt;
-  render(); pmt();
+  if (location.hash === "#homes") { location.replace("calculators.html#rate"); return; }
+  var wk = window.MBT.thisWeek(); window.MBT.render($("tool"), wk.id, { eyebrow: "This week's tool", why: wk.why });
+  render();
 })();
 </script>
 </body>

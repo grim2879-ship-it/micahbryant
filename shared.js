@@ -313,7 +313,7 @@
     [/(full )?employer match/i, "retirement-accounts.html"],
     [/stress test/i, "stress-test.html"],
     [/(emergency |your |a )?cushion/i, "stress-test.html"],
-    [/(what (a|each) (one-point|half-point) change does to your payment|your payment)/i, "market.html#homes"],
+    [/(what (a|each) (one-point|half-point) change does to your payment|your payment)/i, "calculators.html#rate"],
     [/beneficiar(y|ies)/i, "life-events.html"],
     [/life insurance|coverage sized/i, "dime-calculator.html"],
     [/credit cards|variable-rate debt/i, "debt-freedom.html"],

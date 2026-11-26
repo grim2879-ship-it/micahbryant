@@ -9,6 +9,10 @@
 //  Rules: say what changed, with sources. No predictions, no buy/sell,
 //  no tickers. "for" lines say what it can mean, never what to buy.
 //
+//  tool:     this week's quick calculator from tools.js, and one sentence on
+//            why it matters this week. Pick from the quarter's list in
+//            tools.js (Q4: yearend, workcover, buckets, coverage), or "rate"
+//            in a week when rates moved or the Fed meets.
 //  rate:     this week's average 30-year fixed mortgage rate, or v: null
 //            if no named source gave one. Starts the payment calculator.
 //  board:    a few numbers people feel: [label, value, note]
@@ -22,6 +26,7 @@
 // ============================================================
 window.WEEKLY = {
   asof: "Monday, November 23, 2026",
+  tool: { id: "workcover", why: "Open enrollment is open at many jobs right now, and it's the one time a year to check what your coverage at work would actually replace." },
   rate: { v: null, src: "" },
   board: [
     ["10-year Treasury yield", "4.90%", "Nov 25. Mortgage rates tend to follow it."],
@@ -41,12 +46,12 @@ window.WEEKLY = {
       what: "Two monthly measures of how home prices are changing across the country.",
       why: "Home prices and mortgage rates together decide what a home costs per month.",
       for: { buy: "Price and rate are the two numbers that set your payment.", own: "Rising values can mean a higher assessment, and higher property taxes, later." },
-      tool: ["market.html#homes", "Payment at this week's rate"], src: "Scan calendar (Kiplinger, FXStreet)" },
+      tool: ["calculators.html#rate", "Payment at this week's rate"], src: "Scan calendar (Kiplinger, FXStreet)" },
     { at: "2026-11-25T07:00:00-05:00", imp: 1, topic: "housing", name: "Mortgage applications (MBA)", act: "", fc: "", prev: "\u22122.3%",
       what: "A weekly count of people applying for mortgages and refinances.",
       why: "It shows how buyers are reacting to rates right now.",
       for: { buy: "Fewer applications can mean less competition. Know your payment before you shop." },
-      tool: ["market.html#homes", "Payment at this week's rate"], src: "Reuters-sourced calendar" },
+      tool: ["calculators.html#rate", "Payment at this week's rate"], src: "Reuters-sourced calendar" },
     { at: "2026-11-25T08:30:00-05:00", imp: 3, topic: "inflation", name: "Core PCE inflation (October, monthly)", act: "", fc: "0.3%", prev: "0.3%",
       what: "The Fed's preferred measure of underlying inflation. Core leaves out food and energy, though you still pay for both.",
       why: "This is the number the Fed watches most before its December decision. Higher inflation can keep rates high, which reaches mortgages, credit cards and savings rates.",
@@ -75,12 +80,12 @@ window.WEEKLY = {
       what: "Permits for new homes, a forward look at how many will be built.",
       why: "Fewer new homes can keep prices high where supply is already tight.",
       for: { buy: "Tight supply is part of why prices hold up even with high rates." },
-      tool: ["market.html#homes", "Payment at this week's rate"], src: "Reuters-sourced calendar" },
+      tool: ["calculators.html#rate", "Payment at this week's rate"], src: "Reuters-sourced calendar" },
     { at: "2026-11-25T10:00:00-05:00", imp: 2, topic: "housing", name: "New home sales (October)", act: "", fc: "650K", prev: "676K",
       what: "How many newly built homes sold last month, at an annual pace.",
       why: "It shows how buyers are handling today's prices and rates.",
       for: { buy: "If sales slow, builders sometimes offer incentives. Compare the payment, not just the price.", own: "Slower sales nearby can affect what similar homes sell for." },
-      tool: ["market.html#homes", "Payment at this week's rate"], src: "Reuters-sourced calendar" },
+      tool: ["calculators.html#rate", "Payment at this week's rate"], src: "Reuters-sourced calendar" },
     { at: "2026-11-25T10:30:00-05:00", imp: 1, topic: "energy", name: "Crude oil inventories (EIA)", act: "", fc: "", prev: "+3.38M bbl",
       what: "How much crude oil is stored in the U.S. this week.",
       why: "More oil in storage can ease prices at the pump over time.",
@@ -105,7 +110,7 @@ window.WEEKLY = {
       what: "The Fed decides whether to raise, hold or cut its key interest rate.",
       why: "As of Nov 23, markets priced an 88.6% chance of a quarter-point hike. That's a market estimate, not a decision. The rate reaches credit cards, home equity lines, savings accounts and CDs.",
       for: { ret: "Nothing about your contributions needs to change because of one Fed meeting.", near: "Higher rates can mean better yields on safer money and better income rates on some annuities. Know what you're offered before you lock anything in.", buy: "Mortgage quotes can move before and after the decision. Know your payment at a half point higher.", own: "A fixed-rate mortgage doesn't change. Variable-rate debt like a home equity line or credit cards can cost more.", rent: "Loans that reset or need refinancing soon would likely reset higher." },
-      tool: ["market.html#homes", "Payment at this week's rate"], src: "FXStreet, Reuters" }
+      tool: ["calculators.html#rate", "Payment at this week's rate"], src: "FXStreet, Reuters" }
   ],
   items: [
     {
