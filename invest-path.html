@@ -10,19 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-.jr-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 26px}
-.jr-chip{background:#fff;border:1px solid var(--rule);border-radius:20px;padding:8px 15px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
-.jr-chip.on{background:var(--green);border-color:var(--green);color:#fff}
-.mk-for{margin-top:14px;padding:12px 16px;background:var(--paper-2);border-radius:8px;font-size:16px}
-.mk-for b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:3px}
-.mk-for+.mk-for{margin-top:8px}
-.calc2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
-.calc2 label{font-size:14px;color:var(--ink-2);display:block;margin-bottom:4px}
-.calc2 input{width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid var(--rule);border-radius:8px;font:inherit;background:#fff}
-.calc2-out{font-size:17px}.calc2-out b{font-family:var(--serif);font-size:30px;font-weight:500;display:block}
-@media(max-width:600px){.calc2{grid-template-columns:1fr}}
-</style>
-<style>
 .pth-goal{font-family:var(--serif);font-size:22px;color:var(--green);margin:-6px 0 24px}
 .pth-step{display:flex;gap:16px;background:#fff;border:1px solid var(--rule);border-radius:10px;padding:20px 22px;margin-bottom:12px}
 .pth-step.done{opacity:.6}.pth-step.done h3{text-decoration:line-through}
@@ -30,17 +17,27 @@
 .pth-step.done .pth-num{background:var(--green);color:#fff}
 .pth-step h3{font-size:21px;margin:2px 0 6px}.pth-step p{margin:0 0 10px;color:var(--ink-2)}
 .pth-tick{font-size:14px;color:var(--ink-2);cursor:pointer;display:inline-flex;gap:6px;align-items:center;margin-left:14px}
-.pth-bar{height:8px;background:var(--paper-2);border-radius:5px;overflow:hidden;margin:4px 0 26px}.pth-bar i{display:block;height:100%;background:var(--green)}
+.pth-res{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:2px 0 10px;padding:10px 14px;background:var(--green-tint);border-radius:8px;font-size:15px}
+.pth-res b{color:var(--green)}.pth-res a{font-size:14px;margin-left:auto}
+.pth-step.done.auto{opacity:1}.pth-step.done.auto h3{text-decoration:none}
+.pth-next{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 14px 30px -22px rgba(168,122,31,.6)}
+.pth-next .pth-num{border-color:var(--gold);color:var(--gold-2)}
+.pth-tag{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--gold-2);background:var(--gold-tint);border-radius:10px;padding:2px 8px;margin-bottom:6px}
+.pth-bar{height:8px;background:var(--paper-2);border-radius:5px;overflow:hidden;margin:4px 0 26px}.pth-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--green-2));transition:width .6s cubic-bezier(.2,.7,.2,1)}
 </style>
 </head>
 <body>
 <nav class="nav">
   <div class="wrap">
     <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <a class="btn small nav-book" href="book.html">Book</a>
     <div class="nav-links">
+      <a href="index.html#paths" class="on">Find your path</a>
       <a href="index.html#free">Free tools</a>
+      <a href="market.html">This week</a>
+      <a href="news.html">News</a>
       <a href="my-plan.html">Your plan</a>
-      <a href="stress-test.html">Stress test</a>
+      <a class="btn small" href="book.html">Book a review</a>
     </div>
   </div>
 </nav>
@@ -54,13 +51,13 @@
     <div class="pth-bar"><i id="bar"></i></div>
     <div id="steps"></div>
 
-    <div class="mk-item" style="margin-top:28px">
+    <div class="mk-item" style="margin-top:28px" id="weekbox">
       <div class="eyebrow" style="margin-bottom:8px">This week for you</div>
       <div id="week"></div>
-      <p style="margin:12px 0 0"><a href="market.html" id="weeklink">Read this week's full update &rarr;</a></p>
+      <p style="margin:14px 0 0"><a href="market.html" id="weeklink">Read this week's full update &rarr;</a> &nbsp;&middot;&nbsp; <a href="news.html" id="newslink">See the calendar &rarr;</a></p>
     </div>
 
-    <div class="mk-item" style="background:var(--green-tint);border-color:transparent">
+    <div class="mk-item mk-cta">
       <h3>Want help with the next step?</h3>
       <p>We'll look at where you are on this path, what to strengthen first, and what keeps your money working toward the milestone you care about. No pressure, and you decide what happens next.</p>
       <p style="margin:18px 0 0"><a class="btn" href="book.html?utm_source=WEBSITE-PATH">Book a review</a></p>
@@ -101,15 +98,21 @@
     $("jr").innerHTML = Object.keys(J).map(function (k) { return "<button type='button' class='jr-chip" + (k === j ? " on" : "") + "' data-j='" + k + "'>" + J[k].n + "</button>"; }).join("");
     $("jr").querySelectorAll("button").forEach(function (b) { b.onclick = function () { j = b.getAttribute("data-j"); if (window.MB) MB.set("journey", j); history.replaceState(null, "", "?j=" + j); render(); }; });
     $("ttl").textContent = P.n; $("goal").textContent = P.goal;
-    var n = P.steps.filter(function (s, i) { return d[i]; }).length;
-    $("prog").textContent = n + " of " + P.steps.length + " steps in place"; $("bar").style.width = (n / P.steps.length * 100) + "%";
+    var res = P.steps.map(function (s) { return window.MB ? MB.stepResult(s[2]) : null; });
+    var isDone = function (i) { return !!(res[i] || d[i]); };
+    var n = P.steps.filter(function (s, i) { return isDone(i); }).length;
+    var nextI = -1; P.steps.some(function (s, i) { if (!isDone(i)) { nextI = i; return true; } });
+    $("prog").textContent = n + " of " + P.steps.length + " steps in place" + (n === P.steps.length ? ". Your foundation for this path is in place." : ""); $("bar").style.width = (n / P.steps.length * 100) + "%";
     $("steps").innerHTML = P.steps.map(function (s, i) {
-      return "<div class='pth-step" + (d[i] ? " done" : "") + "'><div class='pth-num'>" + (d[i] ? "&#10003;" : i + 1) + "</div><div><h3>" + s[0] + "</h3><p>" + s[1] + "</p><a href='" + s[2] + "'>" + s[3] + " &rarr;</a><label class='pth-tick'><input type='checkbox' data-i='" + i + "'" + (d[i] ? " checked" : "") + "> Already in place</label></div></div>";
+      var r = res[i], cls = "pth-step" + (isDone(i) ? " done" : "") + (r ? " auto" : "") + (i === nextI ? " pth-next" : "");
+      var body = r
+        ? "<div class='pth-res'><b>&#10003; From your " + r.title.replace(/^One Bad Tuesday /, "") + ":</b> " + (r.headline || "Done.") + "<a href='" + s[2] + "'>Update &rarr;</a></div>"
+        : "<a href='" + s[2] + "'>" + s[3] + " &rarr;</a><label class='pth-tick'><input type='checkbox' data-i='" + i + "'" + (d[i] ? " checked" : "") + "> Already in place</label>";
+      return "<div class='" + cls + "'><div class='pth-num'>" + (isDone(i) ? "&#10003;" : i + 1) + "</div><div>" + (i === nextI ? "<span class='pth-tag'>Your next step</span>" : "") + "<h3>" + s[0] + "</h3><p>" + s[1] + "</p>" + body + "</div></div>";
     }).join("");
-    $("steps").querySelectorAll("input").forEach(function (c) { c.onchange = function () { done[j] = done[j] || {}; done[j][c.getAttribute("data-i")] = c.checked; if (window.MB) MB.set("pathDone", JSON.stringify(done)); render(); }; });
-    var notes = W.items.filter(function (it) { return it.for[j]; }).map(function (it) { return "<div class='mk-for'><b>" + it.h + "</b>" + it.for[j] + "</div>"; }).join("");
+    var notes = W.items.filter(function (it) { return it.for[j]; }).map(function (it) { return "<div class='mk-for'><b>" + it.h + "</b>" + (window.MB && MB.linkify ? MB.linkify(it.for[j]) : it.for[j]) + "</div>"; }).join("");
     $("week").innerHTML = "<div class='mk-src' style='margin:0 0 10px'>As of " + W.asof + "</div>" + notes;
-    $("weeklink").href = "market.html?j=" + j;
+    $("weeklink").href = "market.html?j=" + j; $("newslink").href = "news.html?j=" + j;
   }
   render();
 })();

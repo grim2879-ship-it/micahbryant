@@ -34,7 +34,7 @@ window.JOURNEYS = {
   buy: { n: "Buying a home", goal: "A home that doesn't stretch everything else",
     pitch: "Buying with a payment you can carry and a cushion left over.",
     steps: [
-      ["Know the payment at today's rate", "Price and rate are enough to see the monthly payment, and what each half-point change does to it.", "market.html#homes", "Payment at this week's rate"],
+      ["Know the payment at today's rate", "Price and rate are enough to see the monthly payment, and what each half-point change does to it.", "calculators.html#rate", "Payment at this week's rate"],
       ["Keep the down payment out of the market", "Money you need within a year or two shouldn't be able to drop 10% the month you need it.", "money-plan.html", "Give every dollar a job"],
       ["Still have a cushion after closing", "Many buyers put everything into the down payment. The first water heater shows why that hurts.", "stress-test.html", "Take the stress test"],
       ["Protect the mortgage", "If something happened to you, could your family keep the house? Coverage sized to the mortgage answers that.", "dime-calculator.html", "Life insurance calculator"],
@@ -53,7 +53,7 @@ window.JOURNEYS = {
     pitch: "Keeping your rentals working for you through vacancies, rate changes and life.",
     steps: [
       ["Keep reserves you can reach at full value", "Property cash that isn't invested in the market, so a vacancy or a roof never forces a bad decision.", "stress-test.html", "Take the stress test"],
-      ["Know what a rate reset would do", "If a loan resets or needs refinancing soon, price and rate are enough to see the new payment.", "market.html#homes", "Payment at this week's rate"],
+      ["Know what a rate reset would do", "If a loan resets or needs refinancing soon, price and rate are enough to see the new payment.", "calculators.html#rate", "Payment at this week's rate"],
       ["Cover the debt in your name", "If something happened to you, your family would keep paying the loans or sell, possibly at a bad time. Coverage sized to that debt gives them time.", "dime-calculator.html", "Life insurance calculator"],
       ["Make sure someone could run it without you", "A manager, a partner or a family member who knows the tenants, the loans and the accounts. Write it down.", "life-events.html", "Life event planner"],
       ["Count rental income toward your number", "Rental income you can rely on lowers what your savings need to reach.", "independence-number.html", "Find your Independence Number"]

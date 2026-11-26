@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News and Economic Calendar | Micah Bryant</title>
+<meta name="description" content="The week's economic calendar in plain English: what's coming out, when, and what it can mean for your retirement, your home and your plan. Educational, not advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.nw-wrap{max-width:1080px}
+.nw-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}
+.nw-head h1{font-size:clamp(34px,5vw,52px);margin:0}
+.nw-clock{font-size:14px;color:var(--ink-2);text-align:right}
+.nw-clock b{display:block;font-family:var(--serif);font-size:24px;font-weight:500;color:var(--ink)}
+/* board */
+.nw-board{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:0 0 18px}
+.nw-tile{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;position:relative;cursor:default}
+.nw-tile small{display:block;font-size:12px;color:var(--ink-3);font-weight:600;letter-spacing:.03em}
+.nw-tile b{display:block;font-family:var(--serif);font-size:26px;font-weight:500;line-height:1.2;margin:2px 0}
+.nw-tile span{display:block;font-size:12px;color:var(--ink-2);line-height:1.35}
+.nw-tile b.dn{color:var(--red)}.nw-tile b.up{color:var(--green)}
+@media(max-width:980px){.nw-board{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.nw-clock{text-align:left}.nw-board{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -24px 18px;padding:0 24px}.nw-tile{flex:0 0 62%;scroll-snap-align:start}}
+/* next up */
+.nw-next .lbl{color:var(--gold)}
+.nw-next{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;background:var(--green);color:#fff;border-radius:12px;padding:18px 22px;margin-bottom:22px}
+.nw-next .lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.8;font-weight:700}
+.nw-next h3{color:#fff;margin:2px 0 0;font-size:22px}
+.nw-cd{display:flex;gap:10px;margin-left:auto}
+.nw-cd div{background:rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;text-align:center;min-width:58px}
+.nw-cd b{display:block;font-family:var(--serif);font-size:26px;font-weight:500;line-height:1.1}
+.nw-cd small{font-size:11px;opacity:.8;text-transform:uppercase;letter-spacing:.06em}
+/* controls */
+.nw-ctrl{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:0 0 12px}
+.nw-ctrl .grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.nw-ctrl .grp>span{font-size:13px;color:var(--ink-3);margin-right:2px}
+.tg{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink-2)}
+.tg.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin:8px 0 0}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;font:inherit;font-size:15px;font-weight:600;color:var(--ink-3);cursor:pointer}
+.tabs button.on{color:var(--ink);border-color:var(--green)}
+.tabs button small{font-weight:400;margin-left:4px}
+/* calendar table */
+.cal{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--rule);border-top:0;font-size:15px}
+.cal th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:700;text-align:left;padding:10px 12px;background:var(--paper-2);border-bottom:1px solid var(--rule)}
+.cal td{padding:11px 12px;border-bottom:1px solid #eee7da;vertical-align:middle}
+.cal .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cal th.num{text-align:right}
+.cal tr.day td{background:var(--paper);font-weight:700;font-size:14px;padding:9px 12px;color:var(--ink)}
+.cal tr.day.today td{background:var(--green-tint);color:var(--green)}
+.cal tr.day td em{font-style:normal;font-weight:400;color:var(--ink-3);margin-left:8px}
+.cal tr.ev{cursor:pointer;transition:background .12s}
+.cal tr.ev:hover{background:#fbf9f4}
+.cal tr.ev.past{color:var(--ink-3)}
+.cal tr.ev.past .imp i{opacity:.45}
+.cal tr.ev.open{background:#fbf9f4}
+.cal tr.ev.mine td.nm b::after{content:"For you";margin-left:8px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--gold-tint);color:var(--gold-2);border-radius:10px;padding:2px 7px;vertical-align:2px}
+.cal tr.hol td{color:var(--ink-3);font-style:italic;cursor:default}
+.cal td.tm{white-space:nowrap;width:78px;font-variant-numeric:tabular-nums}
+.cal td.nm b{font-weight:600}
+.cal td.ar{width:26px;color:var(--ink-3);text-align:center}
+.cal tr.open td.ar{transform:rotate(90deg)}
+.imp{display:inline-flex;gap:2px;vertical-align:middle}
+.imp i{width:6px;height:16px;border-radius:2px;background:var(--rule)}
+.imp.l3 i{background:var(--red)}.imp.l2 i:nth-child(-n+2){background:var(--amber)}.imp.l1 i:first-child{background:#c9b88f}
+.pend{color:var(--ink-3);font-size:13px}
+.cal tr.now td{padding:0;border:0}
+.cal tr.now td div{height:2px;background:var(--red);position:relative}
+.cal tr.now td div::before{content:"Now";position:absolute;left:8px;top:-9px;background:var(--red);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:8px}
+.cal tr.det td{background:#fbf9f4;padding:4px 18px 20px 102px}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 28px}
+.det-grid h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin:10px 0 4px;font-family:var(--sans)}
+.det-grid p{margin:0;font-size:15px;color:var(--ink-2)}
+.det-for{grid-column:1/-1}
+.det-for .mk-for{margin-top:8px}
+.det-foot{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-size:14px}
+.det-foot .src{color:var(--ink-3);font-size:13px;margin-left:auto}
+.cal-empty{background:#fff;border:1px solid var(--rule);border-top:0;padding:28px;text-align:center;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px;color:var(--ink-2);margin:10px 0 0}
+.legend span{display:inline-flex;gap:7px;align-items:center}
+@media(max-width:760px){
+  .cal thead{display:none}
+  .cal td.fc,.cal td.pv,.cal td.ar{display:none}
+  .cal td{padding:10px 8px}
+  .cal td.tm{width:58px;font-size:13px}
+  .cal tr.det td{padding:4px 12px 18px}
+  .det-grid{grid-template-columns:1fr}
+  .det-nums{display:block!important}
+}
+.det-nums{display:none;font-size:14px;color:var(--ink-2);grid-column:1/-1}
+/* headlines */
+.hl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.hl{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:18px 20px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.hl:hover{border-color:var(--green)}
+.hl h3{font-size:20px;margin:0 0 8px}
+.hl p{font-size:15px;color:var(--ink-2);margin:0 0 10px;flex:1}
+.hl span{font-size:14px;color:var(--green);font-weight:600}
+@media(max-width:860px){.hl-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">Micah Bryant <span>Financial Strategy</span></a>
+    <a class="btn small nav-book" href="book.html">Book</a>
+    <div class="nav-links">
+      <a href="index.html#paths">Find your path</a>
+      <a href="index.html#free">Free tools</a>
+      <a href="market.html">This week</a>
+      <a href="news.html" class="on">News</a>
+      <a href="my-plan.html">Your plan</a>
+      <a class="btn small" href="book.html">Book a review</a>
+    </div>
+  </div>
+</nav>
+
+<section style="padding-top:56px">
+  <div class="wrap nw-wrap">
+    <div class="nw-head">
+      <div>
+        <div class="eyebrow">News and economic calendar</div>
+        <h1>What's moving money, and when.</h1>
+      </div>
+      <div class="nw-clock">Eastern Time<b id="clock"></b><span id="asof"></span></div>
+    </div>
+
+    <div class="nw-board" id="board"></div>
+    <div class="nw-next" id="next" hidden></div>
+
+    <div class="nw-ctrl">
+      <div class="grp"><span>Show it for</span><span id="jr" style="display:contents"></span></div>
+    </div>
+    <div class="nw-ctrl">
+      <div class="grp" id="impf"><span>Household impact</span></div>
+      <div class="grp" id="topf"><span>Topic</span></div>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+    <div id="cal"></div>
+    <div class="legend">
+      <span><span class="imp l3"><i></i><i></i><i></i></span> High: can move mortgage rates, savings rates or retirement balances</span>
+      <span><span class="imp l2"><i></i><i></i><i></i></span> Medium: shapes the bigger picture</span>
+      <span><span class="imp l1"><i></i><i></i><i></i></span> Low: background</span>
+    </div>
+    <p class="mk-src">Tap any row for what it is, why it reaches your wallet, and what it can mean for you. Forecasts are economists' estimates from our sources, not our predictions. Results are added in each weekly update.</p>
+
+    <div style="margin-top:44px">
+      <div class="eyebrow">The stories this week</div>
+      <div class="hl-grid" id="hl"></div>
+    </div>
+
+    <div class="mk-item mk-cta" style="margin-top:28px">
+      <h3 id="ctah">News is noise until it's connected to your plan.</h3>
+      <p id="ctap">Pick where you are and you'll get the steps that strengthen your foundation, with each week's news explained for your situation.</p>
+      <p style="margin:18px 0 0"><a class="btn" id="ctab" href="invest-path.html">Open my path</a> &nbsp; <a class="btn ghost" href="book.html?utm_source=WEBSITE-NEWS">Book a review</a></p>
+    </div>
+    <p class="muted" style="font-size:14px">This page explains scheduled economic news for education. It is not investment, tax or legal advice, it doesn't predict markets, and it doesn't recommend buying or selling anything.</p>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a href="stress-test.html">Stress test</a>
+        <a href="book.html">Book a review</a>
+        <a data-link="youtubeUrl" href="#">YouTube</a>
+        <a href="careers.html">Careers in financial services</a>
+      </div>
+      <div>&copy; <span id="year"></span> Micah Bryant</div>
+    </div>
+    <p class="disclosure">Micah Bryant is a licensed insurance agent (life, health, and annuities) in <span data-cfg="licensedStates">Virginia</span>, affiliated with Experior Financial Group Inc. Outside Virginia, Micah works with licensed mentors and colleagues who can help in your state. Content on this site is for educational purposes only and is not tax, legal, or investment advice.</p>
+  </div>
+</footer>
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script src="shared.js"></script>
+<script src="weekly.js"></script>
+<script src="paths.js"></script>
+<script src="news.js"></script>
+</body>
+</html>

@@ -298,3 +298,38 @@
   };
 
 })();
+
+// ---- Connections between the weekly news, the paths and the tools ----
+(function () {
+  var MB = window.MB; if (!MB) return;
+  // Which saved tool result answers a path step, by the step's link
+  MB.STEP = { "stress-test.html": "stress", "retirement-accounts.html": "retire", "dime-calculator.html": "dime",
+    "independence-number.html": "independence", "money-plan.html": "moneyplan", "debt-freedom.html": "debt",
+    "life-events.html": "events", "income-transition.html": "transition", "business-exposure.html": "business" };
+  MB.stepResult = function (link) { var id = MB.STEP[String(link).split(/[?#]/)[0]]; return id ? MB.results()[id] || null : null; };
+  // Turns tool names mentioned in weekly notes into links (first mention of each, once per note)
+  var LINKS = [
+    [/Independence Number/i, "independence-number.html"],
+    [/(full )?employer match/i, "retirement-accounts.html"],
+    [/stress test/i, "stress-test.html"],
+    [/(emergency |your |a )?cushion/i, "stress-test.html"],
+    [/(what (a|each) (one-point|half-point) change does to your payment|your payment)/i, "calculators.html#rate"],
+    [/beneficiar(y|ies)/i, "life-events.html"],
+    [/life insurance|coverage sized/i, "dime-calculator.html"],
+    [/credit cards|variable-rate debt/i, "debt-freedom.html"],
+    [/annuit(y|ies)/i, "retirement-accounts.html"],
+    [/every dollar a job|your budget/i, "money-plan.html"]
+  ];
+  MB.linkify = function (text) {
+    var out = String(text), used = {};
+    LINKS.forEach(function (L) {
+      if (used[L[1]]) return;
+      var m = out.match(L[0]); if (!m) return;
+      var at = out.indexOf(m[0]);
+      if (out.lastIndexOf("<a ", at) > out.lastIndexOf("</a>", at)) return; // already inside a link
+      used[L[1]] = 1;
+      out = out.slice(0, at) + "<a href='" + L[1] + "'>" + m[0] + "</a>" + out.slice(at + m[0].length);
+    });
+    return out;
+  };
+})();
